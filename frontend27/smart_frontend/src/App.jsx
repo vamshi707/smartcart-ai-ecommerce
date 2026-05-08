@@ -7,7 +7,7 @@ import Fashion from "./pages/Fashion";
 import Electronics from "./pages/Electronics";
 import Cart from "./pages/Cart";
 import Admin from "./pages/Admin";
-import Furniture from "./page/Furniture";
+import Furniture from "./pages/Furniture";
 
 function App() {
 
