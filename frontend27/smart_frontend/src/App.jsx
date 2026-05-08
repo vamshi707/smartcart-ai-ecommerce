@@ -7,6 +7,7 @@ import Fashion from "./pages/Fashion";
 import Electronics from "./pages/Electronics";
 import Cart from "./pages/Cart";
 import Admin from "./pages/Admin";
+import Furniture from "./page/Furniture";
 
 function App() {
 
@@ -36,6 +37,11 @@ function App() {
         <Route
           path="/electronics"
           element={<Electronics />}
+        />
+
+         <Route
+          path="/Furniture"
+          element={<Furniture />}
         />
 
         <Route
