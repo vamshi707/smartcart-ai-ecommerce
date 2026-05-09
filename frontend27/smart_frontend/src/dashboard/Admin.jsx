@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function Admin() {
 
   return (
@@ -22,9 +24,13 @@ export default function Admin() {
             Add, update and manage fashion products.
           </p>
 
-          <button className="bg-black hover:bg-gray-800 text-white px-6 py-3 rounded-2xl transition duration-300">
+         <Link to="/fashion-admin">
+
+        <button className="bg-black hover:bg-gray-800 text-white px-6 py-3 rounded-2xl transition duration-300">
             Open
-          </button>
+        </button>
+
+        </Link>
 
         </div>
 

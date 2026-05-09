@@ -5,9 +5,11 @@ import All from "./pages/All";
 import Groceries from "./pages/Groceries";
 import Fashion from "./pages/Fashion";
 import Electronics from "./pages/Electronics";
-import Cart from "./pages/Cart";
-import Admin from "./pages/Admin";
 import Furniture from "./pages/Furniture";
+import Cart from "./pages/Cart";
+import FashionAdmin from "./dashboard/FashionAdmin";
+
+import Admin from "./dashboard/Admin";
 
 function App() {
 
@@ -19,8 +21,8 @@ function App() {
 
         <Route path="/" element={<Home />} />
 
-         <Route
-          path="/All"
+        <Route
+          path="/all"
           element={<All />}
         />
 
@@ -39,8 +41,8 @@ function App() {
           element={<Electronics />}
         />
 
-         <Route
-          path="/Furniture"
+        <Route
+          path="/furniture"
           element={<Furniture />}
         />
 
@@ -53,6 +55,10 @@ function App() {
           path="/admin"
           element={<Admin />}
         />
+              <Route
+        path="/fashion-admin"
+        element={<FashionAdmin />}
+      />
 
       </Routes>
 
