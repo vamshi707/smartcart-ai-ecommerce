@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export default function Fashion() {
+function Fashion() {
 
   const [products, setProducts] = useState([]);
 
@@ -121,3 +121,4 @@ export default function Fashion() {
   )
 
 }
+export default Fashion;
