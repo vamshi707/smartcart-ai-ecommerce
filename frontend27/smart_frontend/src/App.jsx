@@ -1,5 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
+import Navbar from "./components/Navbar";
+
 import Home from "./pages/Home";
 import All from "./pages/All";
 import Groceries from "./pages/Groceries";
@@ -7,8 +9,8 @@ import Fashion from "./pages/Fashion";
 import Electronics from "./pages/Electronics";
 import Furniture from "./pages/Furniture";
 import Cart from "./pages/Cart";
-import FashionAdmin from "./dashboard/FashionAdmin";
 
+import FashionAdmin from "./dashboard/FashionAdmin";
 import Admin from "./dashboard/Admin";
 
 function App() {
@@ -16,6 +18,8 @@ function App() {
   return (
 
     <BrowserRouter>
+
+      <Navbar />
 
       <Routes>
 
@@ -55,10 +59,11 @@ function App() {
           path="/admin"
           element={<Admin />}
         />
-              <Route
-        path="/fashion-admin"
-        element={<FashionAdmin />}
-      />
+
+        <Route
+          path="/fashion-admin"
+          element={<FashionAdmin />}
+        />
 
       </Routes>
 

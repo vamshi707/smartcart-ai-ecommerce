@@ -1,5 +1,15 @@
 export default function Home() {
+
   return (
-    <h1 className="bg-green-600">Home Page</h1>
+
+    <div className="p-10">
+
+      <h1 className="text-5xl font-bold">
+        Welcome To SmartMart 🔥
+      </h1>
+
+    </div>
+
   )
+
 }
