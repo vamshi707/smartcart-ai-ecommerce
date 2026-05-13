@@ -83,9 +83,7 @@ def detect_fashion(request):
     category = request.data.get("category")
 
     gender = request.data.get("gender")
-
  
-
     products = FashionProduct.objects.filter(
 
         skin_type=tone,
@@ -94,12 +92,7 @@ def detect_fashion(request):
 
         name=category
 
-)
-
-     
-    
-
-     
+)   
     serializer = FashionSerializer(products, many=True)
 
     return Response({
