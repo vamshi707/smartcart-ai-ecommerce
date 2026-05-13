@@ -18,6 +18,7 @@ export default function FashionAdmin() {
   const [stock, setStock] = useState("");
   const [skinType, setSkinType] = useState("");
   const [description, setDescription] = useState("");
+  const [gender, setGender] = useState("");
 
   useEffect(() => {
 
@@ -56,6 +57,7 @@ export default function FashionAdmin() {
           rating: rating,
           skin_type: skinType,
           stock: stock,
+          gender: gender,
 
         }),
 
@@ -212,6 +214,31 @@ export default function FashionAdmin() {
               onChange={(e) => setStock(e.target.value)}
               className="border p-4 rounded-xl"
             />
+           <select
+  value={gender}
+  onChange={(e) => setGender(e.target.value)}
+  className="border p-4 rounded-xl md:col-span-2"
+>
+
+  <option value="">
+
+    Select Gender
+
+  </option>
+
+  <option value="men">
+
+    Men
+
+  </option>
+
+  <option value="women">
+
+    Women
+
+  </option>
+
+</select>
 
             <input
               type="text"

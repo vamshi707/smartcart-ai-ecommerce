@@ -15,6 +15,8 @@ function Fashion() {
 
   const [selectedDress, setSelectedDress] = useState("");
 
+  const [selectedGender, setSelectedGender] = useState("");
+
   const [recommendedProducts, setRecommendedProducts] = useState([]);
 
   const [skinTone, setSkinTone] = useState("");
@@ -87,9 +89,14 @@ function Fashion() {
         },
 
          body: JSON.stringify({
-          image: capturedImage,
-          
-        }),
+
+            image: capturedImage,
+
+            gender: selectedGender,
+
+            category: selectedDress,
+
+          }),
       }
     );
 
@@ -132,19 +139,19 @@ function Fashion() {
         <button
           onClick={() => {
 
-  setShowAI(!showAI);
+              setShowAI(!showAI);
 
-  setShowResult(false);
+              setShowResult(false);
 
-  setCapturedImage(null);
+              setCapturedImage(null);
 
-  setSelectedDress("");
+              setSelectedDress("");
 
-  setRecommendedProducts([]);
+              setRecommendedProducts([]);
 
-  setSkinTone("");
+              setSkinTone("");
 
-}}
+            }}
           className="bg-purple-600 text-white px-6 py-3 rounded-2xl hover:bg-purple-700"
         >
 
@@ -262,56 +269,146 @@ function Fashion() {
 
           <div className="bg-white rounded-3xl shadow-lg p-6">
 
-            <h2 className="text-3xl font-bold text-purple-600 mb-6">
+            
 
-              2. Choose Dress Type
+            {/* GENDER BUTTONS */}
 
-            </h2>
+<h2 className="text-3xl font-bold text-purple-600 mb-6">
 
-            {/* DRESS BUTTONS */}
+  2. Select Gender
 
-            <div className="flex flex-col gap-4 mb-8">
+</h2>
 
-              <button
-                onClick={() => setSelectedDress("shirt")}
-                className={`py-4 rounded-2xl text-lg font-semibold transition ${
-                  selectedDress === "shirt"
-                    ? "bg-purple-600 text-white"
-                    : "bg-gray-100"
-                }`}
-              >
+<div className="flex gap-4 mb-8">
 
-                👕 Shirt
+  <button
+    onClick={() => {
 
-              </button>
+      setSelectedGender("men");
 
-              <button
-                onClick={() => setSelectedDress("pant")}
-                className={`py-4 rounded-2xl text-lg font-semibold transition ${
-                  selectedDress === "pant"
-                    ? "bg-purple-600 text-white"
-                    : "bg-gray-100"
-                }`}
-              >
+      setSelectedDress("");
 
-                👖 Pant
+    }}
+    className={`flex-1 py-4 rounded-2xl text-lg font-semibold transition ${
+      selectedGender === "men"
+        ? "bg-blue-600 text-white"
+        : "bg-gray-100"
+    }`}
+  >
 
-              </button>
+    👨 Men
 
-              <button
-                onClick={() => setSelectedDress("dress")}
-                className={`py-4 rounded-2xl text-lg font-semibold transition ${
-                  selectedDress === "dress"
-                    ? "bg-purple-600 text-white"
-                    : "bg-gray-100"
-                }`}
-              >
+  </button>
 
-                🧥 Full Dress
+  <button
+    onClick={() => {
 
-              </button>
+      setSelectedGender("women");
 
-            </div>
+      setSelectedDress("");
+
+    }}
+    className={`flex-1 py-4 rounded-2xl text-lg font-semibold transition ${
+      selectedGender === "women"
+        ? "bg-pink-600 text-white"
+        : "bg-gray-100"
+    }`}
+  >
+
+    👩 Women
+
+  </button>
+
+</div>
+
+{/* DRESS BUTTONS */}
+
+<div className="flex flex-col gap-4 mb-8">
+
+  {selectedGender === "men" && (
+
+    <>
+
+      <button
+        onClick={() => setSelectedDress("shirt")}
+        className={`py-4 rounded-2xl text-lg font-semibold ${
+          selectedDress === "shirt"
+            ? "bg-purple-600 text-white"
+            : "bg-gray-100"
+        }`}
+      >
+
+        👕 Shirt
+
+      </button>
+
+      <button
+        onClick={() => setSelectedDress("pant")}
+        className={`py-4 rounded-2xl text-lg font-semibold ${
+          selectedDress === "pant"
+            ? "bg-purple-600 text-white"
+            : "bg-gray-100"
+        }`}
+      >
+
+        👖 Pant
+
+      </button>
+
+    </>
+
+  )}
+
+  {selectedGender === "women" && (
+
+    <>
+
+      <button
+        onClick={() => setSelectedDress("saree")}
+        className={`py-4 rounded-2xl text-lg font-semibold ${
+          selectedDress === "saree"
+            ? "bg-pink-600 text-white"
+            : "bg-gray-100"
+        }`}
+      >
+
+        🥻 Saree
+
+      </button>
+
+      <button
+        onClick={() => setSelectedDress("tops")}
+        className={`py-4 rounded-2xl text-lg font-semibold ${
+          selectedDress === "tops"
+            ? "bg-pink-600 text-white"
+            : "bg-gray-100"
+        }`}
+      >
+
+        👚 Tops
+
+      </button>
+
+      <button
+        onClick={() => setSelectedDress("dress")}
+        className={`py-4 rounded-2xl text-lg font-semibold ${
+          selectedDress === "dress"
+            ? "bg-pink-600 text-white"
+            : "bg-gray-100"
+        }`}
+      >
+
+        👗 Dress
+
+      </button>
+
+    </>
+
+  )}
+
+</div>
+
+          
 
             {/* DETECT BUTTON */}
 
