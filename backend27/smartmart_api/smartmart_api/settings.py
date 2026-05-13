@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'Groceries',
     'fashion',
     'rest_framework',
+    'corsheaders',
     'furniture',
     'electrical',
     'vegetable',

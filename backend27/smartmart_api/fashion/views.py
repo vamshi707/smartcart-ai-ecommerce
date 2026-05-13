@@ -37,3 +37,64 @@ def delete_product(request, id):
     product.delete()
 
     return Response("Product Deleted")
+
+@api_view(['POST'])
+
+def detect_fashion(request):
+
+    import base64
+    import numpy as np
+
+    from PIL import Image
+    from io import BytesIO
+
+    image_data = request.data.get("image")
+
+    format, imgstr = image_data.split(';base64,')
+
+    image = Image.open(BytesIO(base64.b64decode(imgstr)))
+
+    image_np = np.array(image)
+
+    height, width, _ = image_np.shape
+
+    center_face = image_np[
+        height//3:height//2,
+        width//3:width//2
+    ]
+
+    avg_color = center_face.mean(axis=(0, 1))
+
+    brightness = avg_color.mean()
+
+    if brightness < 110:
+
+        tone = "dark"
+
+    elif brightness < 180:
+
+        tone = "medium"
+
+    else:
+
+        tone = "white"
+
+
+    category = request.data.get("category")
+
+    products = FashionProduct.objects.filter(
+        skin_type=tone,
+        
+    )
+    
+
+     
+    serializer = FashionSerializer(products, many=True)
+
+    return Response({
+
+        "skin_tone": tone,
+
+        "products": serializer.data
+
+    })
