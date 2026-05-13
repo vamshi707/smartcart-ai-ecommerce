@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import Navbar from "./components/Navbar";
+import CustomerLayout from "./layouts/CustomerLayout";
 
 import Home from "./pages/Home";
 import All from "./pages/All";
@@ -10,8 +10,8 @@ import Electronics from "./pages/Electronics";
 import Furniture from "./pages/Furniture";
 import Cart from "./pages/Cart";
 
-import FashionAdmin from "./dashboard/FashionAdmin";
 import Admin from "./dashboard/Admin";
+import FashionAdmin from "./dashboard/FashionAdmin";
 
 function App() {
 
@@ -19,46 +19,31 @@ function App() {
 
     <BrowserRouter>
 
-      <Navbar />
-
       <Routes>
 
-        <Route path="/" element={<Home />} />
+        {/* CUSTOMER LAYOUT */}
 
-        <Route
-          path="/all"
-          element={<All />}
-        />
+        <Route element={<CustomerLayout />}>
 
-        <Route
-          path="/groceries"
-          element={<Groceries />}
-        />
+          <Route path="/" element={<Home />} />
 
-        <Route
-          path="/fashion"
-          element={<Fashion />}
-        />
+          <Route path="/all" element={<All />} />
 
-        <Route
-          path="/electronics"
-          element={<Electronics />}
-        />
+          <Route path="/groceries" element={<Groceries />} />
 
-        <Route
-          path="/furniture"
-          element={<Furniture />}
-        />
+          <Route path="/fashion" element={<Fashion />} />
 
-        <Route
-          path="/cart"
-          element={<Cart />}
-        />
+          <Route path="/electronics" element={<Electronics />} />
 
-        <Route
-          path="/admin"
-          element={<Admin />}
-        />
+          <Route path="/furniture" element={<Furniture />} />
+
+          <Route path="/cart" element={<Cart />} />
+
+        </Route>
+
+        {/* ADMIN PAGES */}
+
+        <Route path="/admin" element={<Admin />} />
 
         <Route
           path="/fashion-admin"
@@ -69,7 +54,8 @@ function App() {
 
     </BrowserRouter>
 
-  );
+  )
+
 }
 
 export default App;
