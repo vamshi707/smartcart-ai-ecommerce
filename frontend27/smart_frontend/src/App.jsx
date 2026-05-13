@@ -4,7 +4,7 @@ import CustomerLayout from "./layouts/CustomerLayout";
 
 import Home from "./pages/Home";
 import All from "./pages/All";
-import Groceries from "./pages/Groceries";
+import Grocery from "./pages/Grocery";
 import Fashion from "./pages/Fashion";
 import Electronics from "./pages/Electronics";
 import Furniture from "./pages/Furniture";
@@ -12,6 +12,7 @@ import Cart from "./pages/Cart";
 
 import Admin from "./dashboard/Admin";
 import FashionAdmin from "./dashboard/FashionAdmin";
+import GroceryAdmin from "./dashboard/GroceryAdmin";
 
 function App() {
 
@@ -21,15 +22,13 @@ function App() {
 
       <Routes>
 
-        {/* CUSTOMER LAYOUT */}
-
         <Route element={<CustomerLayout />}>
 
           <Route path="/" element={<Home />} />
 
           <Route path="/all" element={<All />} />
 
-          <Route path="/groceries" element={<Groceries />} />
+          <Route path="/grocery" element={<Grocery />} />
 
           <Route path="/fashion" element={<Fashion />} />
 
@@ -41,13 +40,16 @@ function App() {
 
         </Route>
 
-        {/* ADMIN PAGES */}
-
         <Route path="/admin" element={<Admin />} />
 
         <Route
           path="/fashion-admin"
           element={<FashionAdmin />}
+        />
+
+        <Route
+          path="/grocery-admin"
+          element={<GroceryAdmin />}
         />
 
       </Routes>

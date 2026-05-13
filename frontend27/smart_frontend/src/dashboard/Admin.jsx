@@ -73,7 +73,7 @@ export default function Admin() {
         {/* Groceries */}
 
         <div className="bg-white p-10 rounded-3xl shadow-lg hover:shadow-2xl hover:-translate-y-2 transition duration-300">
-
+        
           <h2 className="text-3xl font-bold mb-4">
             Groceries
           </h2>
@@ -81,10 +81,11 @@ export default function Admin() {
           <p className="text-gray-500 mb-6">
             Manage grocery and daily essential products.
           </p>
-
+           <Link to="/grocery-admin"> 
           <button className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-2xl transition duration-300">
             Open
           </button>
+          </Link>
 
         </div>
 

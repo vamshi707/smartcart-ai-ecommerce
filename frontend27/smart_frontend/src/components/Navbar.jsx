@@ -143,16 +143,23 @@ export default function Navbar() {
         </div>
 
         {/* GROCERIES */}
+   <Link
+  to="/grocery">
 
         <div className="flex items-center gap-3 cursor-pointer hover:text-green-600 transition">
-
+ 
           <Apple size={26} className="text-green-600" />
 
           <span className="font-medium">
             Groceries
           </span>
+           
+
+        
 
         </div>
+        </Link>
+        
 
         {/* FASHION */}
  <Link

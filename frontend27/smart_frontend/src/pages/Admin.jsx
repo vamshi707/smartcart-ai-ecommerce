@@ -1,4 +1,8 @@
+import { useNavigate } from "react-router-dom";
+
 export default function Admin() {
+
+  const navigate = useNavigate();
 
   return (
 
@@ -22,7 +26,10 @@ export default function Admin() {
             Add, update and manage fashion products.
           </p>
 
-          <button className="bg-black hover:bg-gray-800 text-white px-6 py-3 rounded-2xl transition duration-300">
+          <button
+            
+            className="bg-black hover:bg-gray-800 text-white px-6 py-3 rounded-2xl transition duration-300"
+          >
             Open
           </button>
 
@@ -76,7 +83,10 @@ export default function Admin() {
             Manage grocery and daily essential products.
           </p>
 
-          <button className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-2xl transition duration-300">
+          <button
+            onClick={() => navigate("/grocery-admin")}
+            className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-2xl transition duration-300"
+          >
             Open
           </button>
 
