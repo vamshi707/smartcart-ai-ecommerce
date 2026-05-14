@@ -87,16 +87,15 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
 
-        'NAME': 'smartmart',
+        'NAME': 'railway',
 
         'USER': 'root',
 
-        'PASSWORD': 'vamshi@1234$',
+        'PASSWORD': 'ijOGsTDOhVwTqdttUOtvOEjwbknfefKT',
 
-        'HOST': 'localhost',
+        'HOST': 'gondola.proxy.rlwy.net',
 
-        'PORT': '3306',
-         
+        'PORT': '24182',
     }
 }
 
