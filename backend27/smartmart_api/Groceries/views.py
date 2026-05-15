@@ -32,6 +32,8 @@ def grocery_products(request):
 
             return Response(serializer.data)
 
+        print(serializer.errors)
+
         return Response(serializer.errors)
 
 
