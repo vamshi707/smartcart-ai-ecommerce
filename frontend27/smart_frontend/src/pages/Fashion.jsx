@@ -34,6 +34,7 @@ function Fashion() {
         setProducts(data);
 
       });
+      
 
   }, []);
 

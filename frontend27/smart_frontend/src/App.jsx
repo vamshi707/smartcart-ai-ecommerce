@@ -24,7 +24,7 @@ function App() {
 
         <Route element={<CustomerLayout />}>
 
-          <Route path="/" element={<Home />} />
+          <Route path="/Home" element={<Home />} />
 
           <Route path="/all" element={<All />} />
 

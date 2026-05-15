@@ -117,9 +117,11 @@ export default function Navbar() {
       </div>
 
       {/* CATEGORY SECTION */}
+   
 
       <div className="flex items-center justify-center gap-12 overflow-x-auto px-8 py-5 bg-white">
-
+               <Link
+  to="/Home"> 
           <div className="flex items-center gap-3 cursor-pointer hover:text-red-600 transition">
 
           <Home size={26} className="text-red-600" />
@@ -130,6 +132,7 @@ export default function Navbar() {
         
 
         </div>
+        </Link>
         {/* ALL */}
 
         <div className="flex items-center gap-3 cursor-pointer hover:text-pink-600 transition">
