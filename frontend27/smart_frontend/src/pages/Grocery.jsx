@@ -9,135 +9,141 @@ export default function Grocery() {
     fetch("http://127.0.0.1:8000/grocery/")
       .then((response) => response.json())
       .then((data) => {
-
         setProducts(data);
-
       });
 
   }, []);
 
   return (
 
-    <div className="bg-gray-100 p-6 min-h-screen">
+    <div className="bg-[#f7f7f7] min-h-screen px-4 md:px-16 py-6">
 
-      {/* TITLE */}
+      {/* HEADER */}
 
-      <h1 className="text-3xl font-bold mb-6">
+      <div className="flex items-center justify-between mb-6">
 
-        Groceries products
+        <h1 className="text-3xl font-bold text-[#1d1d1d]">
+          Grocery Products
+        </h1>
 
-      </h1>
+        <button className="text-pink-500 font-semibold text-lg hover:underline">
+          See All →
+        </button>
+
+      </div>
 
       {/* PRODUCTS */}
 
-      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-7 gap-3">
 
         {products.map((item) => (
 
           <div
-  key={item.id}
-  className="bg-white rounded-2xl shadow-sm hover:shadow-2xl transition-all duration-300 overflow-hidden group relative border border-gray-100 hover:-translate-y-2"
->
+            key={item.id}
+            className="bg-white rounded-2xl border border-gray-300 hover:shadow-lg transition duration-300 overflow-hidden relative group"
+          >
 
-  {/* DISCOUNT BADGE */}
+            {/* IMAGE */}
 
-  <div className="absolute top-3 left-3 z-10 bg-pink-500 text-white text-xs px-3 py-1 rounded-full font-semibold shadow">
+            <div className="w-full h-38 bg-white flex items-center justify-center ">
 
-    {item.discount} OFF
+              <img
+                src={item.image}
+                alt={item.name}
+                className="w-full h-full object-contain group-hover:scale-105 transition duration-300"
+              />
 
-  </div>
+            </div>
 
-  {/* IMAGE */}
+            {/* ADD BUTTON */}
 
-  <div className="w-full h-48 bg-gray-50 flex items-center justify-center overflow-hidden">
+            <button className="absolute top-32 right-3 bg-white border-2 border-pink-500 text-pink-500 font-bold px-5 py-1 rounded-xl shadow hover:bg-pink-500 hover:text-white transition">
 
-    <img
-      src={item.image}
-      alt={item.name}
-      className="w-full h-full object-contain p-4 transition duration-300 group-hover:scale-110"
-    />
+              ADD
 
-  </div>
+            </button>
 
-  {/* CONTENT */}
+            {/* CONTENT */}
 
-  <div className="p-4">
+            <div className="p-3">
 
-    {/* NAME */}
+              {/* PRICE */}
 
-    <h2 className="text-sm font-semibold text-gray-800 leading-5 h-12 overflow-hidden">
+              <div className="flex items-center gap-2">
 
-      {item.name}
+                <span className="bg-green-600 text-white px-2 py-1 rounded-md text-sm font-bold">
 
-    </h2>
+                  ₹{item.price}
 
-    {/* WEIGHT */}
+                </span>
 
-    <p className="text-gray-400 text-sm mt-1">
+                <span className="line-through text-gray-400 text-sm">
 
-      {item.weight}
+                  ₹{item.old_price}
 
-    </p>
+                </span>
 
-    {/* TAG */}
+              </div>
 
-    <div className="mt-2">
+              {/* DISCOUNT */}
 
-      <span className="bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full">
+              <p className="text-green-600 text-xs font-semibold mt-1">
 
-        Fresh Product
+                ₹{item.discount} OFF
 
-      </span>
+              </p>
 
-    </div>
+              {/* PRODUCT NAME */}
 
-    {/* RATING */}
+              <h2 className="text-[15px] font-semibold text-gray-1000 mt-2 leading-5 line-clamp-2 min-h-[42px]">
 
-    <div className="flex items-center gap-2 mt-3">
+                {item.name}
 
-      <span className="bg-green-600 text-white text-xs px-2 py-1 rounded-md">
+              </h2>
 
-        ★ {item.rating}
+              {/* WEIGHT */}
 
-      </span>
+              <p className="text-gray-600 text-sm">
 
-      <span className="text-gray-500 text-sm">
+                1 pack ({item.weight})
 
-        ({item.rating_count})
+              </p>
 
-      </span>
+              {/* TAG */}
 
-    </div>
+              <div className="mt-2">
 
-    {/* PRICE */}
+                <span className="bg-cyan-100 text-cyan-800 text-xs px-2 py-1 rounded-md">
 
-    <div className="flex items-center gap-2 mt-4">
+                  Fresh Product
 
-      <span className="text-2xl font-bold text-gray-800">
+                </span>
 
-        ₹{item.price}
+              </div>
 
-      </span>
+              {/* RATING */}
 
-      <span className="line-through text-gray-400 text-sm">
+              <div className="flex items-center gap-1 mt-3 text-sm">
 
-        ₹{item.old_price}
+                <span className="text-green-600 font-bold">
 
-      </span>
+                  ★ {item.rating}
 
-    </div>
+                </span>
 
-    {/* BUTTON */}
+                <span className="text-gray-500">
 
-    <button className="w-full mt-4 bg-gradient-to-r from-pink-500 to-red-500 text-white py-2 rounded-xl font-semibold hover:scale-105 transition duration-300 shadow-md">
+  ({item.rating_count >= 1000
+    ? (item.rating_count / 1000).toFixed(1) + "k"
+    : item.rating_count})
 
-      ADD TO CART
+</span>
 
-    </button>
+              </div>
 
-  </div>
+            </div>
 
-</div>
+          </div>
 
         ))}
 

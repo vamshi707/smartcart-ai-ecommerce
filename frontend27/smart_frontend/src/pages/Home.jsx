@@ -32,7 +32,7 @@ const banners = [
     title: "Mega Fashion Edit",
     subtitle: "Up to 70% off — new drops daily",
     cta: "Shop the look",
-    className: "bg-gradient-berry text-white",
+    className: "bg-gradient-berry text-[oklch(0.2_0.04_140)]",
     badge: "70% OFF",
     icon: Shirt,
   },
@@ -82,15 +82,15 @@ function Home() {
    
 
       {/* MARQUEE STRIP */}
-      <div className="bg-foreground text-background overflow-hidden">
+      <div className="bg-black text-white overflow-hidden">
         <div className="flex gap-12 py-2 text-xs font-medium animate-marquee whitespace-nowrap">
           {Array.from({ length: 2 }).map((_, k) => (
             <div key={k} className="flex gap-12 shrink-0">
-              <span className="flex items-center gap-2"><Sparkles className="size-3.5 text-accent" /> AI Skin-Tone Beauty Match — try the camera</span>
-              <span className="flex items-center gap-2"><Tag className="size-3.5 text-accent" /> Big Smart Days — up to 80% off</span>
-              <span className="flex items-center gap-2"><Truck className="size-3.5 text-accent" /> Groceries in 10 minutes</span>
-              <span className="flex items-center gap-2"><ShieldCheck className="size-3.5 text-accent" /> 100% authentic products</span>
-              <span className="flex items-center gap-2"><Award className="size-3.5 text-accent" /> 50M+ happy customers</span>
+              <span className="flex items-center gap-2"><Sparkles className="size-3.5 text-yellow-400"  /> AI Skin-Tone Beauty Match — try the camera</span>
+              <span className="flex items-center gap-2"><Tag className="size-3.5 text-yellow-400" /> Big Smart Days — up to 80% off</span>
+              <span className="flex items-center gap-2"><Truck className="size-3.5 text-yellow-400" /> Groceries in 10 minutes</span>
+              <span className="flex items-center gap-2"><ShieldCheck className="size-3.5 text-yellow-400" /> 100% authentic products</span>
+              <span className="flex items-center gap-2"><Award className="size-3.5 text-yellow-400" /> 50M+ happy customers</span>
             </div>
           ))}
         </div>
@@ -170,7 +170,7 @@ function Home() {
           </div>
           <div className="relative min-h-[260px]">
             <img
-              src="https://images.unsplash.com/photo-1522335789203-aaa3a25b8b4f?q=80&w=1000&auto=format&fit=crop"
+            src="https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg"  
               alt="AI Beauty"
               className="absolute inset-0 w-full h-full object-cover"
             />

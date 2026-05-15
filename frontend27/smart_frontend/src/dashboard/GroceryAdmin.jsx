@@ -76,6 +76,7 @@ export default function GroceryAdmin() {
     );
 
     const data = await response.json();
+    console.log(data);
 
     setProducts([...products, data]);
 

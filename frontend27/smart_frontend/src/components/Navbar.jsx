@@ -22,7 +22,7 @@ export default function Navbar() {
 
       {/* TOP NAVBAR */}
 
-      <div className="flex items-center justify-between px-8 py-4 border-b">
+      <div className="flex items-center justify-between px-18 py-6 border-b">
 
         {/* LEFT SIDE */}
 
