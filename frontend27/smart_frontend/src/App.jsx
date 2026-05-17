@@ -13,6 +13,7 @@ import ScrollToTop from "./components/ScrollToTop";
 
 import Admin from "./dashboard/Admin";
 import FashionAdmin from "./dashboard/FashionAdmin";
+import ElectronicsAdmin from "./dashboard/ElectronicsAdmin";
 import GroceryAdmin from "./dashboard/GroceryAdmin";
 
 function App() {
@@ -55,6 +56,10 @@ function App() {
           path="/grocery-admin"
           element={<GroceryAdmin />}
         />
+        <Route
+            path="/hardware"
+            element={<ElectronicsAdmin />}
+          />
 
       </Routes>
 

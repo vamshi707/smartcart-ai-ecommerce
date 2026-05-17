@@ -180,15 +180,20 @@ export default function Navbar() {
 
         {/* ELECTRONICS */}
 
-        <div className="flex items-center gap-3 cursor-pointer hover:text-blue-600 transition">
+                <Link
+  to="/Electronics">
 
+        <div className="flex items-center gap-3 cursor-pointer hover:text-blue-600 transition">
+    
           <Smartphone size={26} className="text-blue-600" />
 
           <span className="font-medium">
             Electronics
           </span>
+           
 
         </div>
+        </Link>
 
         {/* FURNITURE */}
 

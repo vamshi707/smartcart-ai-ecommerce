@@ -462,7 +462,7 @@ function Home() {
 
   {/* BACKGROUND IMAGE */}
   <img
-     src="https://images.unsplash.com/photo-1607082349566-187342175e2f?q=80&w=1200&auto=format&fit=crop"
+     src="https://images.unsplash.com/photo-1607083206869-4c7672e72a8a?q=80&w=1400&auto=format&fit=crop"
     alt="Save Offer"
     className="absolute inset-0 w-full h-full object-cover"
   />
