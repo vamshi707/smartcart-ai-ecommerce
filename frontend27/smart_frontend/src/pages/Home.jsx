@@ -1,4 +1,4 @@
- 
+import Footer from "../components/Footer";
 import {
   Search, ShoppingCart, MapPin, ChevronRight, Heart, Star,
   Truck, ShieldCheck, Sparkles, Tag, Clock, Headphones,
@@ -61,13 +61,14 @@ const deals = [
   { title: "Fresh Vegetables", subtitle: "From ₹19", img: "https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=600&auto=format&fit=crop" },
   { title: "Top Mobiles", subtitle: "Up to 40% off", img: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=600&auto=format&fit=crop" },
   { title: "Home Decor", subtitle: "Starting ₹199", img: "https://images.unsplash.com/photo-1505691938895-1758d7feb511?q=80&w=600&auto=format&fit=crop" },
-  { title: "Beauty Picks", subtitle: "AI skin match", img: "https://images.unsplash.com/photo-1522335789203-aaa3a25b8b4f?q=80&w=600&auto=format&fit=crop" },
+  { title: "Beauty Picks", subtitle: "AI skin match",   img: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=600&q=80" },
   { title: "Men's Fashion", subtitle: "From ₹299", img: "https://images.unsplash.com/photo-1490114538077-0a7f8cb49891?q=80&w=600&auto=format&fit=crop" },
-  { title: "Kids & Toys", subtitle: "Min 30% off", img: "https://images.unsplash.com/photo-1558877385-8c1f8d24a839?q=80&w=600&auto=format&fit=crop" },
 ];
 
 function Home() {
+  
   return (
+    <>
     <div className="min-h-screen bg-white text-foreground">
       {/* TOP BAR */}
       <div className="bg-gradient-brand text-primary-foreground text-xs">
@@ -154,10 +155,13 @@ function Home() {
               <Sparkles className="size-3.5" /> AI POWERED · NEW
             </div>
             <h3 className="mt-4 text-3xl md:text-4xl font-extrabold leading-tight text-balance">
-              Find your perfect shade with <span className="text-accent">AI Face Detect</span>
+              Find your perfect shade with   <span className="text-accent"> Smart AI</span>
             </h3>
             <p className="mt-3 opacity-90 max-w-md">
-              Snap a selfie and SmartMart's AI detects your skin tone, undertone & face shape — then matches foundation, lipstick, sunglasses and outfits made for you.
+                Upload or click a photo and SmartCart AI detects
+  fashion styles, furniture, groceries, beauty products,
+  electronics and much more — then gives personalized
+  recommendations instantly.
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
               <button className="bg-accent text-accent-foreground font-bold px-5 py-3 rounded-full inline-flex items-center gap-2 hover:opacity-90">
@@ -168,20 +172,46 @@ function Home() {
               </button>
             </div>
           </div>
-          <div className="relative min-h-[260px]">
-            <img
-            src="https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg"  
-              alt="AI Beauty"
-              className="absolute inset-0 w-full h-full object-cover"
-            />
+     <div className="relative h-[400px] overflow-hidden">
+
+  <div className="flex animate-slider h-full">
+
+    {/* IMAGE 1 */}
+    <img
+      src="https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg"
+      alt="Beauty AI"
+      className="min-w-full h-full object-cover"
+    />
+
+    {/* IMAGE 2 */}
+    <img
+      src=" https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1600&q=80"
+      alt="Furniture AI"
+      className="min-w-full h-full object-cover"
+    />
+          <img
+  src="https://images.unsplash.com/photo-1724908267988-63310819325c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+  alt="home AI"
+    className="min-w-full h-full object-cover"
+/>
+
+    {/* IMAGE 3 */}
+    <img
+      src="https://images.pexels.com/photos/264636/pexels-photo-264636.jpeg"
+      alt="Grocery AI"
+      className="min-w-full h-full object-cover"
+    />
+  
+
             <div className="absolute inset-0 bg-gradient-to-l from-transparent to-primary/40" />
           </div>
+        </div>
         </div>
       </section>
 
       {/* DEAL TILES */}
       <section className="max-w-7xl mx-auto px-4 py-12">
-        <div className="flex items-end justify-between mb-6">
+        <div className="flex items-end justify-between mb-5">
           <div>
             <h2 className="text-3xl md:text-4xl font-extrabold flex items-center gap-2">
               <TrendingUp className="size-7 text-primary" /> Top deals today
@@ -189,7 +219,7 @@ function Home() {
             <p className="text-muted-foreground mt-1">Hand-picked offers across every category.</p>
           </div>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
           {deals.map((d) => (
             <div key={d.title} className="group relative rounded-2xl overflow-hidden shadow-card hover:shadow-pop transition cursor-pointer">
               <img src={d.img} alt={d.title} className="aspect-square w-full object-cover group-hover:scale-110 transition duration-500" />
@@ -243,39 +273,160 @@ function Home() {
         </div>
       </section>
 
-      {/* WHY SMARTMART */}
-      <section className="max-w-7xl mx-auto px-4 pb-12">
-        <div className="rounded-3xl bg-card border border-border p-8 md:p-12 shadow-card">
-          <div className="text-center max-w-2xl mx-auto">
-            <span className="text-xs font-bold text-primary uppercase tracking-widest">Why SmartMart</span>
-            <h2 className="text-3xl md:text-4xl font-extrabold mt-2">One app. Every category. Smarter shopping.</h2>
-            <p className="text-muted-foreground mt-3">From morning groceries to your next iPhone — SmartMart brings India's best brands, prices and delivery into one beautiful experience.</p>
-          </div>
-          <div className="grid md:grid-cols-4 gap-4 mt-10">
-            {[
-              { icon: Clock, title: "10-min express", desc: "Groceries & essentials at your door fast." },
-              { icon: ShieldCheck, title: "100% authentic", desc: "Brand-direct, quality-checked products." },
-              { icon: Sparkles, title: "AI for you", desc: "Face match, skin tone & smart picks." },
-              { icon: Headphones, title: "24×7 support", desc: "Real humans, fast resolutions." },
-            ].map(({ icon: Icon, title, desc }) => (
-              <div key={title} className="rounded-2xl bg-secondary/50 p-5 hover:bg-secondary transition">
-                <div className="size-11 rounded-xl bg-gradient-brand grid place-items-center text-white shadow-soft">
-                  <Icon className="size-5" />
-                </div>
-                <h4 className="mt-4 font-bold">{title}</h4>
-                <p className="text-sm text-muted-foreground mt-1">{desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* WHY SMARTCART */}
+<section className="relative max-w-7xl mx-auto px-4 pb-6 overflow-hidden rounded-3xl">
 
+  {/* BACKGROUND VIDEO */}
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    className="absolute inset-0 w-full h-full object-cover"
+  >
+    <source src="/smartcart.mp4" type="video/mp4" />
+  </video>
+
+  {/* DARK OVERLAY */}
+  <div className="absolute inset-0 bg-black/70"></div>
+
+  {/* GLOW EFFECTS */}
+  <div className="absolute top-10 left-10 w-52 h-52 bg-pink-500/20 rounded-full blur-3xl animate-pulse"></div>
+
+  <div className="absolute bottom-0 right-0 w-60 h-60 bg-blue-500/20 rounded-full blur-3xl animate-pulse"></div>
+
+  {/* CONTENT */}
+  <div className="relative z-10 rounded-3xl border border-white/10 p-5 md:p-6 backdrop-blur-sm">
+
+    {/* TOP TEXT */}
+    <div className="text-center max-w-2xl mx-auto">
+
+      <span className="text-xs font-bold text-pink-400 uppercase tracking-[4px]">
+        Why SmartCart
+      </span>
+
+      <h2 className="text-2xl md:text-3xl font-extrabold mt-2 text-white leading-tight">
+
+        One app.
+        <span className="bg-gradient-to-r from-pink-400 to-blue-400 bg-clip-text text-transparent">
+          {" "}Every category.
+        </span>
+
+        <br />
+
+        Smarter shopping.
+
+      </h2>
+
+      <p className="text-gray-300 mt-3 text-sm leading-relaxed">
+
+        From groceries to fashion, electronics and furniture —
+        SmartMart brings AI-powered shopping into one premium experience.
+
+      </p>
+
+    </div>
+
+    {/* FEATURE CARDS */}
+    <div className="grid md:grid-cols-4 gap-4 mt-7">
+
+      {[
+        {
+          icon: Clock,
+          title: "10-min express",
+          desc: "Groceries & essentials delivered instantly.",
+        },
+
+        {
+          icon: ShieldCheck,
+          title: "100% authentic",
+          desc: "Trusted brands with verified quality checks.",
+        },
+
+        {
+          icon: Sparkles,
+          title: "AI shopping",
+          desc: "Skin tone detect, smart fashion & room AI.",
+        },
+
+        {
+          icon: Headphones,
+          title: "24×7 support",
+          desc: "Fast support with real human assistance.",
+        },
+
+      ].map(({ icon: Icon, title, desc }) => (
+
+        <div
+          key={title}
+          className="
+            group
+            rounded-2xl
+            bg-white/10
+            border border-white/10
+            backdrop-blur-md
+            p-4
+            hover:bg-white/20
+            hover:scale-105
+            transition-all
+            duration-300
+            shadow-xl
+          "
+        >
+
+          {/* ICON */}
+          <div className="
+            size-11
+            rounded-xl
+            bg-gradient-to-r
+            from-pink-500
+            to-blue-500
+            grid
+            place-items-center
+            text-white
+            shadow-lg
+            group-hover:rotate-6
+            transition
+          ">
+
+            <Icon className="size-5" />
+
+          </div>
+
+          {/* TITLE */}
+          <h4 className="mt-4 font-bold text-lg text-white">
+
+            {title}
+
+          </h4>
+
+          {/* DESC */}
+          <p className="text-sm text-gray-300 mt-1 leading-relaxed">
+
+            {desc}
+
+          </p>
+
+        </div>
+
+      ))}
+
+    </div>
+
+  </div>
+
+</section>
+<br /><br />
+ 
+ 
+
+ 
       {/* APP DOWNLOAD CTA */}
       <section className="max-w-7xl mx-auto px-4 pb-12">
-        <div className="rounded-3xl bg-foreground text-background p-8 md:p-12 grid md:grid-cols-2 items-center gap-8 overflow-hidden relative">
-          <div className="absolute -right-20 -top-20 size-72 bg-gradient-brand rounded-full opacity-40 blur-3xl" />
+        <div className="rounded-3xl bg- text-black p-8 md:p-12 grid md:grid-cols-2 items-center gap-8 overflow-hidden relative">
+          <div className=" absolute -right-10 -top-20 size-full bg-gradient-brand rounded-full opacity-70 blur-3xl" />
           <div className="relative">
-            <h3 className="text-3xl md:text-4xl font-extrabold leading-tight">Get the SmartMart app.<br/>Faster. Smarter. Yours.</h3>
+            <h3 className="text-3xl md:text-4xl font-extrabold leading-tight ">Get the SmartMart app.<br/>Faster. Smarter. Yours.</h3>
             <p className="text-background/70 mt-3 max-w-md">Exclusive app-only deals, AI try-ons, lightning checkout and 10-minute delivery — all in your pocket.</p>
             <div className="mt-6 flex flex-wrap gap-3">
               <button className="bg-background text-foreground px-5 py-3 rounded-xl font-bold text-sm hover:opacity-90">App Store</button>
@@ -283,51 +434,62 @@ function Home() {
             </div>
           </div>
           <div className="relative grid grid-cols-2 gap-4">
-            <div className="rounded-2xl bg-gradient-berry p-5 aspect-square flex flex-col justify-end shadow-pop">
-              <div className="text-xs font-bold opacity-90">EXPRESS</div>
-              <div className="text-2xl font-extrabold">10-min</div>
-              <div className="text-sm opacity-90">delivery</div>
-            </div>
-            <div className="rounded-2xl bg-gradient-lime text-[oklch(0.2_0.04_140)] p-5 aspect-square flex flex-col justify-end shadow-pop translate-y-6">
-              <div className="text-xs font-bold opacity-90">SAVE</div>
-              <div className="text-2xl font-extrabold">₹500</div>
-              <div className="text-sm opacity-90">first order</div>
-            </div>
+
+  {/* DELIVERY BOX */}
+  <div className="relative rounded-2xl bg-gradient-berry p-5 aspect-square overflow-hidden flex flex-col justify-end shadow-pop">
+
+    {/* DELIVERY BOY IMAGE */}
+    <img
+         src="https://images.unsplash.com/photo-1526367790999-0150786686a2?q=80&w=1200&auto=format&fit=crop"
+      alt="Delivery Boy"
+      className="absolute inset-0 w-full h-full object-cover"
+    />
+
+    {/* OVERLAY */}
+    <div className="absolute inset-0 bg-black/40"></div>
+
+    {/* TEXT */}
+    <div className="relative z-10 text-white">
+      <div className="text-xs font-bold opacity-90">EXPRESS</div>
+      <div className="text-2xl font-extrabold">10-min</div>
+      <div className="text-sm opacity-90">delivery</div>
+    </div>
+
+  </div>
+
+  {/* SAVE BOX */}
+    <div className="relative rounded-2xl bg-gradient-lime text-[oklch(0.2_0.04_140)] p-5 aspect-square overflow-hidden flex flex-col justify-end shadow-pop translate-y-6">
+
+  {/* BACKGROUND IMAGE */}
+  <img
+     src="https://images.unsplash.com/photo-1607082349566-187342175e2f?q=80&w=1200&auto=format&fit=crop"
+    alt="Save Offer"
+    className="absolute inset-0 w-full h-full object-cover"
+  />
+
+  {/* DARK OVERLAY */}
+  <div className="absolute inset-0 bg-black/25"></div>
+
+  {/* TEXT */}
+  <div className="relative z-10 text-white">
+    <div className="text-xs font-bold opacity-90">SAVE</div>
+    <div className="text-2xl font-extrabold">₹500</div>
+    <div className="text-sm opacity-90">first order</div>
+  </div>
+
+</div>
+
+
           </div>
         </div>
       </section>
 
-      {/* FOOTER */}
-      <footer className="bg-foreground text-background/80 mt-4">
-        <div className="max-w-7xl mx-auto px-4 py-12 grid md:grid-cols-5 gap-8">
-          <div className="md:col-span-2">
-            <div className="flex items-center gap-2">
-              <div className="size-9 rounded-xl bg-gradient-brand grid place-items-center text-white font-black">S</div>
-              <div className="font-display font-extrabold text-xl text-background">SmartMart</div>
-            </div>
-            <p className="mt-4 text-sm max-w-sm">India's smartest all-in-one shopping platform — groceries, fashion, electronics, beauty and more, powered by AI.</p>
-          </div>
-          {[
-            { h: "Shop", links: ["Grocery", "Fashion", "Electronics", "Beauty", "Furniture"] },
-            { h: "Company", links: ["About", "Careers", "Press", "Blog", "Sustainability"] },
-            { h: "Help", links: ["Contact", "Returns", "Shipping", "Privacy", "Terms"] },
-          ].map((col) => (
-            <div key={col.h}>
-              <div className="font-bold text-background mb-3">{col.h}</div>
-              <ul className="space-y-2 text-sm">
-                {col.links.map((l) => <li key={l} className="hover:text-background cursor-pointer">{l}</li>)}
-              </ul>
-            </div>
-          ))}
-        </div>
-        <div className="border-t border-white/10">
-          <div className="max-w-7xl mx-auto px-4 py-5 text-xs flex flex-col md:flex-row items-center justify-between gap-2">
-            <span>© 2026 SmartMart Technologies Pvt Ltd. All rights reserved.</span>
-            <span>Made with ♥ in India</span>
-          </div>
-        </div>
-      </footer>
+       
     </div>
+
+       <Footer />
+    
+    </>
   );
 }
 export default Home;

@@ -9,6 +9,7 @@ import Fashion from "./pages/Fashion";
 import Electronics from "./pages/Electronics";
 import Furniture from "./pages/Furniture";
 import Cart from "./pages/Cart";
+import ScrollToTop from "./components/ScrollToTop";
 
 import Admin from "./dashboard/Admin";
 import FashionAdmin from "./dashboard/FashionAdmin";
@@ -19,10 +20,13 @@ function App() {
   return (
 
     <BrowserRouter>
+    <ScrollToTop />
 
       <Routes>
 
         <Route element={<CustomerLayout />}>
+
+          <Route path="/" element={<Home />} />
 
           <Route path="/Home" element={<Home />} />
 

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Footer from "../components/Footer";
 
 export default function Grocery() {
 
@@ -15,6 +16,7 @@ export default function Grocery() {
   }, []);
 
   return (
+    <>
 
     <div className="bg-[#f7f7f7] min-h-screen px-4 md:px-16 py-6">
 
@@ -150,7 +152,10 @@ export default function Grocery() {
       </div>
 
     </div>
-
+    
+     <Footer />
+    
+</>
   );
 
 }

@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import Webcam from "react-webcam";
+import Footer from "../components/Footer";
 
 function Fashion() {
 
@@ -114,6 +115,7 @@ function Fashion() {
   };
 
   return (
+     <>
 
     <div className="min-h-screen bg-gray-100 p-6">
 
@@ -618,6 +620,13 @@ function Fashion() {
       </div>
 
     </div>
+
+     <Footer />
+    
+    </>
+
+ 
+
 
   )
 
