@@ -9,10 +9,12 @@ import Fashion from "./pages/Fashion";
 import Electronics from "./pages/Electronics";
 import Furniture from "./pages/Furniture";
 import Cart from "./pages/Cart";
-
+import Login from "./pages/Login";
+import ProductDetails from "./pages/ProductDetails";
 import Admin from "./dashboard/Admin";
 import FashionAdmin from "./dashboard/FashionAdmin";
 import GroceryAdmin from "./dashboard/GroceryAdmin";
+import Payment from "./pages/Payment";
 
 function App() {
 
@@ -24,7 +26,9 @@ function App() {
 
         <Route element={<CustomerLayout />}>
 
-          <Route path="/Home" element={<Home />} />
+          <Route path="/" element={<Home />} />
+
+          <Route path="/home" element={<Home />} />
 
           <Route path="/all" element={<All />} />
 
@@ -36,7 +40,13 @@ function App() {
 
           <Route path="/furniture" element={<Furniture />} />
 
+          <Route path="/login" element={<Login />} />
+
           <Route path="/cart" element={<Cart />} />
+          
+          <Route path="/product" element={<ProductDetails />} />
+
+          <Route path="/payment" element={<Payment />} />
 
         </Route>
 
@@ -56,8 +66,7 @@ function App() {
 
     </BrowserRouter>
 
-  )
-
+  );
 }
 
 export default App;

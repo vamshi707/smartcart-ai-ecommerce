@@ -1,13 +1,14 @@
-import { useEffect, useState, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import Webcam from "react-webcam";
-
+import { useNavigate } from "react-router-dom";
 function Fashion() {
 
   const [products, setProducts] = useState([]);
   const [showAI, setShowAI] = useState(false);
   const [openCamera, setOpenCamera] = useState(false);
-
+  
   const webcamRef = useRef(null);
+  const navigate = useNavigate();
 
   const [capturedImage, setCapturedImage] = useState(null);
 
@@ -21,28 +22,23 @@ function Fashion() {
 
   const [skinTone, setSkinTone] = useState("");
 
- 
 
-  useEffect(() => {
 
-    fetch("http://127.0.0.1:8000/fashion/")
+useEffect(() => {
 
-      .then((response) => response.json())
+  fetch("http://127.0.0.1:8000/fashion/")
+    .then((response) => response.json())
+    .then((data) => {
+      setProducts(data);
+    });
 
-      .then((data) => {
+}, []);
 
-        setProducts(data);
 
-      });
-      
+// CAPTURE PHOTO
 
-  }, []);
-
-  // CAPTURE PHOTO
-
-  const capturePhoto = () => {
-
-    const imageSrc = webcamRef.current.getScreenshot();
+const capturePhoto = () => {
+      const imageSrc = webcamRef.current.getScreenshot();
 
     setCapturedImage(imageSrc);
 
@@ -68,6 +64,7 @@ function Fashion() {
   }
 
 };
+
 
   // DETECT FASHION
 
@@ -100,6 +97,16 @@ function Fashion() {
           }),
       }
     );
+    if (!response.ok) {
+
+  const text = await response.text();
+
+  console.log(text);
+
+  alert("Server Error");
+
+  return;
+}
 
     const data = await response.json();
 
@@ -542,11 +549,15 @@ function Fashion() {
             <div className="w-full h-64 bg-gray-100 flex items-center justify-center overflow-hidden p-3">
 
               <img
-                src={item.image}
-                alt={item.name}
-                className="max-w-full max-h-full object-contain hover:scale-105 transition duration-300"
-              />
-
+  src={item.image}
+  alt={item.name}
+  onClick={() =>
+    navigate("/product", {
+      state: { product: item },
+    })
+  }
+  className="max-w-full max-h-full object-contain hover:scale-105 transition duration-300 cursor-pointer"
+/>
             </div>
 
             {/* CONTENT */}
@@ -600,27 +611,19 @@ function Fashion() {
                   ₹{item.old_price}
 
                 </span>
-
-              </div>
-
-              <button className="w-full bg-black hover:bg-purple-700 text-white py-3 rounded-xl mt-5">
-
-                Add To Cart
-
-              </button>
-
-            </div>
-
-          </div>
-
-        ))}
+        </div>
 
       </div>
 
     </div>
 
-  )
+  ))}
 
+</div>
+
+</div>
+);
 }
 
 export default Fashion;
+

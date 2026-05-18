@@ -5,6 +5,7 @@ import {
   Smartphone, Shirt, Sofa, Apple, Gem, Gamepad2, Baby, BookOpen,
   Zap, Camera, TrendingUp, Award, Menu,
 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
  
 
@@ -67,6 +68,50 @@ const deals = [
 ];
 
 function Home() {
+  const navigate = useNavigate();
+
+const addToCart = (product) => {
+  const isLoggedIn = sessionStorage.getItem("isLoggedIn");
+
+  const cartItem = {
+    id: product.name,
+    name: product.name,
+    price: product.price,
+    old_price: product.mrp,
+    image: product.img,
+    rating: product.rating,
+    quantity: 1,
+  };
+
+  if (!isLoggedIn) {
+    localStorage.setItem(
+      "pendingCartItem",
+      JSON.stringify(cartItem)
+    );
+
+    navigate("/login");
+    return;
+  }
+
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  const existing = cart.find(
+    (item) => item.id === cartItem.id
+  );
+
+  if (existing) {
+    cart = cart.map((item) =>
+      item.id === cartItem.id
+        ? { ...item, quantity: item.quantity + 1 }
+        : item
+    );
+  } else {
+    cart.push(cartItem);
+  }
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+  window.dispatchEvent(new Event("cartUpdated"));
+};
   return (
     <div className="min-h-screen bg-white text-foreground">
       {/* TOP BAR */}
@@ -234,9 +279,13 @@ function Home() {
                   <span className="text-lg font-extrabold">{p.price}</span>
                   <span className="text-xs text-muted-foreground line-through">{p.mrp}</span>
                 </div>
-                <button className="mt-3 w-full bg-primary text-primary-foreground hover:bg-primary-glow rounded-xl py-2 text-sm font-bold transition">
-                  Add to cart
-                </button>
+               <button
+  onClick={addToCart}
+  className="w-full mt-6 bg-black text-white py-4 rounded-2xl text-xl hover:bg-purple-700 transition"
+>
+  Add To Cart
+</button>
+
               </div>
             </div>
           ))}

@@ -1,14 +1,13 @@
 from rest_framework.decorators import api_view
-
 from rest_framework.response import Response
 
 from .models import FashionProduct
-
 from .serializers import FashionSerializer
 
 
-@api_view(['GET', 'POST'])
+# GET ALL PRODUCTS + ADD PRODUCT
 
+@api_view(['GET', 'POST'])
 def fashion_products(request):
 
     if request.method == 'GET':
@@ -28,8 +27,13 @@ def fashion_products(request):
             serializer.save()
 
             return Response(serializer.data)
-@api_view(['DELETE'])
 
+        return Response(serializer.errors)
+
+
+# DELETE PRODUCT
+
+@api_view(['DELETE'])
 def delete_product(request, id):
 
     product = FashionProduct.objects.get(id=id)
@@ -38,67 +42,98 @@ def delete_product(request, id):
 
     return Response("Product Deleted")
 
-@api_view(['POST'])
 
+# AI DETECT FASHION
+
+@api_view(['POST'])
 def detect_fashion(request):
 
-    import base64
-    import numpy as np
+    try:
 
-    from PIL import Image
-    from io import BytesIO
+        import base64
+        import numpy as np
 
-    image_data = request.data.get("image")
+        from PIL import Image
+        from io import BytesIO
 
-    format, imgstr = image_data.split(';base64,')
+        image_data = request.data.get("image")
 
-    image = Image.open(BytesIO(base64.b64decode(imgstr)))
+        if not image_data:
 
-    image_np = np.array(image)
+            return Response({
+                "error": "No image received"
+            }, status=400)
 
-    height, width, _ = image_np.shape
+        # BASE64 SPLIT
 
-    center_face = image_np[
-        height//3:height//2,
-        width//3:width//2
-    ]
+        format, imgstr = image_data.split(';base64,')
 
-    avg_color = center_face.mean(axis=(0, 1))
+        # IMAGE CONVERT
 
-    brightness = avg_color.mean()
+        image = Image.open(
+            BytesIO(base64.b64decode(imgstr))
+        ).convert("RGB")
 
-    if brightness < 110:
+        image_np = np.array(image)
 
-        tone = "dark"
+        height, width, channels = image_np.shape
 
-    elif brightness < 180:
+        center_face = image_np[
+            height//3:height//2,
+            width//3:width//2
+        ]
 
-        tone = "medium"
+        avg_color = center_face.mean(axis=(0, 1))
 
-    else:
+        brightness = avg_color.mean()
 
-        tone = "white"
+        # TONE DETECTION
 
+        if brightness < 110:
 
-    category = request.data.get("category")
+            tone = "dark"
 
-    gender = request.data.get("gender")
- 
-    products = FashionProduct.objects.filter(
+        elif brightness < 180:
 
-        skin_type=tone,
+            tone = "medium"
 
-        gender=gender,
+        else:
 
-        name=category
+            tone = "white"
 
-)   
-    serializer = FashionSerializer(products, many=True)
+        category = request.data.get("category")
 
-    return Response({
+        gender = request.data.get("gender")
 
-        "skin_tone": tone,
+        print("Tone:", tone)
+        print("Gender:", gender)
+        print("Category:", category)
 
-        "products": serializer.data
+        # PRODUCT FILTER
 
-    })
+        products = FashionProduct.objects.filter(
+            skin_type=tone,
+            gender=gender,
+            name__icontains=category
+        )
+
+        serializer = FashionSerializer(
+            products,
+            many=True
+        )
+
+        return Response({
+
+            "skin_tone": tone,
+
+            "products": serializer.data
+
+        })
+
+    except Exception as e:
+
+        print("DETECT ERROR:", str(e))
+
+        return Response({
+            "error": str(e)
+        }, status=500)

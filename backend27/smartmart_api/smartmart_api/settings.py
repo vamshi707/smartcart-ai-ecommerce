@@ -39,17 +39,22 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'Groceries',
     'fashion',
+    
     'rest_framework',
     'corsheaders',
     'furniture',
     'electrical',
-    'vegetable',
+    'login',
     'user',
     'cart',
     'order',
+    
+    
+
 ]
 
 MIDDLEWARE = [
+    
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',    
@@ -136,3 +141,16 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 CORS_ALLOW_ALL_ORIGINS = True
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+EMAIL_HOST = 'smtp.gmail.com'
+
+EMAIL_PORT = 587
+
+EMAIL_USE_TLS = True
+
+EMAIL_HOST_USER = 'pujithachallagundla12@gmail.com'
+
+EMAIL_HOST_PASSWORD = 'zljdpyuejtmsmxhi'
