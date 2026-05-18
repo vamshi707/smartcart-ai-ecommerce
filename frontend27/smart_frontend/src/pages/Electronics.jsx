@@ -1,252 +1,648 @@
-import { useState } from "react";
+import { useEffect, useState, useRef } from "react";
+import Webcam from "react-webcam";
+import Footer from "../components/Footer";
 
-export default function Electronics() {
+function Electronics() {
 
-  const [image, setImage] = useState(null);
-  const [preview, setPreview] = useState(null);
-  const [detected, setDetected] = useState(false);
+  const [products, setProducts] = useState([]);
 
-  const products = [
+  const [showAI, setShowAI] = useState(false);
 
-    {
-      id: 1,
-      name: "Steel Screw",
-      price: 50,
-      image:
-        "https://images.pexels.com/photos/209235/pexels-photo-209235.jpeg",
-    },
+  const [openCamera, setOpenCamera] = useState(false);
 
-    {
-      id: 2,
-      name: "DC Motor",
-      price: 450,
-      image:
-        "https://images.pexels.com/photos/159298/gears-cogs-machine-machinery-159298.jpeg",
-    },
+  const webcamRef = useRef(null);
 
-    {
-      id: 3,
-      name: "Pipe",
-      price: 250,
-      image:
-        "https://images.pexels.com/photos/2760243/pexels-photo-2760243.jpeg",
-    },
+  const [capturedImage, setCapturedImage] = useState(null);
 
-    {
-      id: 4,
-      name: "Spanner",
-      price: 150,
-      image:
-        "https://images.pexels.com/photos/162553/keys-workshop-mechanic-tools-162553.jpeg",
-    },
 
-  ];
 
-  const handleImage = (e) => {
+  const [showResult, setShowResult] = useState(false);
+
+  const [recommendedProducts, setRecommendedProducts] = useState([]);
+
+  // AI RESULT STATES
+
+  const [detectedProduct, setDetectedProduct] = useState("");
+
+  const [lengthMM, setLengthMM] = useState("");
+
+  const [diameterMM, setDiameterMM] = useState("");
+
+  const [confidence, setConfidence] = useState("");
+
+  const [selectedCategory, setSelectedCategory] = useState("");
+
+  // FETCH PRODUCTS
+
+  useEffect(() => {
+
+    fetch("http://127.0.0.1:8000/hardware/")
+
+      .then((response) => response.json())
+
+      .then((data) => {
+
+        setProducts(data);
+
+      });
+
+  }, []);
+
+  // CAPTURE PHOTO
+
+  const capturePhoto = () => {
+
+    const imageSrc = webcamRef.current.getScreenshot();
+
+    setCapturedImage(imageSrc);
+
+    setOpenCamera(false);
+
+  };
+
+  // UPLOAD IMAGE
+
+  const uploadImage = (e) => {
 
     const file = e.target.files[0];
 
-    setImage(file);
+    if (file) {
 
-    setPreview(URL.createObjectURL(file));
+      const reader = new FileReader();
+
+      reader.onloadend = () => {
+
+        setCapturedImage(reader.result);
+
+      };
+
+      reader.readAsDataURL(file);
+
+    }
 
   };
 
-  const detectHardware = () => {
+  // DETECT HARDWARE
 
-    setDetected(true);
+ 
 
-  };
+const detectHardware = async () => {
+
+  if (!capturedImage) {
+
+    alert("Capture or upload hardware image");
+
+    return;
+
+  }
+
+  try {
+
+    const response = await fetch(
+
+      "http://127.0.0.1:8000/detect-hardware/",
+
+      {
+
+        method: "POST",
+
+        headers: {
+
+          "Content-Type": "application/json",
+
+        },
+
+        body: JSON.stringify({
+
+          image: capturedImage,
+
+        }),
+
+      }
+
+    );
+
+    const data = await response.json();
+
+    console.log(data);
+
+    // DETECTED PRODUCT
+
+    setDetectedProduct(
+
+      data.category || "Unknown"
+
+    );
+
+    // CONFIDENCE
+
+    setConfidence(
+
+      data.confidence || 0
+
+    );
+
+    // MATCHED PRODUCTS
+
+    setRecommendedProducts(
+
+      data.products || []
+
+    );
+
+    // GET ORIGINAL DATABASE VALUES
+
+    if (data.products.length > 0) {
+
+    setLengthMM(data.length_mm);
+
+    setDiameterMM(data.diameter_mm);
+
+    }
+
+    setShowResult(true);
+
+  }
+
+  catch (error) {
+
+    console.log(error);
+
+    alert("AI Detection Failed");
+
+  }
+
+};
 
   return (
 
-    <div className="min-h-screen bg-gray-100 pb-20">
+    <>
 
-      {/* HERO */}
+      <div className="min-h-screen bg-gray-100 p-6">
 
-      <div className="bg-gradient-to-r from-black to-gray-800 text-white p-10 rounded-b-[50px] shadow-2xl">
+        {/* TOP HEADER */}
 
-        <h1 className="text-5xl font-bold mb-5">
+        <div className="flex justify-between items-center mb-8">
 
-          SmartCart Hardware AI
+          <div>
 
-        </h1>
+            <h1 className="text-4xl font-bold">
 
-        <p className="text-gray-300 text-lg max-w-2xl">
+              AI Hardware Detection
 
-          Upload screws, motors, pipes, spanners and hardware products.
-          AI automatically detects products and shows matching items.
+            </h1>
 
-        </p>
+            <p className="text-gray-500 mt-2">
 
-        <div className="mt-8 flex flex-wrap gap-5">
+              Detect screws, motors, pipes and hardware products using AI.
 
-          <label className="bg-white text-black px-8 py-4 rounded-2xl font-semibold cursor-pointer hover:scale-105 transition duration-300">
+            </p>
 
-            Upload Product Image
-
-            <input
-              type="file"
-              hidden
-              onChange={handleImage}
-            />
-
-          </label>
+          </div>
 
           <button
-            onClick={detectHardware}
-            className="bg-green-500 hover:bg-green-600 px-8 py-4 rounded-2xl font-semibold transition duration-300"
+            onClick={() => {
+
+              setShowAI(!showAI);
+
+              setShowResult(false);
+
+              setCapturedImage(null);
+
+              setRecommendedProducts([]);
+
+            }}
+            className="bg-black text-white px-6 py-3 rounded-2xl hover:bg-gray-800"
           >
-            Detect Hardware
+
+            Hardware AI
+
           </button>
 
         </div>
 
-      </div>
+        {/* AI SECTION */}
 
-      {/* IMAGE PREVIEW */}
+        {showAI && !showResult && (
 
-      {preview && (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
 
-        <div className="max-w-5xl mx-auto mt-10 bg-white p-8 rounded-3xl shadow-xl">
+            {/* LEFT CARD */}
 
-          <h2 className="text-3xl font-bold mb-6">
+            <div className="bg-white rounded-3xl shadow-lg p-6">
 
-            Uploaded Image
+              <h2 className="text-3xl font-bold text-black mb-6">
 
-          </h2>
-
-          <img
-            src={preview}
-            alt=""
-            className="w-full h-[350px] object-cover rounded-3xl"
-          />
-
-        </div>
-
-      )}
-
-      {/* AI RESULT */}
-
-      {detected && (
-
-        <div className="max-w-5xl mx-auto mt-10 bg-white p-8 rounded-3xl shadow-xl">
-
-          <div className="flex flex-wrap items-center justify-between gap-5">
-
-            <div>
-
-              <h2 className="text-4xl font-bold mb-3">
-
-                AI Detection Result
+                1. Upload Hardware Image
 
               </h2>
 
-              <p className="text-gray-600 text-lg">
+              {!capturedImage && (
 
-                Detected Product:
-                <span className="font-bold text-black">
-                  {" "}Steel Screw
-                </span>
+                <button
+                  onClick={() => setOpenCamera(!openCamera)}
+                  className="w-full bg-blue-600 text-white py-4 rounded-2xl mb-5 hover:bg-blue-700"
+                >
 
-              </p>
+                  Open Camera
 
-              <p className="text-gray-600 text-lg mt-2">
+                </button>
 
-                Length:
-                <span className="font-bold text-black">
-                  {" "}35 MM
-                </span>
+              )}
+              
 
-              </p>
+               {/* CATEGORY SELECT */}
 
-              <p className="text-gray-600 text-lg mt-2">
+<select
+  value={selectedCategory}
+  onChange={(e) => setSelectedCategory(e.target.value)}
+  className="w-full border-2 border-black rounded-2xl p-4 mb-5"
+>
 
-                Confidence:
-                <span className="font-bold text-green-600">
-                  {" "}98%
-                </span>
+  <option value="">
+    Select Hardware Type
+  </option>
 
-              </p>
+  <option value="Screw">
+    Screw
+  </option>
+
+  <option value="Bolt">
+    Bolt
+  </option>
+
+  <option value="Pipe">
+    Pipe
+  </option>
+
+  <option value="Motor">
+    Motor
+  </option>
+
+  <option value="Spanner">
+    Spanner
+  </option>
+
+</select>
+
+
+{/* UPLOAD */}
+
+<label className="w-full flex items-center justify-center bg-gray-100 hover:bg-gray-200 transition border-2 border-dashed border-black rounded-2xl p-6 cursor-pointer mb-5">
+
+  <div className="text-center">
+
+    <p className="text-xl font-semibold text-black">
+
+      Upload Hardware Image
+
+    </p>
+
+    <p className="text-gray-500 mt-2">
+
+      Click here to choose image
+
+    </p>
+
+  </div>
+
+  <input
+    type="file"
+    accept="image/*"
+    onChange={uploadImage}
+    className="hidden"
+  />
+
+</label>
+
+              {/* CAMERA */}
+
+              {openCamera && (
+
+                <div>
+
+                  <Webcam
+                    ref={webcamRef}
+                    audio={false}
+                    screenshotFormat="image/jpeg"
+                    className="rounded-2xl w-full h-80 object-contain bg-gray-100"
+                  />
+
+                  <button
+                    onClick={capturePhoto}
+                    className="w-full bg-black text-white py-4 rounded-2xl mt-4"
+                  >
+
+                    Capture Photo
+
+                  </button>
+
+                </div>
+
+              )}
+
+              {/* CAPTURED IMAGE */}
+
+              {capturedImage && (
+
+                <div>
+
+                  <img
+                    src={capturedImage}
+                    className="rounded-2xl w-full h-80 object-contain bg-gray-100"
+                  />
+
+                  <p className="text-green-600 font-semibold mt-4">
+
+                    Hardware image uploaded successfully ✅
+
+                  </p>
+
+                </div>
+
+              )}
 
             </div>
 
-            <div className="bg-green-100 text-green-700 px-6 py-4 rounded-2xl font-bold text-xl">
+            {/* RIGHT CARD */}
 
-              AI Matched Successfully
+            <div className="bg-white rounded-3xl shadow-lg p-6">
+
+              <h2 className="text-3xl font-bold text-black mb-6">
+
+                2. AI Hardware Detection
+
+              </h2>
+
+              <div className="bg-gray-100 rounded-2xl p-6 mb-8">
+
+                <h3 className="text-2xl font-bold mb-3">
+
+                  SmartCart AI Features
+
+                </h3>
+
+                <div className="space-y-3 text-gray-700">
+
+                  <p>✅ Hardware Detection</p>
+
+                  <p>✅ Screw Size Detection</p>
+
+                  <p>✅ Diameter Measurement</p>
+
+                  <p>✅ Product Matching</p>
+
+                  <p>✅ Future AR Measuring</p>
+
+                </div>
+
+              </div>
+
+              {/* DETECT BUTTON */}
+
+              <button
+                onClick={detectHardware}
+                className="w-full bg-gradient-to-r from-black to-gray-700 text-white py-4 rounded-2xl text-xl font-semibold hover:scale-105 transition duration-300"
+              >
+
+                Detect Hardware AI
+
+              </button>
 
             </div>
 
           </div>
 
-        </div>
+        )}
 
-      )}
+        {/* RESULT SECTION */}
 
-      {/* PRODUCTS */}
+        {showResult && (
 
-      <div className="max-w-7xl mx-auto mt-14 px-5">
+          <div className="bg-white rounded-3xl shadow-lg p-6 mb-10">
 
-        <div className="flex items-center justify-between mb-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
 
-          <h2 className="text-4xl font-bold">
+              {/* IMAGE */}
 
-            Trending Hardware Products
+              <div>
 
-          </h2>
+                <img
+                  src={capturedImage}
+                  className="rounded-3xl w-full h-96 object-cover"
+                />
 
-          <button className="bg-black text-white px-6 py-3 rounded-2xl">
+              </div>
 
-            View All
+              {/* AI RESULT */}
 
-          </button>
+              <div>
 
-        </div>
+                <h1 className="text-4xl font-bold text-black mb-6">
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                  AI Detection Result
 
-          {products.map((item) => (
+                </h1>
+
+                <div className="space-y-5">
+
+                  <div>
+
+                    <p className="text-gray-500 text-lg">
+
+                      Match Score
+
+                    </p>
+
+                    <h2 className="text-3xl font-bold text-green-600">
+
+                      {confidence}% Excellent Match
+
+                    </h2>
+
+                  </div>
+
+                  <div>
+
+                    <p className="text-gray-500 text-lg">
+
+                      Detected Product
+
+                    </p>
+
+                    <h2 className="text-2xl font-semibold">
+
+                      {detectedProduct}
+
+                    </h2>
+
+                  </div>
+
+                  <div>
+
+                    <p className="text-gray-500 text-lg">
+
+                      Length
+
+                    </p>
+
+                    <h2 className="text-2xl font-semibold">
+
+                      {lengthMM} MM
+
+                    </h2>
+
+                  </div>
+
+                  <div>
+
+                    <p className="text-gray-500 text-lg">
+
+                      Diameter
+
+                    </p>
+
+                    <h2 className="text-2xl font-semibold">
+
+                      {diameterMM} MM
+
+                    </h2>
+
+                  </div>
+
+                  <div className="bg-gray-100 rounded-2xl p-5 mt-5">
+
+                    <h2 className="text-2xl font-bold text-black mb-3">
+
+                      AI Suggestion
+
+                    </h2>
+
+                    <p className="text-gray-700 text-lg leading-8">
+
+                      Matching hardware products are recommended
+                      based on AI object detection and size analysis.
+
+                    </p>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        )}
+
+        {/* PRODUCT TITLE */}
+
+        <h1 className="text-3xl font-bold text-black mb-6">
+
+          Recommended Hardware Products
+
+        </h1>
+
+        {/* PRODUCTS */}
+
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-5">
+
+          {(showResult ? recommendedProducts : products).map((item) => (
 
             <div
               key={item.id}
-              className="bg-white rounded-3xl shadow-xl overflow-hidden hover:-translate-y-2 hover:shadow-2xl transition duration-300"
+              className="bg-white rounded-2xl overflow-hidden shadow hover:shadow-xl transition duration-300"
             >
 
-              <img
-                src={item.image}
-                alt=""
-                className="w-full h-60 object-cover"
-              />
+              {/* IMAGE */}
 
-              <div className="p-5">
+              <div className="w-full h-64 bg-gray-100 flex items-center justify-center overflow-hidden p-3">
 
-                <h3 className="text-2xl font-bold mb-2">
+                <img
+                  src={item.image}
+                  alt={item.name}
+                  className="max-w-full max-h-full object-contain hover:scale-105 transition duration-300"
+                />
+
+              </div>
+
+              {/* CONTENT */}
+
+              <div className="p-4">
+
+                <h2 className="text-yellow-700 font-bold text-sm uppercase">
+
+                  {item.brand}
+
+                </h2>
+
+                <h1 className="text-lg font-semibold mt-1 line-clamp-1">
 
                   {item.name}
 
-                </h3>
+                </h1>
 
-                <p className="text-gray-500 mb-5">
+                <p className="text-gray-500 text-sm mt-1 line-clamp-2">
 
-                  High quality hardware product.
+                  {item.description}
 
                 </p>
 
-                <div className="flex items-center justify-between">
+                {/* SPECS */}
 
-                  <span className="text-2xl font-bold text-green-600">
+                {item.category === "Screw" && (
+
+                  <div className="mt-3 text-sm text-gray-600 space-y-1">
+
+                    <p>
+
+                      Length:
+                      {" "}
+                      {item.specifications?.length_mm} MM
+
+                    </p>
+
+                    <p>
+
+                      Diameter:
+                      {" "}
+                      {item.specifications?.diameter_mm} MM
+
+                    </p>
+
+                    <p>
+
+                      Head:
+                      {" "}
+                      {item.specifications?.head_type}
+
+                    </p>
+
+                  </div>
+
+                )}
+
+                {/* PRICE */}
+
+                <div className="mt-4 flex items-center gap-2">
+
+                  <span className="text-2xl font-bold">
 
                     ₹{item.price}
 
                   </span>
 
-                  <button className="bg-black hover:bg-gray-800 text-white px-5 py-3 rounded-2xl">
-
-                    Add
-
-                  </button>
-
                 </div>
+
+                {/* BUTTON */}
+
+                <button className="w-full bg-black hover:bg-gray-700 text-white py-3 rounded-xl mt-5">
+
+                  Add To Cart
+
+                </button>
 
               </div>
 
@@ -258,8 +654,12 @@ export default function Electronics() {
 
       </div>
 
-    </div>
+      <Footer />
+
+    </>
 
   )
 
 }
+
+export default Electronics;

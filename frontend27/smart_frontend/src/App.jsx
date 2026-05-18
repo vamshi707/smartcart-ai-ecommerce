@@ -10,18 +10,23 @@ import Electronics from "./pages/Electronics";
 import Furniture from "./pages/Furniture";
 import Cart from "./pages/Cart";
 import ScrollToTop from "./components/ScrollToTop";
+import Login from "./pages/Login";
+import ProductDetails from "./pages/ProductDetails";
 
 import Admin from "./dashboard/Admin";
 import FashionAdmin from "./dashboard/FashionAdmin";
 import ElectronicsAdmin from "./dashboard/ElectronicsAdmin";
 import GroceryAdmin from "./dashboard/GroceryAdmin";
 
+import Payment from "./pages/Payment";
+
 function App() {
 
   return (
 
     <BrowserRouter>
-    <ScrollToTop />
+
+      <ScrollToTop />
 
       <Routes>
 
@@ -29,7 +34,7 @@ function App() {
 
           <Route path="/" element={<Home />} />
 
-          <Route path="/Home" element={<Home />} />
+          <Route path="/home" element={<Home />} />
 
           <Route path="/all" element={<All />} />
 
@@ -41,7 +46,13 @@ function App() {
 
           <Route path="/furniture" element={<Furniture />} />
 
+          <Route path="/login" element={<Login />} />
+
           <Route path="/cart" element={<Cart />} />
+
+          <Route path="/product" element={<ProductDetails />} />
+
+          <Route path="/payment" element={<Payment />} />
 
         </Route>
 
@@ -56,17 +67,17 @@ function App() {
           path="/grocery-admin"
           element={<GroceryAdmin />}
         />
+
         <Route
-            path="/hardware"
-            element={<ElectronicsAdmin />}
-          />
+          path="/hardware"
+          element={<ElectronicsAdmin />}
+        />
 
       </Routes>
 
     </BrowserRouter>
 
-  )
-
+  );
 }
 
 export default App;

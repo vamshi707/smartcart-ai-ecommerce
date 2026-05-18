@@ -1,14 +1,16 @@
-import { useEffect, useState, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import Webcam from "react-webcam";
 import Footer from "../components/Footer";
 
+import { useNavigate } from "react-router-dom";
 function Fashion() {
 
   const [products, setProducts] = useState([]);
   const [showAI, setShowAI] = useState(false);
   const [openCamera, setOpenCamera] = useState(false);
-
+  
   const webcamRef = useRef(null);
+  const navigate = useNavigate();
 
   const [capturedImage, setCapturedImage] = useState(null);
 
@@ -22,28 +24,23 @@ function Fashion() {
 
   const [skinTone, setSkinTone] = useState("");
 
- 
 
-  useEffect(() => {
 
-    fetch("http://127.0.0.1:8000/fashion/")
+useEffect(() => {
 
-      .then((response) => response.json())
+  fetch("http://127.0.0.1:8000/fashion/")
+    .then((response) => response.json())
+    .then((data) => {
+      setProducts(data);
+    });
 
-      .then((data) => {
+}, []);
 
-        setProducts(data);
 
-      });
-      
+// CAPTURE PHOTO
 
-  }, []);
-
-  // CAPTURE PHOTO
-
-  const capturePhoto = () => {
-
-    const imageSrc = webcamRef.current.getScreenshot();
+const capturePhoto = () => {
+      const imageSrc = webcamRef.current.getScreenshot();
 
     setCapturedImage(imageSrc);
 
@@ -69,6 +66,7 @@ function Fashion() {
   }
 
 };
+
 
   // DETECT FASHION
 
@@ -101,6 +99,16 @@ function Fashion() {
           }),
       }
     );
+    if (!response.ok) {
+
+  const text = await response.text();
+
+  console.log(text);
+
+  alert("Server Error");
+
+  return;
+}
 
     const data = await response.json();
 
@@ -522,114 +530,93 @@ function Fashion() {
 
       {/* PRODUCT TITLE */}
 
-      <h1 className="text-3xl font-bold text-purple-600 mb-6">
+<h1 className="text-3xl font-bold text-purple-600 mb-6">
+  Recommended Products
+</h1>
 
-        Recommended Products
+{/* PRODUCTS */}
 
-      </h1>
+<div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-5">
 
-      {/* PRODUCTS */}
+  {(showResult ? recommendedProducts : products).map((item) => (
 
-      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-5">
+    <div
+      key={item.id}
+      className="bg-white rounded-2xl overflow-hidden shadow hover:shadow-xl transition duration-300"
+    >
 
-        {(showResult ? recommendedProducts : products).map((item) => (
+      {/* IMAGE */}
 
-          <div
-            key={item.id}
-            className="bg-white rounded-2xl overflow-hidden shadow hover:shadow-xl transition duration-300"
-          >
+      <div className="w-full h-64 bg-gray-100 flex items-center justify-center overflow-hidden p-3">
 
-            {/* IMAGE */}
+        <img
+          src={item.image}
+          alt={item.name}
+          onClick={() =>
+            navigate("/product", {
+              state: { product: item },
+            })
+          }
+          className="max-w-full max-h-full object-contain hover:scale-105 transition duration-300 cursor-pointer"
+        />
 
-            <div className="w-full h-64 bg-gray-100 flex items-center justify-center overflow-hidden p-3">
+      </div>
 
-              <img
-                src={item.image}
-                alt={item.name}
-                className="max-w-full max-h-full object-contain hover:scale-105 transition duration-300"
-              />
+      {/* CONTENT */}
 
-            </div>
+      <div className="p-4">
 
-            {/* CONTENT */}
+        <h2 className="text-yellow-700 font-bold text-sm uppercase">
+          {item.brand}
+        </h2>
 
-            <div className="p-4">
+        <h1 className="text-lg font-semibold mt-1 line-clamp-1">
+          {item.name}
+        </h1>
 
-              <h2 className="text-yellow-700 font-bold text-sm uppercase">
+        <p className="text-gray-500 text-sm mt-1 line-clamp-2">
+          {item.description}
+        </p>
 
-                {item.brand}
+        <div className="flex items-center gap-2 mt-3">
 
-              </h2>
+          <span className="bg-green-500 text-white text-xs px-2 py-1 rounded-md">
+            ⭐ {item.rating}
+          </span>
 
-              <h1 className="text-lg font-semibold mt-1 line-clamp-1">
+          <span className="text-gray-500 text-xs">
+            Stock: {item.stock}
+          </span>
 
-                {item.name}
+        </div>
 
-              </h1>
+        <div className="mt-4 flex items-center gap-2">
 
-              <p className="text-gray-500 text-sm mt-1 line-clamp-2">
+          <span className="text-2xl font-bold">
+            ₹{item.price}
+          </span>
 
-                {item.description}
+          <span className="line-through text-gray-400 text-sm">
+            ₹{item.old_price}
+          </span>
 
-              </p>
-
-              <div className="flex items-center gap-2 mt-3">
-
-                <span className="bg-green-500 text-white text-xs px-2 py-1 rounded-md">
-
-                  ⭐ {item.rating}
-
-                </span>
-
-                <span className="text-gray-500 text-xs">
-
-                  Stock: {item.stock}
-
-                </span>
-
-              </div>
-
-              <div className="mt-4 flex items-center gap-2">
-
-                <span className="text-2xl font-bold">
-
-                  ₹{item.price}
-
-                </span>
-
-                <span className="line-through text-gray-400 text-sm">
-
-                  ₹{item.old_price}
-
-                </span>
-
-              </div>
-
-              <button className="w-full bg-black hover:bg-purple-700 text-white py-3 rounded-xl mt-5">
-
-                Add To Cart
-
-              </button>
-
-            </div>
-
-          </div>
-
-        ))}
+        </div>
 
       </div>
 
     </div>
 
-     <Footer />
-    
-    </>
+  ))}
 
- 
+</div>
 
+<Footer />
 
-  )
+</div>
 
+</>
+
+  );
 }
 
 export default Fashion;
