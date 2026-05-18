@@ -84,33 +84,31 @@ export default function Navbar() {
 
           {/* LOGIN */}
 
-          <div className="flex flex-col items-center cursor-pointer hover:text-purple-600 transition">
+          <Link to="/login">
+  <div className="flex flex-col items-center cursor-pointer hover:text-purple-600 transition">
+    <User size={26} />
 
-            <User size={26} />
-
-            <span className="text-sm font-medium">
-              Login
-            </span>
-
-          </div>
+    <span className="text-sm font-medium">
+      Login
+    </span>
+  </div>
+</Link>
 
           {/* CART */}
 
-          <div className="relative flex flex-col items-center cursor-pointer hover:text-purple-600 transition">
+         <Link to="/cart">
+  <div className="relative flex flex-col items-center cursor-pointer hover:text-purple-600 transition">
+    <ShoppingCart size={28} />
 
-            <ShoppingCart size={28} />
+    <span className="absolute -top-2 -right-2 bg-purple-600 text-white text-xs px-2 py-0.5 rounded-full">
+      2
+    </span>
 
-            <span className="absolute -top-2 -right-2 bg-purple-600 text-white text-xs px-2 py-0.5 rounded-full">
-
-              2
-
-            </span>
-
-            <span className="text-sm font-medium">
-              Cart
-            </span>
-
-          </div>
+    <span className="text-sm font-medium">
+      Cart
+    </span>
+  </div>
+</Link>
 
         </div>
 
