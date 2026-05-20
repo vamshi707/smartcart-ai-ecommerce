@@ -4,7 +4,6 @@ from rest_framework.response import Response
 from .models import FashionProduct
 from .serializers import FashionSerializer
 
-
 # GET ALL PRODUCTS + ADD PRODUCT
 
 @api_view(['GET', 'POST'])

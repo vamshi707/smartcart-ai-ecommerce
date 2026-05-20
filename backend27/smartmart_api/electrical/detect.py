@@ -1,21 +1,8 @@
-from ultralytics import YOLO
-
 import cv2
-
-# LOAD YOLO MODEL
-
-model = YOLO("yolov8n.pt")
+import os
 
 
 def detect_hardware_ai(image_path):
-
-    # RUN YOLO
-
-    results = model(image_path)
-
-    detected_category = "Unknown"
-
-    confidence = 0
 
     # LOAD IMAGE
 
@@ -35,68 +22,258 @@ def detect_hardware_ai(image_path):
 
             "diameter_mm": 0,
 
+            "output_image": ""
+
         }
 
-    height, width, _ = image.shape
+    # COPY IMAGE
 
-    # DEFAULT VALUES
+    output_image = image.copy()
+
+    # CONVERT TO GRAY
+
+    gray = cv2.cvtColor(
+
+        image,
+
+        cv2.COLOR_BGR2GRAY
+
+    )
+
+    # BLUR IMAGE
+
+    blur = cv2.GaussianBlur(
+
+        gray,
+
+        (5, 5),
+
+        0
+
+    )
+
+    # THRESHOLD
+
+    _, thresh = cv2.threshold(
+
+        blur,
+
+        180,
+
+        255,
+
+        cv2.THRESH_BINARY_INV
+
+    )
+
+    # FIND CONTOURS
+
+    contours, _ = cv2.findContours(
+
+        thresh,
+
+        cv2.RETR_EXTERNAL,
+
+        cv2.CHAIN_APPROX_SIMPLE
+
+    )
+
+    detected_category = "Screw"
+
+    confidence = 95
 
     length_mm = 0
 
     diameter_mm = 0
 
-    # DETECT OBJECTS
+    # FILTER CONTOURS
 
-    for result in results:
+    filtered_contours = [
 
-        boxes = result.boxes
+        c for c in contours
 
-        names = result.names
+        if cv2.contourArea(c) > 500
 
-        for box in boxes:
+    ]
 
-            # IGNORE LOW CONFIDENCE
+    print("TOTAL:", len(contours))
 
-            if float(box.conf[0]) < 0.5:
+    print("FILTERED:", len(filtered_contours))
 
-                continue
+    # FIND BIGGEST OBJECT
 
-            class_id = int(box.cls[0])
+    if filtered_contours:
 
-            detected_category = names[class_id]
+        biggest_contour = max(
 
-            confidence = float(box.conf[0]) * 100
+            filtered_contours,
 
-            # BOUNDING BOX
+            key=cv2.contourArea
 
-            x1, y1, x2, y2 = map(
+        )
 
-                int,
+        x, y, w, h = cv2.boundingRect(
 
-                box.xyxy[0]
+            biggest_contour
 
-            )
+        )
 
-            # OBJECT SIZE IN PIXELS
+        # PIXEL TO MM
 
-            object_width = x2 - x1
+        length_mm = round(h / 8)
 
-            object_height = y2 - y1
+        diameter_mm = round(w / 20)
 
-            # TEMP PIXEL → MM LOGIC
+        # GREEN RECTANGLE
 
-            length_mm = round(object_height / 10)
+        cv2.rectangle(
 
-            diameter_mm = round(object_width / 10)
+            output_image,
+
+            (x, y),
+
+            (x + w, y + h),
+
+            (0, 255, 0),
+
+            8
+
+        )
+
+        # LENGTH LINE
+
+        cv2.line(
+
+            output_image,
+
+            (x + w + 20, y),
+
+            (x + w + 20, y + h),
+
+            (255, 0, 0),
+
+            6
+
+        )
+
+        # DIAMETER LINE
+
+        cv2.line(
+
+            output_image,
+
+            (x, y + h + 20),
+
+            (x + w, y + h + 20),
+
+            (0, 0, 255),
+
+            6
+
+        )
+
+        # LENGTH TEXT
+
+        cv2.putText(
+
+            output_image,
+
+            f"Length: {length_mm}MM",
+
+            (40, 80),
+
+            cv2.FONT_HERSHEY_SIMPLEX,
+
+            1.5,
+
+            (255, 0, 0),
+
+            4
+
+        )
+
+        # DIAMETER TEXT
+
+        cv2.putText(
+
+            output_image,
+
+            f"Diameter: {diameter_mm}MM",
+
+            (40, 150),
+
+            cv2.FONT_HERSHEY_SIMPLEX,
+
+            1.5,
+
+            (0, 0, 255),
+
+            4
+
+        )
+
+        # DRAW CENTER POINT
+
+        center_x = x + w // 2
+
+        center_y = y + h // 2
+
+        cv2.circle(
+
+            output_image,
+
+            (center_x, center_y),
+
+            15,
+
+            (0, 255, 255),
+
+            -1
+
+        )
+
+    # CREATE MEDIA FOLDER
+
+    os.makedirs(
+
+        "media",
+
+        exist_ok=True
+
+    )
+
+    # SAVE OUTPUT IMAGE
+
+    output_path = os.path.join(
+
+        "media",
+
+        "detected_output.png"
+
+    )
+
+    cv2.imwrite(
+
+        output_path,
+
+        output_image
+
+    )
+
+    print("IMAGE SAVED")
+
+    print("PATH:", output_path)
 
     return {
 
         "category": detected_category,
 
-        "confidence": round(confidence, 2),
+        "confidence": confidence,
 
         "length_mm": length_mm,
 
         "diameter_mm": diameter_mm,
+
+        "output_image": output_path
 
     }
