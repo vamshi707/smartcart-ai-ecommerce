@@ -12,6 +12,8 @@ function Electronics() {
 
   const webcamRef = useRef(null);
 
+  const [outputImage, setOutputImage] = useState("");
+
   const [capturedImage, setCapturedImage] = useState(null);
 
 
@@ -115,6 +117,7 @@ const detectHardware = async () => {
         body: JSON.stringify({
 
           image: capturedImage,
+          category: selectedCategory,
 
         }),
 
@@ -152,13 +155,17 @@ const detectHardware = async () => {
 
     // GET ORIGINAL DATABASE VALUES
 
-    if (data.products.length > 0) {
+ setLengthMM(
+  data.length_mm || ""
+);
 
-    setLengthMM(data.length_mm);
+setDiameterMM(
+  data.diameter_mm || ""
+);
 
-    setDiameterMM(data.diameter_mm);
-
-    }
+setOutputImage(
+  data.output_image || ""
+);
 
     setShowResult(true);
 
@@ -347,10 +354,15 @@ const detectHardware = async () => {
 
                 <div>
 
-                  <img
-                    src={capturedImage}
-                    className="rounded-2xl w-full h-80 object-contain bg-gray-100"
-                  />
+ <img
+  src={
+    outputImage
+      ? `http://127.0.0.1:8000/${outputImage}?time=${Date.now()}`
+      : capturedImage
+  }
+  alt=""
+  className="rounded-3xl w-full h-[450px] object-contain bg-white p-4"
+/>
 
                   <p className="text-green-600 font-semibold mt-4">
 
@@ -426,12 +438,21 @@ const detectHardware = async () => {
               {/* IMAGE */}
 
               <div>
+ {/* IMAGE */}
 
-                <img
-                  src={capturedImage}
-                  className="rounded-3xl w-full h-96 object-cover"
-                />
+<div>
 
+ <img
+  src={
+    outputImage
+      ? `http://127.0.0.1:8000/${outputImage}?time=${Date.now()}`
+      : capturedImage
+  }
+  alt=""
+  className="rounded-3xl w-full h-[450px] object-contain bg-white p-4"
+/>
+
+        </div>
               </div>
 
               {/* AI RESULT */}
