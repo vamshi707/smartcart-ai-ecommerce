@@ -628,7 +628,7 @@ setOutputImage(
 
         {/* PRODUCTS */}
 
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-5">
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-6">
 
           {products.map((item) => (
 
@@ -639,7 +639,7 @@ setOutputImage(
 
               {/* IMAGE */}
 
-              <div className="w-full h-64 bg-gray-100 flex items-center justify-center overflow-hidden p-3">
+              <div className="w-full h-30 bg-gray-100 flex items-center justify-center overflow-hidden ">
 
                 <img
                   src={item.image}
@@ -651,7 +651,7 @@ setOutputImage(
 
               {/* CONTENT */}
 
-              <div className="p-4">
+              <div className="p-2">
 
                 <h2 className="text-yellow-700 font-bold text-sm uppercase">
 
@@ -719,7 +719,7 @@ setOutputImage(
 
                 {/* BUTTON */}
 
-                <button className="w-full bg-black hover:bg-gray-700 text-white py-3 rounded-xl mt-5">
+                <button className="w-full bg-black hover:bg-gray-700 text-white py-3 rounded-xl mt-4">
 
                   Add To Cart
 
