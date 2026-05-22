@@ -332,7 +332,7 @@ setOutputImage(
                     ref={webcamRef}
                     audio={false}
                     screenshotFormat="image/jpeg"
-                    className="rounded-2xl w-full h-80 object-contain bg-gray-100"
+                    className="rounded-2xl w-full h-20 object-contain bg-gray-100"
                   />
 
                   <button
@@ -354,15 +354,11 @@ setOutputImage(
 
                 <div>
 
- <img
-  src={
-    outputImage
-      ? `http://127.0.0.1:8000/${outputImage}?time=${Date.now()}`
-      : capturedImage
-  }
-  alt=""
-  className="rounded-3xl w-full h-[450px] object-contain bg-white p-4"
-/>
+                  <img
+                    src={capturedImage}
+                    alt=""
+                    className="rounded-3xl w-full h-[350px] object-contain bg-white p-4"
+                  />
 
                   <p className="text-green-600 font-semibold mt-4">
 
@@ -442,15 +438,11 @@ setOutputImage(
 
 <div>
 
- <img
-  src={
-    outputImage
-      ? `http://127.0.0.1:8000/${outputImage}?time=${Date.now()}`
-      : capturedImage
-  }
-  alt=""
-  className="rounded-3xl w-full h-[450px] object-contain bg-white p-4"
-/>
+    <img
+      src={capturedImage}
+      alt=""
+      className="rounded-3xl w-full h-[300px] object-contain bg-white p-4"
+    />
 
         </div>
               </div>
@@ -459,7 +451,7 @@ setOutputImage(
 
               <div>
 
-                <h1 className="text-4xl font-bold text-black mb-6">
+                <h1 className="text-4xl font-bold text-black">
 
                   AI Detection Result
 
@@ -512,6 +504,74 @@ setOutputImage(
                       {lengthMM} MM
 
                     </h2>
+                    <div className="mt-5">
+
+  <h2 className="text-xl font-bold mb-3">
+
+    Similar Sizes
+
+  </h2>
+
+   <div className="flex gap-5 overflow-x-auto mt-5 pb-3">
+
+  {recommendedProducts.map((item) => (
+
+    <div
+      key={item.id}
+      className="min-w-[180px] bg-white rounded-2xl shadow-lg p-4 border"
+    >
+
+      {/* IMAGE */}
+
+      <img
+        src={item.image}
+        alt=""
+        className="w-full h-15 object-contain"
+      />
+
+      {/* SIZE */}
+
+      <h2 className="text-xl font-bold text-center mt-3">
+
+        {item.specifications?.length_mm} MM
+
+      </h2>
+
+      {/* DIAMETER */}
+
+      <p className="text-gray-500 text-center mt-1">
+
+        Diameter:
+        {" "}
+        {item.specifications?.diameter_mm} MM
+
+      </p>
+
+      {/* PRICE */}
+
+      <p className="text-2xl font-bold text-center mt-3">
+
+        ₹{item.price}
+
+      </p>
+
+      {/* BUTTON */}
+
+      <button className="w-full bg-black text-white py-3 rounded-xl mt-4">
+
+        Add To Cart
+
+      </button>
+
+    </div>
+
+  ))}
+
+</div>
+
+ 
+
+</div>
 
                   </div>
 
@@ -570,7 +630,7 @@ setOutputImage(
 
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-5">
 
-          {(showResult ? recommendedProducts : products).map((item) => (
+          {products.map((item) => (
 
             <div
               key={item.id}
