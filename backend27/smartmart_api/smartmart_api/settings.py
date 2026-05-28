@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'Groceries',
     'fashion',
-    
+    'SearchResult',
     'rest_framework',
     'corsheaders',
     'furniture',

@@ -27,6 +27,8 @@ urlpatterns = [
     path('', include('Groceries.urls')),
     path('', include('electrical.urls')),
     path('', include('login.urls')),
+    path("api/", include("SearchResult.urls")),
+    path("api/", include("order.urls")),
 ]
 
 # MEDIA FILES
