@@ -77,7 +77,7 @@ const addToCart = (product) => {
   const cartItem = {
     id: product.name,
     name: product.name,
-    price: product.price,
+    price: Number(product.price.replace("₹", "").replace(",", "")),
     old_price: product.mrp,
     image: product.img,
     rating: product.rating,
@@ -312,7 +312,7 @@ const addToCart = (product) => {
                   <span className="text-xs text-muted-foreground line-through">{p.mrp}</span>
                 </div>
                <button
-  onClick={addToCart}
+  onClick={() => addToCart(p)}
   className="w-full mt-6 bg-black text-white py-4 rounded-2xl text-xl hover:bg-purple-700 transition"
 >
   Add To Cart

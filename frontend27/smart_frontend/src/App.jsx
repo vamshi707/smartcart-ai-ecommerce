@@ -12,7 +12,8 @@ import Cart from "./pages/Cart";
 import ScrollToTop from "./components/ScrollToTop";
 import Login from "./pages/Login";
 import ProductDetails from "./pages/ProductDetails";
-
+import SearchResult from "./pages/SearchResult";
+import MyOrders from "./pages/MyOrders";
 import Admin from "./dashboard/Admin";
 import FashionAdmin from "./dashboard/FashionAdmin";
 import ElectronicsAdmin from "./dashboard/ElectronicsAdmin";
@@ -49,10 +50,11 @@ function App() {
           <Route path="/login" element={<Login />} />
 
           <Route path="/cart" element={<Cart />} />
-
+         <Route path="/my-orders" element={<MyOrders />} />
           <Route path="/product" element={<ProductDetails />} />
 
           <Route path="/payment" element={<Payment />} />
+          <Route path="/search" element={<SearchResult />} />
 
         </Route>
 

@@ -1,4 +1,5 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import {
   Home,
   ShoppingCart,
@@ -15,6 +16,40 @@ import {
 } from "lucide-react";
 
 export default function Navbar() {
+ const [cartCount, setCartCount] = useState(0);
+ 
+  const [searchText, setSearchText] = useState("");
+  const navigate = useNavigate();
+
+useEffect(() => {
+  const updateCartCount = () => {
+    const cart =
+      JSON.parse(localStorage.getItem("cart")) || [];
+
+    setCartCount(cart.length);
+  };
+
+  updateCartCount();
+
+  window.addEventListener(
+    "cartUpdated",
+    updateCartCount
+  );
+
+  return () => {
+    window.removeEventListener(
+      "cartUpdated",
+      updateCartCount
+    );
+  };
+}, []);
+const handleSearch = (e) => {
+  e.preventDefault();
+
+  if (searchText.trim()) {
+    navigate(`/search?query=${searchText}`);
+  }
+};
 
   return (
 
@@ -66,17 +101,20 @@ export default function Navbar() {
 
         {/* SEARCH BAR */}
 
-        <div className="flex items-center bg-gray-100 px-5 py-3 rounded-2xl w-[42%] shadow-sm border">
+        <form
+  onSubmit={handleSearch}
+  className="flex items-center bg-gray-100 px-5 py-3 rounded-2xl w-[42%] shadow-sm border"
+>
+  <Search className="text-gray-500" size={20} />
 
-          <Search className="text-gray-500" size={20} />
-
-          <input
-            type="text"
-            placeholder='Search "Milk, Shoes, Mobiles..."'
-            className="bg-transparent outline-none ml-3 w-full text-gray-700"
-          />
-
-        </div>
+  <input
+    type="text"
+    value={searchText}
+    onChange={(e) => setSearchText(e.target.value)}
+    placeholder='Search "Milk, Shoes, Mobiles..."'
+    className="bg-transparent outline-none ml-3 w-full text-gray-700"
+  />
+</form>
 
         {/* RIGHT SIDE */}
 
@@ -84,15 +122,39 @@ export default function Navbar() {
 
           {/* LOGIN */}
 
-          <Link to="/login">
-  <div className="flex flex-col items-center cursor-pointer hover:text-purple-600 transition">
+          {localStorage.getItem("isLoggedIn") ? (
+
+  <div
+    onClick={() => {
+      localStorage.removeItem("isLoggedIn");
+      localStorage.removeItem("userEmail");
+
+      navigate("/login");
+
+      window.location.reload();
+    }}
+    className="flex flex-col items-center cursor-pointer hover:text-red-600 transition"
+  >
     <User size={26} />
 
     <span className="text-sm font-medium">
-      Login
+      Logout
     </span>
   </div>
-</Link>
+
+) : (
+
+  <Link to="/login">
+    <div className="flex flex-col items-center cursor-pointer hover:text-purple-600 transition">
+      <User size={26} />
+
+      <span className="text-sm font-medium">
+        Login
+      </span>
+    </div>
+  </Link>
+
+)}
 
           {/* CART */}
 
@@ -100,15 +162,23 @@ export default function Navbar() {
   <div className="relative flex flex-col items-center cursor-pointer hover:text-purple-600 transition">
     <ShoppingCart size={28} />
 
-    <span className="absolute -top-2 -right-2 bg-purple-600 text-white text-xs px-2 py-0.5 rounded-full">
-      2
-    </span>
+    {cartCount > 0 && (
+  <span className="absolute -top-2 -right-2 bg-purple-600 text-white text-xs px-2 py-0.5 rounded-full">
+    {cartCount}
+  </span>
+)}
 
     <span className="text-sm font-medium">
       Cart
     </span>
   </div>
 </Link>
+<Link to="/my-orders">
+    <div className="flex flex-col items-center cursor-pointer hover:text-purple-600 transition">
+      <span className="text-2xl">📦</span>
+      <span className="text-sm font-medium">My Orders</span>
+    </div>
+  </Link>
 
         </div>
 

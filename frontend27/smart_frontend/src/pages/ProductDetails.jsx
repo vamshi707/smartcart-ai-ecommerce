@@ -22,8 +22,8 @@ export default function ProductDetails() {
     return;
   }
 
-  const isLoggedIn = sessionStorage.getItem("isLoggedIn");
-
+ const isLoggedIn =
+  localStorage.getItem("isLoggedIn");
   const cartItem = {
     ...product,
     size: selectedSize,
@@ -67,7 +67,7 @@ export default function ProductDetails() {
 
   window.dispatchEvent(new Event("cartUpdated"));
 
-  alert("Added to cart");
+  
 };  
  return (
   <div className="w-full h-[70vh] overflow-hidden bg-gray-100 flex items-center justify-center">
