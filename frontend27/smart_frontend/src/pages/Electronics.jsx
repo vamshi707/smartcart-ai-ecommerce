@@ -282,13 +282,6 @@ setOutputImage(
     Pipe
   </option>
 
-  <option value="Motor">
-    Motor
-  </option>
-
-  <option value="Spanner">
-    Spanner
-  </option>
 
 </select>
 
