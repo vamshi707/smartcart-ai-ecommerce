@@ -78,7 +78,7 @@ def detect_hardware_ai(image_path):
 
     )
 
-    detected_category = "Screw"
+    detected_category = "Unknown"
 
     confidence = 95
 
@@ -86,7 +86,7 @@ def detect_hardware_ai(image_path):
 
     diameter_mm = 0
 
-    # FILTER CONTOURS
+    # FILTER SMALL OBJECTS
 
     filtered_contours = [
 
@@ -96,11 +96,11 @@ def detect_hardware_ai(image_path):
 
     ]
 
-    print("TOTAL:", len(contours))
+    print("TOTAL CONTOURS:", len(contours))
 
-    print("FILTERED:", len(filtered_contours))
+    print("FILTERED CONTOURS:", len(filtered_contours))
 
-    # FIND BIGGEST OBJECT
+    # DETECT BIGGEST OBJECT
 
     if filtered_contours:
 
@@ -118,13 +118,67 @@ def detect_hardware_ai(image_path):
 
         )
 
+        print("WIDTH:", w)
+
+        print("HEIGHT:", h)
+
         # PIXEL TO MM
 
         length_mm = round(h / 8)
 
-        diameter_mm = round(w / 20)
+        diameter_mm = round(w / 8)
 
-        # GREEN RECTANGLE
+        # AVOID DIVIDE ERROR
+
+        if w == 0:
+
+            aspect_ratio = 0
+
+        else:
+
+            aspect_ratio = h / w
+
+        print("ASPECT RATIO:", aspect_ratio)
+
+        # AI CATEGORY DETECTION
+
+        # PIPE
+
+        if diameter_mm >= 5:
+
+            detected_category = "Pipe"
+
+        # SCREW
+
+        elif aspect_ratio > 2.5:
+
+            detected_category = "Screw"
+
+        # MOTOR
+
+        elif w > 200 and h > 200:
+
+            detected_category = "Motor"
+
+        # SPANNER
+
+        elif 1.2 < aspect_ratio < 2.5:
+
+            detected_category = "Spanner"
+
+        # BOLT
+
+        else:
+
+            detected_category = "Bolt"
+
+        print("DETECTED CATEGORY:", detected_category)
+
+        print("LENGTH MM:", length_mm)
+
+        print("DIAMETER MM:", diameter_mm)
+
+        # DRAW GREEN RECTANGLE
 
         cv2.rectangle(
 
@@ -212,7 +266,27 @@ def detect_hardware_ai(image_path):
 
         )
 
-        # DRAW CENTER POINT
+        # CATEGORY TEXT
+
+        cv2.putText(
+
+            output_image,
+
+            f"Detected: {detected_category}",
+
+            (40, 220),
+
+            cv2.FONT_HERSHEY_SIMPLEX,
+
+            1.5,
+
+            (0, 255, 0),
+
+            4
+
+        )
+
+        # CENTER POINT
 
         center_x = x + w // 2
 
@@ -231,6 +305,12 @@ def detect_hardware_ai(image_path):
             -1
 
         )
+
+    else:
+
+        print("NO OBJECT DETECTED")
+
+        detected_category = "Unknown"
 
     # CREATE MEDIA FOLDER
 

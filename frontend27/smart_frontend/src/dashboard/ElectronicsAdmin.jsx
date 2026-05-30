@@ -80,21 +80,7 @@ export default function ElectronicsAdmin() {
       }
 
     }
-
-    // MOTOR
-
-    else if (category === "Motor") {
-
-      specifications = {
-
-        voltage: voltage,
-        rpm: rpm,
-        power: power,
-
-      }
-
-    }
-
+ 
     // PIPE
 
     else if (category === "Pipe") {
@@ -110,18 +96,18 @@ export default function ElectronicsAdmin() {
     }
 
     // SPANNER
+    // BOLT
 
-    else if (category === "Spanner") {
+else if (category === "Bolt") {
 
-      specifications = {
+  specifications = {
 
-        size_mm: sizeMM,
-        finish: finish,
-        type: spannerType,
+    length_mm: lengthMM,
+    diameter_mm: diameterMM,
 
-      }
+  }
 
-    }
+}
 
     const response = await fetch(
       "http://127.0.0.1:8000/hardware/",
@@ -263,11 +249,11 @@ export default function ElectronicsAdmin() {
 
               <option value="Screw">Screw</option>
 
-              <option value="Motor">Motor</option>
 
               <option value="Pipe">Pipe</option>
 
-              <option value="Spanner">Spanner</option>
+              <option value="Bolt">Bolt</option>
+
 
             </select>
 
@@ -359,41 +345,7 @@ export default function ElectronicsAdmin() {
               </>
 
             )}
-
-            {/* MOTOR INPUTS */}
-
-            {category === "Motor" && (
-
-              <>
-
-                <input
-                  type="text"
-                  placeholder="Voltage"
-                  value={voltage}
-                  onChange={(e) => setVoltage(e.target.value)}
-                  className="border p-4 rounded-xl"
-                />
-
-                <input
-                  type="number"
-                  placeholder="RPM"
-                  value={rpm}
-                  onChange={(e) => setRPM(e.target.value)}
-                  className="border p-4 rounded-xl"
-                />
-
-                <input
-                  type="text"
-                  placeholder="Power"
-                  value={power}
-                  onChange={(e) => setPower(e.target.value)}
-                  className="border p-4 rounded-xl"
-                />
-
-              </>
-
-            )}
-
+ 
             {/* PIPE INPUTS */}
 
             {category === "Pipe" && (
@@ -428,39 +380,30 @@ export default function ElectronicsAdmin() {
 
             )}
 
-            {/* SPANNER INPUTS */}
+            {category === "Bolt" && (
 
-            {category === "Spanner" && (
+  <>
 
-              <>
+    <input
+      type="number"
+      placeholder="Length MM"
+      value={lengthMM}
+      onChange={(e) => setLengthMM(e.target.value)}
+      className="border p-4 rounded-xl"
+    />
 
-                <input
-                  type="text"
-                  placeholder="Size MM"
-                  value={sizeMM}
-                  onChange={(e) => setSizeMM(e.target.value)}
-                  className="border p-4 rounded-xl"
-                />
+    <input
+      type="number"
+      placeholder="Diameter MM"
+      value={diameterMM}
+      onChange={(e) => setDiameterMM(e.target.value)}
+      className="border p-4 rounded-xl"
+    />
 
-                <input
-                  type="text"
-                  placeholder="Finish"
-                  value={finish}
-                  onChange={(e) => setFinish(e.target.value)}
-                  className="border p-4 rounded-xl"
-                />
+  </>
 
-                <input
-                  type="text"
-                  placeholder="Type"
-                  value={spannerType}
-                  onChange={(e) => setSpannerType(e.target.value)}
-                  className="border p-4 rounded-xl"
-                />
+)}
 
-              </>
-
-            )}
 
           </div>
 

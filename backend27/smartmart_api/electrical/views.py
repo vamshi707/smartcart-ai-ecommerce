@@ -91,6 +91,8 @@ def detect_hardware(request):
 
     # FILTER PRODUCTS MANUALLY
 
+   
+
     filtered_products = []
 
     for product in matched_products:
@@ -98,24 +100,60 @@ def detect_hardware(request):
         try:
 
             product_length = int(
-
                 product.specifications.get(
-
                     "length_mm",
-
                     0
-
                 )
-
             )
 
-            if length_mm <= product_length <= length_mm + 5:
+            product_diameter = int(
+                product.specifications.get(
+                    "diameter_mm",
+                    0
+                )
+            )
+
+            print("PRODUCT:", product.name)
+
+            # SCREW FILTER
+            if selected_category.lower() == "screw":
+
+                if length_mm <= product_length <= length_mm + 5:
+
+                    filtered_products.append(product)
+            
+
+            # PIPE FILTER
+            elif selected_category.lower() == "pipe":
+
+                    pipe_diameter = int(
+                        product.specifications.get(
+                            "diameter",
+                            0
+                        )
+                    )
+
+                    if length_mm <= pipe_diameter <= length_mm + 5:
+
+                        filtered_products.append(product)
+
+
+            # BOLT FILTER
+            elif selected_category.lower() == "bolt":
+
+
+                 if length_mm <= product_length <= length_mm + 5:
+
+                    filtered_products.append(product)
+
+            # OTHER PRODUCTS
+            else:
 
                 filtered_products.append(product)
 
-        except:
+        except Exception as e:
 
-            pass
+            print("FILTER ERROR:", e)
 
     # SERIALIZER
 

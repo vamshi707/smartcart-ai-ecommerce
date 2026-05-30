@@ -332,7 +332,7 @@ setOutputImage(
                     ref={webcamRef}
                     audio={false}
                     screenshotFormat="image/jpeg"
-                    className="rounded-2xl w-full h-20 object-contain bg-gray-100"
+                    className="rounded-2xl w-full h-70 object-contain bg-gray-100"
                   />
 
                   <button
@@ -409,6 +409,7 @@ setOutputImage(
               {/* DETECT BUTTON */}
 
               <button
+              
                 onClick={detectHardware}
                 className="w-full bg-gradient-to-r from-black to-gray-700 text-white py-4 rounded-2xl text-xl font-semibold hover:scale-105 transition duration-300"
               >
@@ -531,21 +532,31 @@ setOutputImage(
 
       {/* SIZE */}
 
-      <h2 className="text-xl font-bold text-center mt-3">
+      {item.category === "Pipe" ? (
 
-        {item.specifications?.length_mm} MM
+  <>
+    <h2 className="text-xl font-bold text-center mt-3">
+      {item.specifications?.diameter} MM
+    </h2>
 
-      </h2>
+    <p className="text-gray-500 text-center mt-1">
+      Length: {item.specifications?.length} MM
+    </p>
+  </>
 
-      {/* DIAMETER */}
+) : (
 
-      <p className="text-gray-500 text-center mt-1">
+  <>
+    <h2 className="text-xl font-bold text-center mt-3">
+      {item.specifications?.length_mm} MM
+    </h2>
 
-        Diameter:
-        {" "}
-        {item.specifications?.diameter_mm} MM
+    <p className="text-gray-500 text-center mt-1">
+      Diameter: {item.specifications?.diameter_mm} MM
+    </p>
+  </>
 
-      </p>
+)}
 
       {/* PRICE */}
 
