@@ -128,6 +128,11 @@ const capturePhoto = () => {
 
   };
 
+  const totalPrice = recommendedProducts.reduce(
+  (sum, item) => sum + Number(item.price),
+  0
+);
+
   return (
      <>
 
@@ -225,6 +230,7 @@ const capturePhoto = () => {
     </p>
 
   </div>
+  
 
   <input
     type="file"
@@ -243,7 +249,7 @@ const capturePhoto = () => {
                   ref={webcamRef}
                   audio={false}
                   screenshotFormat="image/jpeg"
-                  className="rounded-2xl w-full h-80 object-contain bg-gray-100"
+                  className="rounded-2xl w-full h-70 object-contain bg-gray-100"
                 />
 
                 <button
@@ -273,6 +279,7 @@ const capturePhoto = () => {
     <p className="text-green-600 font-semibold mt-4">
       Photo captured successfully ✅
     </p>
+    
 
   </div>
               
@@ -341,7 +348,7 @@ onClick={() => setSelectedRoom("Kitchen")}
   }`}
 >
  
-🍳 Kitchen
+🍳 Others
 </button>
 
             {/* DETECT BUTTON */}
@@ -409,6 +416,8 @@ onClick={() => setSelectedRoom("Kitchen")}
 
       Room Type: {selectedRoom}
 
+     
+
     </h2>
 
     <div className="bg-gray-100 rounded-2xl p-5">
@@ -419,6 +428,67 @@ onClick={() => setSelectedRoom("Kitchen")}
         based on your selected room.
 
       </p>
+      {recommendedProducts.length > 0 && (
+
+<div className="grid md:grid-cols-8 gap-5 mt-8">
+
+  {recommendedProducts.map((item) => (
+
+    <div
+      key={item.id}
+      className="bg-white rounded-xl shadow-lg p-4"
+    >
+
+      <img
+        src={item.image}
+        alt=""
+        className="w-full h-40 object-contain"
+      />
+
+      <h2 className="font-bold mt-3">
+        {item.name}
+      </h2>
+
+      <p className="text-gray-500">
+        {item.brand}
+      </p>
+
+      <p className="text-2xl font-bold mt-2">
+        ₹{item.price}
+      </p>
+
+      <button
+        onClick={() =>
+          handleAddToCart(item, navigate)
+        }
+          className="flex-1 bg-yellow-600 text-white py-3 rounded-xl"
+  >
+    🛒 Cart
+  </button>
+  
+
+   
+
+    </div>
+    
+
+  ))}
+
+</div>
+
+
+)}
+  <div className="bg-purple-100 rounded-2xl p-4 mt-4">
+
+  <h2 className="text-2xl font-bold text-purple-700">
+    Total Furniture Cost
+  </h2>
+
+  <p className="text-4xl font-bold mt-2">
+    ₹{totalPrice}
+  </p>
+
+</div>
 
     </div>
 

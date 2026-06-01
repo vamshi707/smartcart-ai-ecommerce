@@ -167,7 +167,7 @@ export default function FurnitureAdmin() {
               <option value="Bedroom">Bedroom</option>
               <option value="Living Room">Living Room</option>
               <option value="Office">Office</option>
-              <option value="Kitchen">Kitchen</option>
+              <option value="Kitchen">others</option>
             </select>
 
             <select
@@ -183,6 +183,8 @@ export default function FurnitureAdmin() {
               <option value="Front">Front</option>
               <option value="Back">Back</option>
               <option value="Wall">Wall</option>
+               
+
             </select>
 
             <input
