@@ -23,7 +23,6 @@ def download_image(url, filename):
 
     return None
 
-
 def generate_room(room_image_path, products):
 
     room = cv2.imread(room_image_path)
@@ -58,114 +57,124 @@ def generate_room(room_image_path, products):
 
         name = item.name.lower()
 
-        # BIGGER REALISTIC SIZES
+        # DYNAMIC SIZES
 
         if "bed" in name:
 
-            fw = 420
-            fh = 260
+            fw = int(width * 0.40)
+            fh = int(height * 0.40)
 
         elif "sofa" in name:
 
-            fw = 220
-            fh = 180
+            fw = int(width * 0.18)
+            fh = int(height * 0.25)
 
-        elif "wardrobe" in name:
+        elif "wardrobe" in name or "cupboard" in name:
 
-            fw = 180
-            fh = 300
+            fw = int(width * 0.35)
+            fh = int(height * 0.60)
 
         elif "table" in name:
 
-            fw = 120
-            fh = 100
+            fw = int(width * 0.25)
+            fh = int(height * 0.25)
 
         elif "lamp" in name:
 
-            fw = 60
-            fh = 100
+            fw = int(width * 0.40)
+            fh = int(height * 0.40)
 
         else:
 
-            fw = 120
-            fh = 120
+            fw = int(width * 0.10)
+            fh = int(height * 0.15)
 
         furniture = cv2.resize(
             furniture,
             (fw, fh)
         )
 
-        # BETTER ROOM LAYOUT
+        # POSITION FROM DATABASE
 
-        if "bed" in name:
+        position = item.position.lower()
+
+        if position == "left":
+
+            x = 20
+            y = height - fh - 50
+
+        elif position == "right":
+
+            x = width - fw - 20
+            y = height - fh - 50
+
+        elif position == "center":
 
             x = width // 2 - fw // 2
-            y = height - fh - 20
-
-        elif "sofa" in name:
-
-            x = 50
             y = height - fh - 40
 
-        elif "wardrobe" in name:
+        elif position == "corner":
 
             x = width - fw - 50
-            y = height - fh - 30
+            y = height - fh - 80
 
-        elif "lamp" in name:
+        elif position == "wall":
 
-            x = width // 2 + 140
-            y = height - fh - 130
+            x = width - fw - 30
+            y = height - fh - 120
 
-        elif "table" in name:
+        elif position == "front":
 
-            x = width // 2 + 80
-            y = height - fh - 40
+            x = width // 2 - fw // 2
+            y = height - fh - 10
+
+        elif position == "back":
+
+            x = width // 2 - fw // 2
+            y = int(height * 0.40)
 
         else:
 
             x = 50
-            y = height - fh - 40
+            y = height - fh - 50
 
-        # BOUNDARY CHECK
+        # KEEP INSIDE IMAGE
 
-        if (
-            x >= 0 and
-            y >= 0 and
-            x + fw <= width and
-            y + fh <= height
-        ):
+        x = max(0, min(x, width - fw))
+        y = max(0, min(y, height - fh))
 
-            if len(furniture.shape) == 3 and furniture.shape[2] == 4:
+        if len(furniture.shape) == 3 and furniture.shape[2] == 4:
 
-                alpha = furniture[:, :, 3] / 255.0
+            alpha = furniture[:, :, 3] / 255.0
 
-                for c in range(3):
+            for c in range(3):
+
+                room[
+                    y:y+fh,
+                    x:x+fw,
+                    c
+                ] = (
+
+                    alpha * furniture[:, :, c]
+
+                    +
+
+                    (1 - alpha) *
 
                     room[
                         y:y+fh,
                         x:x+fw,
                         c
-                    ] = (
+                    ]
 
-                        alpha * furniture[:, :, c]
-                        +
+                )
 
-                        (1 - alpha) *
-                        room[
-                            y:y+fh,
-                            x:x+fw,
-                            c
-                        ]
+        else:
 
-                    )
-
-            else:
-
-                room[
-                    y:y+fh,
-                    x:x+fw
-                ] = furniture[:, :, :3]
+            room[
+                y:y+fh,
+                x:x+fw
+            ] = furniture[:, :, :3]
 
     output_path = os.path.join(
         "media",
