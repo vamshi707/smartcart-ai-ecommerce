@@ -264,6 +264,8 @@ const handleSearch = (e) => {
         </Link>
 
         {/* FURNITURE */}
+          <Link
+  to="/Furniture"> 
 
         <div className="flex items-center gap-3 cursor-pointer hover:text-orange-600 transition">
 
@@ -274,6 +276,7 @@ const handleSearch = (e) => {
           </span>
 
         </div>
+        </Link>
 
 
         {/* BEAUTY */}

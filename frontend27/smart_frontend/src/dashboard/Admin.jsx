@@ -69,10 +69,12 @@ export default function Admin() {
           <p className="text-gray-500 mb-6">
             Add room furniture and home decor products.
           </p>
+          <Link to="/furniture-admin"> 
 
           <button className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-2xl transition duration-300">
             Open
           </button>
+          </Link>
 
         </div>
 

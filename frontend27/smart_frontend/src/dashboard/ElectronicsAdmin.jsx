@@ -28,22 +28,13 @@ export default function ElectronicsAdmin() {
 
   // MOTOR INPUTS
 
-  const [voltage, setVoltage] = useState("");
-  const [rpm, setRPM] = useState("");
-  const [power, setPower] = useState("");
 
   // PIPE INPUTS
 
   const [pipeDiameter, setPipeDiameter] = useState("");
   const [pipeLength, setPipeLength] = useState("");
   const [pressure, setPressure] = useState("");
-
-  // SPANNER INPUTS
-
-  const [sizeMM, setSizeMM] = useState("");
-  const [finish, setFinish] = useState("");
-  const [spannerType, setSpannerType] = useState("");
-
+ 
   // FETCH PRODUCTS
 
   useEffect(() => {

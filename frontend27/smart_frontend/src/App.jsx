@@ -18,6 +18,7 @@ import Admin from "./dashboard/Admin";
 import FashionAdmin from "./dashboard/FashionAdmin";
 import ElectronicsAdmin from "./dashboard/ElectronicsAdmin";
 import GroceryAdmin from "./dashboard/GroceryAdmin";
+import FurnitureAdmin from "./dashboard/FurnitureAdmin";
 
 import Payment from "./pages/Payment";
 
@@ -74,6 +75,10 @@ function App() {
           path="/hardware"
           element={<ElectronicsAdmin />}
         />
+        <Route
+            path="/furniture-admin"
+            element={<FurnitureAdmin />}
+          />
 
       </Routes>
 

@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import Webcam from "react-webcam";
 import Footer from "../components/Footer";
 
+
 function Electronics() {
 
   const [products, setProducts] = useState([]);
@@ -560,12 +561,12 @@ setOutputImage(
       </p>
 
       {/* BUTTON */}
-
-      <button className="w-full bg-black text-white py-3 rounded-xl mt-4">
-
-        Add To Cart
-
-      </button>
+ <button
+  
+  className="w-full mt-4 bg-purple-600 text-white py-3 rounded-xl"
+>
+  Add To Cart
+</button>
 
     </div>
 
@@ -723,11 +724,12 @@ setOutputImage(
 
                 {/* BUTTON */}
 
-                <button className="w-full bg-black hover:bg-gray-700 text-white py-3 rounded-xl mt-4">
-
-                  Add To Cart
-
-                </button>
+                <button
+ 
+  className="w-full mt-4 bg-purple-600 text-white py-3 rounded-xl"
+>
+  Add To Cart
+</button>
 
               </div>
 
