@@ -64,12 +64,12 @@ def generate_room(room_image_path, products):
             fw = int(width * 0.40)
             fh = int(height * 0.40)
 
-        elif "sofa" in name or "showcase" in name :
+        elif "sofa" in name or "showcase" in name:
 
             fw = int(width * 0.70)
             fh = int(height * 0.70)
 
-        elif "wardrobe" in name or "cupboard" in name:
+        elif "wardrobe" in name or "cupboard" in name or "office desk" in name :
 
             fw = int(width * 0.35)
             fh = int(height * 0.60)
@@ -79,15 +79,7 @@ def generate_room(room_image_path, products):
             fw = int(width * 0.25)
             fh = int(height * 0.25)
 
-        elif "living room table" in name:
-
-            fw = int(width * 0.100)
-            fh = int(height * 0.100)
-
-
-
-
-      
+   
 
         elif "lamp" in name:
 
