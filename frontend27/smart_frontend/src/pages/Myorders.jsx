@@ -111,7 +111,7 @@ return (
   onClick={() => cancelOrder(order.id)}
   className="flex-1 bg-red-600 text-white py-3 rounded-xl"
 >
-  ❌ Cancel Order
+  ❌ Cancel your order
 </button>
 
           </div>
