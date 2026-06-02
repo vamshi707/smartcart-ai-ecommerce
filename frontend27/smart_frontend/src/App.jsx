@@ -82,7 +82,7 @@ function App() {
             element={<FurnitureAdmin />}
           />
           <Route
-  path="/beautyadmin"
+  path="/beauty-admin"
   element={<BeautyAdmin />}
 />
 

@@ -91,6 +91,23 @@ export default function Admin() {
           </button>
 
         </div>
+         <div className="bg-white p-10 rounded-3xl shadow-lg hover:shadow-2xl hover:-translate-y-2 transition duration-300">
+
+          <h2 className="text-3xl font-bold mb-4">
+            Beauty
+          </h2>
+
+          <p className="text-gray-500 mb-6">
+            Manage Beauty and daily essential products.
+          </p>
+
+          <button
+             
+          >
+            Open
+          </button>
+
+        </div>
 
       </div>
 

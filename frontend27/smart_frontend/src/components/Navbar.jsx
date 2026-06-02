@@ -207,6 +207,9 @@ const handleSearch = (e) => {
         </div>
         </Link>
         {/* ALL */}
+                  <Link
+  to="/All"> 
+
 
         <div className="flex items-center gap-3 cursor-pointer hover:text-pink-600 transition">
 
@@ -217,6 +220,7 @@ const handleSearch = (e) => {
           </span>
 
         </div>
+        </Link>
 
         {/* GROCERIES */}
    <Link
@@ -301,6 +305,7 @@ const handleSearch = (e) => {
   </div>
 </Link>
         </div>
+        
 
       </div>
 

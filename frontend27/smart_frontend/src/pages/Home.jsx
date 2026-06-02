@@ -15,9 +15,6 @@ const categories = [
   { name: "Electronics", icon: Smartphone, gradient: "bg-gradient-mint", tag: "New" },
   { name: "Furniture", icon: Sofa, gradient: "bg-gradient-sun", tag: "Sale" },
   { name: "Beauty", icon: Gem, gradient: "bg-gradient-berry", tag: "AI Match" },
-  { name: "Toys & Baby", icon: Baby, gradient: "bg-gradient-mint", tag: "Hot" },
-  { name: "Books", icon: BookOpen, gradient: "bg-gradient-sun", tag: "Picks" },
-  { name: "Gaming", icon: Gamepad2, gradient: "bg-gradient-lime", tag: "Pro" },
 ];
 
 const banners = [
@@ -37,8 +34,29 @@ const banners = [
     badge: "70% OFF",
     icon: Shirt,
   },
+
   {
-    title: "Smart Electronics",
+    title: "Smart Hardware",
+    subtitle: "Mobiles, laptops & gadgets",
+    cta: "Explore",
+    className: "bg-gradient-mint text-[oklch(0.18_0.04_220)]",
+    badge: "Lowest Prices",
+    icon: Smartphone,
+  },
+
+
+ {
+    title: "Smart Furniture",
+    subtitle: "Mobiles, laptops & gadgets",
+    cta: "Explore",
+    className: "bg-gradient-mint text-[oklch(0.18_0.04_220)]",
+    badge: "Lowest Prices",
+    icon: Smartphone,
+  },
+
+
+ {
+    title: "Smart Beauty",
     subtitle: "Mobiles, laptops & gadgets",
     cta: "Explore",
     className: "bg-gradient-mint text-[oklch(0.18_0.04_220)]",
