@@ -338,18 +338,7 @@ onClick={() => setSelectedRoom("Office")}
 💻 Office
 </button>
 
-<button
-onClick={() => setSelectedRoom("Kitchen")}
 
-  className={`w-full py-4 rounded-2xl mb-3 ${
-    selectedRoom === "Kitchen"
-      ? "bg-purple-600 text-white"
-      : "bg-gray-100"
-  }`}
->
- 
-🍳 Others
-</button>
 
             {/* DETECT BUTTON */}
 
