@@ -15,6 +15,7 @@ import {
   HeartHandshake,
 } from "lucide-react";
 
+
 export default function Navbar() {
  const [cartCount, setCartCount] = useState(0);
  
@@ -22,11 +23,15 @@ export default function Navbar() {
   const navigate = useNavigate();
 
 useEffect(() => {
-  const updateCartCount = () => {
-    const cart =
-      JSON.parse(localStorage.getItem("cart")) || [];
+ const updateCartCount = () => {
+  const userEmail = localStorage.getItem("userEmail");
+  const cartKey = userEmail ? `cart_${userEmail}` : "cart";
 
-    setCartCount(cart.length);
+  const cart =
+    JSON.parse(localStorage.getItem(cartKey)) || [];
+
+  setCartCount(cart.length);
+
   };
 
   updateCartCount();
@@ -281,19 +286,25 @@ const handleSearch = (e) => {
 
         {/* BEAUTY */}
 
-        <div className="flex items-center gap-3 cursor-pointer hover:text-rose-500 transition">
+        <Link to="/beauty">
+  <div className="flex items-center gap-3 cursor-pointer hover:text-rose-500 transition">
 
-          <HeartHandshake size={26} className="text-rose-500" />
+    <HeartHandshake
+      size={26}
+      className="text-rose-500"
+    />
 
-          <span className="font-medium">
-            Beauty
-          </span>
+    <span className="font-medium">
+      Beauty
+    </span>
 
+  </div>
+</Link>
         </div>
 
       </div>
 
-    </div>
+  
 
   )
 

@@ -6,20 +6,26 @@ function Payment() {
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
   const [formError, setFormError] = useState("");
-  const [paymentMethod, setPaymentMethod] = useState("upi");
+  const [paymentMethod, setPaymentMethod] = useState("");
+  const [upiApp, setUpiApp] = useState("");
+
   const navigate = useNavigate();
 
+  const userEmail = localStorage.getItem("userEmail");
+  const cartKey = userEmail ? `cart_${userEmail}` : "cart";
+
   const [cartItems, setCartItems] = useState(
-  JSON.parse(localStorage.getItem("cart")) || []
-);
+    JSON.parse(localStorage.getItem(cartKey)) || []
+  );
 
   const getPrice = (price) => {
     return Number(String(price).replace(/[₹,]/g, ""));
   };
 
-  const itemTotal = cartItems.reduce((total, item) => {
-    return total + getPrice(item.price) * item.quantity;
-  }, 0);
+  const itemTotal = cartItems.reduce(
+    (total, item) => total + getPrice(item.price) * item.quantity,
+    0
+  );
 
   const oldTotal = cartItems.reduce((total, item) => {
     const oldPrice = item.old_price
@@ -33,61 +39,59 @@ function Payment() {
   const deliveryFee = itemTotal > 499 ? 0 : 25;
   const toPay = itemTotal + deliveryFee;
 
-const handlePlaceOrder = () => {
-  if (
-  !fullName.trim() ||
-  !phone.trim() ||
-  !address.trim()
-) {
-    setFormError("Please fill all address details");
-    return;
-  }
+  const handlePlaceOrder = () => {
+    if (!fullName.trim() || !phone.trim() || !address.trim()) {
+      setFormError("Please fill all address details");
+      return;
+    }
 
-  const userEmail = localStorage.getItem("userEmail");
+    if (!paymentMethod) {
+      setFormError("Please select payment method");
+      return;
+    }
 
-  if (!userEmail) {
-    alert("Please login first");
-    navigate("/login");
-    return;
-  }
+    if (paymentMethod === "upi" && !upiApp) {
+      setFormError("Please select UPI app");
+      return;
+    }
 
-  fetch("http://127.0.0.1:8000/api/place-order/", {
-    method: "POST",
+    if (!userEmail) {
+      alert("Please login first");
+      navigate("/login");
+      return;
+    }
 
-    headers: {
-      "Content-Type": "application/json",
-    },
+    setFormError("");
 
-    body: JSON.stringify({
-      email: userEmail,
-      fullName,
-      phone,
-      address,
-      paymentMethod,
-      totalAmount: toPay,
-      items: cartItems,
-    }),
-  })
-    .then((res) => res.json())
+    fetch("http://127.0.0.1:8000/api/place-order/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: userEmail,
+        fullName,
+        phone,
+        address,
+        paymentMethod,
+        upiApp,
+        totalAmount: toPay,
+        items: cartItems,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
 
-.then((data) => {
-  console.log(data);
+        localStorage.removeItem(cartKey);
+        setCartItems([]);
 
-  localStorage.removeItem("cart");
+        window.dispatchEvent(new Event("cartUpdated"));
 
-  setCartItems([]);
-
-  window.dispatchEvent(
-    new Event("cartUpdated")
-  );
-
-  alert("Order placed successfully");
-
-  window.location.href = "/my-orders";
-})
-
-    .catch((err) => console.log(err));
-};
+        navigate("/order-success");
+      })
+      .catch((err) => console.log(err));
+  };
 
   return (
     <div className="min-h-screen bg-[#f5f5f5] px-4 py-6">
@@ -111,9 +115,7 @@ const handlePlaceOrder = () => {
             </h2>
 
             {cartItems.length === 0 ? (
-              <p className="text-gray-500">
-                Your cart is empty
-              </p>
+              <p className="text-gray-500">Your cart is empty</p>
             ) : (
               <div className="space-y-4">
                 {cartItems.map((item, index) => (
@@ -213,34 +215,61 @@ const handlePlaceOrder = () => {
               ].map((method) => (
                 <div
                   key={method.id}
-                  onClick={() => setPaymentMethod(method.id)}
-                  className={`flex items-center justify-between border rounded-2xl p-4 cursor-pointer transition ${
+                  onClick={() => {
+                    setPaymentMethod(method.id);
+                    setUpiApp("");
+                  }}
+                  className={`border rounded-2xl p-4 cursor-pointer transition ${
                     paymentMethod === method.id
                       ? "border-purple-600 bg-purple-50"
                       : "border-gray-200"
                   }`}
                 >
-                  <div>
-                    <h3 className="font-bold">
-                      {method.title}
-                    </h3>
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h3 className="font-bold">{method.title}</h3>
+                      <p className="text-sm text-gray-500">
+                        {method.desc}
+                      </p>
+                    </div>
 
-                    <p className="text-sm text-gray-500">
-                      {method.desc}
-                    </p>
+                    <div
+                      className={`w-5 h-5 rounded-full border flex items-center justify-center ${
+                        paymentMethod === method.id
+                          ? "border-purple-600"
+                          : "border-gray-300"
+                      }`}
+                    >
+                      {paymentMethod === method.id && (
+                        <div className="w-3 h-3 bg-purple-600 rounded-full" />
+                      )}
+                    </div>
                   </div>
 
-                  <div
-                    className={`w-5 h-5 rounded-full border flex items-center justify-center ${
-                      paymentMethod === method.id
-                        ? "border-purple-600"
-                        : "border-gray-300"
-                    }`}
-                  >
-                    {paymentMethod === method.id && (
-                      <div className="w-3 h-3 bg-purple-600 rounded-full" />
-                    )}
-                  </div>
+                  {paymentMethod === "upi" && method.id === "upi" && (
+                    <div className="mt-4 space-y-3">
+                      <h3 className="font-bold">
+                        Select UPI App
+                      </h3>
+
+                      {["Google Pay", "PhonePe", "Paytm"].map((app) => (
+                        <div
+                          key={app}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setUpiApp(app);
+                          }}
+                          className={`p-3 border rounded-xl cursor-pointer bg-white ${
+                            upiApp === app
+                              ? "border-purple-600 bg-purple-50"
+                              : "border-gray-200"
+                          }`}
+                        >
+                          {app}
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
@@ -265,9 +294,7 @@ const handlePlaceOrder = () => {
 
             <div className="flex justify-between">
               <span>Delivery fee</span>
-              <span>
-                {deliveryFee === 0 ? "FREE" : `₹${deliveryFee}`}
-              </span>
+              <span>{deliveryFee === 0 ? "FREE" : `₹${deliveryFee}`}</span>
             </div>
 
             <hr />
