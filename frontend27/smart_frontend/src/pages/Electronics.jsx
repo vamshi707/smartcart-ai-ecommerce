@@ -1,8 +1,8 @@
 import { useEffect, useState, useRef } from "react";
 import Webcam from "react-webcam";
 import Footer from "../components/Footer";
-
-
+import { useNavigate } from "react-router-dom";
+import { handleAddToCart } from "../utils/cartUtils";
 function Electronics() {
 
   const [products, setProducts] = useState([]);
@@ -17,7 +17,7 @@ function Electronics() {
 
   const [capturedImage, setCapturedImage] = useState(null);
 
-
+const navigate = useNavigate();
 
   const [showResult, setShowResult] = useState(false);
 
@@ -562,12 +562,11 @@ setOutputImage(
 
       {/* BUTTON */}
  <button
-  
+  onClick={() => handleAddToCart(item, navigate)}
   className="w-full mt-4 bg-purple-600 text-white py-3 rounded-xl"
 >
   Add To Cart
 </button>
-
     </div>
 
   ))}
@@ -725,7 +724,7 @@ setOutputImage(
                 {/* BUTTON */}
 
                 <button
- 
+  onClick={() => handleAddToCart(item, navigate)}
   className="w-full mt-4 bg-purple-600 text-white py-3 rounded-xl"
 >
   Add To Cart

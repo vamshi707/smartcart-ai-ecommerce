@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import CustomerLayout from "./layouts/CustomerLayout";
-
+import OrderSuccess from "./pages/OrderSuccess";
 import Home from "./pages/Home";
 import All from "./pages/All";
 import Grocery from "./pages/Grocery";
@@ -19,7 +19,8 @@ import FashionAdmin from "./dashboard/FashionAdmin";
 import ElectronicsAdmin from "./dashboard/ElectronicsAdmin";
 import GroceryAdmin from "./dashboard/GroceryAdmin";
 import FurnitureAdmin from "./dashboard/FurnitureAdmin";
-
+import BeautyAdmin from "./dashboard/BeautyAdmin";
+import Beauty from "./pages/Beauty";
 import Payment from "./pages/Payment";
 
 function App() {
@@ -53,10 +54,11 @@ function App() {
           <Route path="/cart" element={<Cart />} />
          <Route path="/my-orders" element={<MyOrders />} />
           <Route path="/product" element={<ProductDetails />} />
+          <Route path="/order-success" element={<OrderSuccess />}/>
 
           <Route path="/payment" element={<Payment />} />
           <Route path="/search" element={<SearchResult />} />
-
+           <Route path="/beauty" element={<Beauty />} />
         </Route>
 
         <Route path="/admin" element={<Admin />} />
@@ -79,8 +81,13 @@ function App() {
             path="/furniture-admin"
             element={<FurnitureAdmin />}
           />
+          <Route
+  path="/beautyadmin"
+  element={<BeautyAdmin />}
+/>
 
       </Routes>
+      
 
     </BrowserRouter>
 

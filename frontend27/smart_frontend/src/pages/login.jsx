@@ -95,7 +95,7 @@ export default function Login() {
     <div className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center px-4">
       <div className="relative w-full max-w-5xl h-[620px] bg-white rounded-3xl overflow-hidden shadow-2xl grid grid-cols-1 md:grid-cols-2">
         <button
-          onClick={() => navigate(-1)}
+         onClick={() => navigate("/")}
           className="absolute top-5 right-6 text-4xl font-bold z-10"
         >
           ×
