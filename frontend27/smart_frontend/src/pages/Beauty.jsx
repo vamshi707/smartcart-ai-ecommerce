@@ -68,7 +68,7 @@ function Beauty() {
     <>
       <div className="min-h-screen bg-gray-100 p-6">
         {!showAI && (
-  <div className="bg-gradient-to-r from-pink-500 via-pink-400 to-rose-300 rounded-3xl p-3 mb-4 flex justify-between items-center overflow-hidden shadow-xl">
+  <div className="bg-gradient-to-r from-pink-500 via-pink-400 to-rose-300 rounded-3xl p-2 mb-4 flex justify-between items-center overflow-hidden shadow-xl">
 
     <div className="text-white">
       <h2 className="text-5xl font-bold">
@@ -82,7 +82,7 @@ function Beauty() {
 
       <button
         onClick={() => setShowAI(true)}
-        className="mt-6 bg-white text-pink-600 px-8 py-4 rounded-2xl text-xl font-bold hover:scale-105 transition"
+        className="mt-6 bg-white text-pink-600 px-6 py-2 rounded-2xl text-xl font-bold hover:scale-105 transition"
       >
         ✨ Try Beauty AI →
       </button>

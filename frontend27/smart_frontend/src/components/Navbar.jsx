@@ -62,7 +62,7 @@ const handleSearch = (e) => {
 
       {/* TOP NAVBAR */}
 
-      <div className="flex items-center justify-between px-18 py-6 border-b">
+      <div className="flex items-center justify-between px-18 py-3 border-b">
 
         {/* LEFT SIDE */}
 
@@ -108,7 +108,7 @@ const handleSearch = (e) => {
 
         <form
   onSubmit={handleSearch}
-  className="flex items-center bg-gray-100 px-5 py-3 rounded-2xl w-[42%] shadow-sm border"
+  className="flex items-center bg-gray-100 px-4 py-3 rounded-2xl w-[42%] shadow-sm border"
 >
   <Search className="text-gray-500" size={20} />
 
@@ -192,7 +192,7 @@ const handleSearch = (e) => {
       {/* CATEGORY SECTION */}
    
 
-      <div className="flex items-center justify-center gap-12 overflow-x-auto px-8 py-5 bg-white">
+      <div className="flex items-center justify-center gap-12 overflow-x-auto px-8 py-2 bg-white">
                <Link
   to="/Home"> 
           <div className="flex items-center gap-3 cursor-pointer hover:text-red-600 transition">
