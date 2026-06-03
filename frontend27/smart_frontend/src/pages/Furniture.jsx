@@ -182,6 +182,32 @@ const capturePhoto = () => {
         </button>
 
       </div>
+      {!showAI && (
+  <div className="bg-gradient-to-r from-purple-700 to-purple-500 rounded-3xl p-6 mb-10 flex justify-between items-center">
+
+    <div className="text-white">
+      <h2 className="text-3xl font-bold">
+        Furniture AI Assistant
+      </h2>
+
+      <p className="mt-2 text-lg">
+        Upload your room image and get AI furniture recommendations.
+      </p>
+
+      <button
+        onClick={() => setShowAI(true)}
+        className="mt-4 bg-white text-purple-700 px-6 py-3 rounded-xl font-semibold"
+      >
+        Detect Furniture AI →
+      </button>
+    </div>
+
+    <div className="text-8xl">
+      🤖
+    </div>
+
+  </div>
+)}
 
       {/* AI SECTION */}
 

@@ -124,28 +124,46 @@ const capturePhoto = () => {
 
   return (
      <>
+     <br />
+              
+        {!showAI && (
+  <div className=" w-[100%]  bg-gradient-to-r from-pink-600 via-purple-500 to-purple-400 rounded-3xl p-4  flex justify-between items-center overflow-hidden shadow-x1">
+
+    <div className="text-white">
+      <h2 className="text-4xl font-bold">
+        Fashion AI Assistant
+      </h2>
+
+      <p className="mt-3 text-lg max-w-lg">
+        Upload your selfie and get personalized fashion recommendations powered by AI.
+      </p>
+
+      <button
+        onClick={() => setShowAI(true)}
+        className="mt-5 bg-white text-purple-700 px-6 py-3 rounded-xl font-semibold"
+      >
+        Detect Fashion AI →
+      </button>
+    </div>
+
+    <img
+      src="/ronot.png"
+      alt="AI Assistant"
+      className="w-64 "
+    />
+
+  </div>
+)}
+
 
     <div className="min-h-screen bg-gray-100 p-6">
+      
 
       {/* TOP HEADER */}
 
       <div className="flex justify-between items-center mb-8">
 
-        <div>
-
-          <h1 className="text-4xl font-bold">
-
-            AI Fashion Recommendation
-
-          </h1>
-
-          <p className="text-gray-500 mt-2">
-
-            Get AI powered fashion suggestions based on your selfie.
-
-          </p>
-
-        </div>
+ 
 
         <button
           onClick={() => {

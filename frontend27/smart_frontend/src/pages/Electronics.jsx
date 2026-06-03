@@ -228,6 +228,34 @@ setOutputImage(
           </button>
 
         </div>
+        {!showAI && (
+  <div className="bg-gradient-to-r from-black via-cyan-600 to-sky-900 rounded-3xl p-4  flex justify-between items-center overflow-hidden shadow-xl">
+
+    <div className="text-white">
+      <h2 className="text-4xl font-bold">
+        Hardware AI Assistant
+      </h2>
+
+      <p className="mt-3 text-lg max-w-lg">
+        Upload a hardware image and get AI-powered hardware product recommendations.
+      </p>
+
+      <button
+        onClick={() => setShowAI(true)}
+        className="mt-5 bg-white text-blue-700 px-6 py-3 rounded-xl font-semibold"
+      >
+        🔧 Detect Hardware AI →
+      </button>
+    </div>
+
+    <img
+  src="/reb.png"
+  alt="AI Assistant"
+  className="w-64"
+/>
+
+  </div>
+)}
 
         {/* AI SECTION */}
 

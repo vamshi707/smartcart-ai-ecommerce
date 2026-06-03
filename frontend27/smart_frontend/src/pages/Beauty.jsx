@@ -4,6 +4,7 @@ import Footer from "../components/Footer";
 import { useNavigate } from "react-router-dom";
 import { handleAddToCart } from "../utils/cartUtils";
 
+
 function Beauty() {
   const navigate = useNavigate();
 
@@ -66,7 +67,51 @@ function Beauty() {
   return (
     <>
       <div className="min-h-screen bg-gray-100 p-6">
+        {!showAI && (
+  <div className="bg-gradient-to-r from-pink-500 via-pink-400 to-rose-300 rounded-3xl p-3 mb-4 flex justify-between items-center overflow-hidden shadow-xl">
+
+    <div className="text-white">
+      <h2 className="text-5xl font-bold">
+        Beauty AI Assistant ✨
+      </h2>
+
+      <p className="mt-4 text-xl max-w-xl">
+        Upload your selfie and get personalized
+        beauty product recommendations powered by AI.
+      </p>
+
+      <button
+        onClick={() => setShowAI(true)}
+        className="mt-6 bg-white text-pink-600 px-8 py-4 rounded-2xl text-xl font-bold hover:scale-105 transition"
+      >
+        ✨ Try Beauty AI →
+      </button>
+    </div>
+
+    <div className="relative block">
+      <img
+        src="/beauty.png"
+        alt="Beauty AI"
+        className="w-80 object-contain"
+      />
+
+      <div className="absolute top-5 left-0 text-4xl">
+        ✨
+      </div>
+
+      <div className="absolute top-20 right-5 text-3xl">
+        💄
+      </div>
+
+      <div className="absolute bottom-10 left-10 text-3xl">
+        🌸
+      </div>
+    </div>
+
+  </div>
+)}
         <div className="flex justify-between items-center mb-8">
+          
           <div>
             <h1 className="text-4xl font-bold">
               AI Beauty Recommendation
