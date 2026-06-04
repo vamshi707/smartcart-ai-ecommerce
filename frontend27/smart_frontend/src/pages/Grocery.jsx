@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
 import Footer from "../components/Footer";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay } from "swiper/modules";
+
+import "swiper/css";
 
 
 import { useNavigate } from "react-router-dom";
@@ -24,10 +28,79 @@ export default function Grocery() {
   return (
     <>
 
-    <div className="bg-[#f7f7f7] min-h-screen px-4 md:px-16 py-6">
+    <div className="bg-[#f7f7f7] min-h-screen px-4 md:px-14 py-3">
 
       {/* HEADER */}
+  <Swiper
+  modules={[Autoplay]}
+  autoplay={{
+    delay: 3000,
+    disableOnInteraction: false,
+  }}
+  loop={true}
+>
+ <SwiperSlide>
+  <div className="bg-gradient-to-r from-green-700 to-green-500 h-[280px] rounded-3xl flex items-center justify-between px-4 overflow-hidden">
 
+    <div className="text-white max-w-md">
+      <h1 className="text-4xl font-bold">
+        SMARTCART
+          </h1>
+          <h3 className="text-2xl "> 
+        Grocery Festival
+       </h3>
+
+      <p className="text-2xl mt-4">
+        Up To 50% OFF on Fresh Products
+      </p>
+
+      <button className="mt-5 bg-yellow-400 text-black px-8 py-3 rounded-xl font-bold">
+        Shop Now
+      </button>
+    </div>
+
+    <img
+      src="/grocery.png"
+      alt="Grocery"
+      className="h-full w-[80%] object-cover"
+    />
+
+  </div>
+</SwiperSlide>
+
+  <SwiperSlide>
+    <div className="bg-gradient-to-r from-orange-600 to-yellow-500 h-[280px] rounded-3xl flex items-center justify-between px-10">
+
+      <div className="text-white">
+        <h1 className="text-5xl font-bold">
+          Fresh Fruits
+        </h1>
+
+        <p className="text-2xl mt-4">
+          Everyday Low Prices
+        </p>
+
+        <button className="mt-6 bg-white text-orange-600 px-8 py-3 rounded-xl font-bold">
+          Order Now
+        </button>
+      </div>
+
+      <img
+        src="/fruit.jpg"
+        alt="Fruits"
+        className="h-[280px] w-[70%] object-cover"
+      />
+
+    </div>
+  </SwiperSlide>
+  <SwiperSlide>
+  <img
+    src="/surf.jpg"
+    alt="SmartMart Grocery Festival"
+    className="w-full h-[320px] object-cover  rounded-4xl"
+  />
+</SwiperSlide>
+</Swiper>
       <div className="flex items-center justify-between mb-6">
 
         <h1 className="text-3xl font-bold text-[#1d1d1d]">
