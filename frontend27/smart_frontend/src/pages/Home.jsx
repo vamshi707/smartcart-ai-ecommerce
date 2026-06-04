@@ -25,7 +25,9 @@ const banners = [
     className: "bg-gradient-lime text-[oklch(0.2_0.04_140)]",
     badge: "Express",
     icon: Apple,
+    route: "/grocery",
   },
+
   {
     title: "Mega Fashion Edit",
     subtitle: "Up to 70% off — new drops daily",
@@ -33,6 +35,7 @@ const banners = [
     className: "bg-gradient-berry text-[oklch(0.2_0.04_140)]",
     badge: "70% OFF",
     icon: Shirt,
+    route: "/fashion",
   },
 
   {
@@ -42,26 +45,27 @@ const banners = [
     className: "bg-gradient-mint text-[oklch(0.18_0.04_220)]",
     badge: "Lowest Prices",
     icon: Smartphone,
+    route: "/electronics",
   },
 
-
- {
-    title: "Smart Furniture",
-    subtitle: "Mobiles, laptops & gadgets",
+  {
+    title: "Luxury Furniture",
+    subtitle: "Premium Home Decor",
     cta: "Explore",
-    className: "bg-gradient-mint text-[oklch(0.18_0.04_220)]",
-    badge: "Lowest Prices",
-    icon: Smartphone,
+    className: "bg-gradient-to-r from-orange-600 to-red-700 text-black",
+    badge: "40% OFF",
+    icon: Sofa,
+    route: "/furniture",
   },
 
-
- {
-    title: "Smart Beauty",
-    subtitle: "Mobiles, laptops & gadgets",
-    cta: "Explore",
-    className: "bg-gradient-mint text-[oklch(0.18_0.04_220)]",
-    badge: "Lowest Prices",
-    icon: Smartphone,
+  {
+    title: "Beauty Collection",
+    subtitle: "AI Beauty Match",
+    cta: "Shop Now",
+    className: "bg-gradient-to-r from-rose-800 to-pink-600 text-black",
+    badge: "Trending",
+    icon: Gem,
+    route: "/beauty",
   },
 ];
 
@@ -164,11 +168,17 @@ const addToCart = (product) => {
 
       {/* BANNER GRID (Zepto-style ads) */}
       <section className="max-w-7xl mx-auto px-4 pt-6">
-        <div className="grid md:grid-cols-3 gap-4">
+        <div className="grid md:grid-cols-5 gap-6">
           {banners.map((b) => {
-            const Icon = b.icon;
-            return (
-              <div key={b.title} className={`relative overflow-hidden rounded-3xl p-6 min-h-[200px] flex flex-col justify-between shadow-card hover:shadow-pop transition ${b.className}`}>
+  const Icon = b.icon;
+  return (
+    <div
+      key={b.title}
+      onClick={() => navigate(b.route)}
+      className={`relative overflow-hidden rounded-3xl p-6 min-h-[200px]
+      flex flex-col justify-between shadow-card hover:shadow-pop
+      hover:scale-105 transition cursor-pointer ${b.className}`}
+    >
                 <div className="flex items-start justify-between">
                   <span className="bg-white/25 backdrop-blur px-3 py-1 rounded-full text-xs font-bold">{b.badge}</span>
                   <Icon className="size-10 opacity-80 animate-float" />
@@ -182,13 +192,32 @@ const addToCart = (product) => {
                 </div>
                 <div className="absolute -right-10 -bottom-10 size-40 rounded-full bg-white/10" />
               </div>
+              
             );
           })}
+          
         </div>
       </section>
 
+      <section className="max-w-7xl mx-auto px-4 py-2">
+
+  <div className="relative overflow-hidden rounded-[40px] shadow-2xl border border-gray-200">
+
+    <img
+      src="/logopic.jpeg"
+      alt="SmartMart Banner"
+      className="w-full object-cover"
+    />
+
+    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+
+  </div>
+
+</section>
+      
+
       {/* CATEGORIES */}
-      <section className="max-w-7xl mx-auto px-4 py-10">
+      <section className="max-w-7xl mx-auto px-4 py-2">
         <div className="flex items-end justify-between mb-6">
           <div>
             <h2 className="text-3xl md:text-4xl font-extrabold">Shop by category</h2>
@@ -196,11 +225,21 @@ const addToCart = (product) => {
           </div>
           <a className="text-sm font-semibold text-primary hidden md:flex items-center gap-1 cursor-pointer">View all <ChevronRight className="size-4" /></a>
         </div>
-        <div className="grid grid-cols-4 md:grid-cols-8 gap-3">
+        <div className=" grid md: grid-cols-5 gap-5 md:grid-cols-5 gap-6">
           {categories.map((c) => {
             const Icon = c.icon;
             return (
-              <button key={c.name} className="group relative bg-card rounded-2xl p-4 shadow-card hover:shadow-pop hover:-translate-y-1 transition text-center">
+              <button
+  key={c.name}
+  onClick={() => {
+    if (c.name === "Groceries") navigate("/grocery");
+    if (c.name === "Fashion") navigate("/fashion");
+    if (c.name === "Electronics") navigate("/electronics");
+    if (c.name === "Furniture") navigate("/furniture");
+    if (c.name === "Beauty") navigate("/beauty");
+  }}
+  className="group relative bg-card rounded-2xl p-4 shadow-card hover:shadow-pop hover:-translate-y-1 transition text-center cursor-pointer"
+>
                 <div className={`size-14 mx-auto rounded-2xl ${c.gradient} grid place-items-center text-white shadow-soft`}>
                   <Icon className="size-7" />
                 </div>
@@ -286,7 +325,13 @@ const addToCart = (product) => {
         </div>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
           {deals.map((d) => (
-            <div key={d.title} className="group relative rounded-2xl overflow-hidden shadow-card hover:shadow-pop transition cursor-pointer">
+           <div
+ 
+  key={d.title}
+  onClick={() => navigate("/grocery")}
+  className="group relative rounded-2xl overflow-hidden shadow-card hover:shadow-pop transition cursor-pointer"
+>
+
               <img src={d.img} alt={d.title} className="aspect-square w-full object-cover group-hover:scale-110 transition duration-500" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-3 text-white">

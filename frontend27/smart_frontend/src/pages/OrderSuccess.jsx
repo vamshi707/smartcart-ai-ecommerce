@@ -8,7 +8,7 @@ export default function OrderSuccess() {
     <div className="w-full h-[70vh] bg-sky-500 flex items-center justify-center relative overflow-hidden">
 
   <button
-    onClick={() => navigate("/")}
+    onClick={() => navigate("/ ")}
     className="absolute top-6 left-6 text-white"
   >
     <ArrowLeft size={35} />
@@ -40,7 +40,7 @@ export default function OrderSuccess() {
       </button>
 
       <button
-        onClick={() => navigate("/")}
+        onClick={() => navigate("/All")}
         className="w-full border-2 border-white py-3 rounded-full font-bold"
       >
         Continue Shopping
