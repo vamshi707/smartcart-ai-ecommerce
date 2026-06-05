@@ -36,8 +36,30 @@ function Payment() {
   }, 0);
 
   const discount = oldTotal - itemTotal;
-  const deliveryFee = itemTotal > 499 ? 0 : 25;
-  const toPay = itemTotal + deliveryFee;
+  const delivery = itemTotal > 499 ? 0 : 25;
+ const gst = Math.round(itemTotal * 0.05);
+
+const toPay =
+  itemTotal +
+  delivery +
+  gst;
+
+const removeItem = (indexToRemove) => {
+  const updatedCart = cartItems.filter(
+    (_, index) => index !== indexToRemove
+  );
+
+  setCartItems(updatedCart);
+
+  localStorage.setItem(
+    cartKey,
+    JSON.stringify(updatedCart)
+  );
+
+  window.dispatchEvent(
+    new Event("cartUpdated")
+  );
+};
 
   const handlePlaceOrder = () => {
     if (!fullName.trim() || !phone.trim() || !address.trim()) {
@@ -62,6 +84,9 @@ function Payment() {
     }
 
     setFormError("");
+    console.log(
+  JSON.stringify(cartItems, null, 2)
+);
 
     fetch("http://127.0.0.1:8000/api/place-order/", {
       method: "POST",
@@ -145,9 +170,20 @@ function Payment() {
                       )}
                     </div>
 
-                    <p className="font-bold">
-                      ₹{getPrice(item.price) * item.quantity}
-                    </p>
+                   <div className="text-right">
+
+  <p className="font-bold">
+    ₹{getPrice(item.price) * item.quantity}
+  </p>
+
+                    <button
+                      onClick={() => removeItem(index)}
+                      className="mt-2 bg-red-500 text-white px-3 py-1 rounded-lg text-xs"
+                    >
+                      ❌ Cancel
+                    </button>
+
+                  </div>
                   </div>
                 ))}
               </div>
@@ -252,22 +288,81 @@ function Payment() {
                         Select UPI App
                       </h3>
 
-                      {["Google Pay", "PhonePe", "Paytm"].map((app) => (
-                        <div
-                          key={app}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setUpiApp(app);
-                          }}
-                          className={`p-3 border rounded-xl cursor-pointer bg-white ${
-                            upiApp === app
-                              ? "border-purple-600 bg-purple-50"
-                              : "border-gray-200"
-                          }`}
-                        >
-                          {app}
-                        </div>
-                      ))}
+                     <div className="space-y-3">
+
+  <div
+    onClick={(e) => {
+      e.stopPropagation();
+      setUpiApp("Google Pay");
+    }}
+    className={`flex items-center gap-4 p-4 border rounded-2xl cursor-pointer ${
+      upiApp === "Google Pay"
+        ? "border-purple-600 bg-purple-50"
+        : "border-gray-200"
+    }`}
+  >
+    <img
+        src="https://i.pinimg.com/564x/67/28/d8/6728d8f618ff531833c69bd830569376.jpg" 
+      alt="Google Pay"
+      className="w-12 h-16 object-contain"
+    />
+    <div>
+      <h3 className="font-bold">Google Pay</h3>
+      <p className="text-sm text-gray-500">
+        Pay instantly with UPI
+      </p>
+    </div>
+  </div>
+
+  <div
+    onClick={(e) => {
+      e.stopPropagation();
+      setUpiApp("PhonePe");
+    }}
+    className={`flex items-center gap-4 p-4 border rounded-2xl cursor-pointer ${
+      upiApp === "PhonePe"
+        ? "border-purple-600 bg-purple-50"
+        : "border-gray-200"
+    }`}
+  >
+    <img
+      src="https://download.logo.wine/logo/PhonePe/PhonePe-Logo.wine.png"
+      alt="PhonePe"
+      className="w-12 h-20 object-contain"
+    />
+    <div>
+      <h3 className="font-bold">PhonePe</h3>
+      <p className="text-sm text-gray-500">
+        Pay instantly with UPI
+      </p>
+    </div>
+  </div>
+
+  <div
+    onClick={(e) => {
+      e.stopPropagation();
+      setUpiApp("Paytm");
+    }}
+    className={`flex items-center gap-4 p-4 border rounded-2xl cursor-pointer ${
+      upiApp === "Paytm"
+        ? "border-purple-600 bg-purple-50"
+        : "border-gray-200"
+    }`}
+  >
+    <img
+      src="https://download.logo.wine/logo/Paytm/Paytm-Logo.wine.png"
+      alt="Paytm"
+      className="w-12 h-20 object-contain"
+    />
+    <div>
+      <h3 className="font-bold">Paytm</h3>
+      <p className="text-sm text-gray-500">
+        Pay instantly with UPI
+      </p>
+    </div>
+  </div>
+
+</div> 
                     </div>
                   )}
                 </div>
@@ -293,8 +388,8 @@ function Payment() {
             </div>
 
             <div className="flex justify-between">
-              <span>Delivery fee</span>
-              <span>{deliveryFee === 0 ? "FREE" : `₹${deliveryFee}`}</span>
+              <span>Delivery </span>
+              <span>{delivery === 0 ? "FREE" : `₹${delivery}`}</span>
             </div>
 
             <hr />

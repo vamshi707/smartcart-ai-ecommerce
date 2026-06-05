@@ -25,10 +25,8 @@ function Furniture() {
 
   const [recommendedProducts, setRecommendedProducts] = useState([]);
 
-  
-
-
-
+  const [showMessage, setShowMessage] = useState(false);
+ 
 useEffect(() => {
 
    fetch("http://127.0.0.1:8000/furniture/")
@@ -473,9 +471,15 @@ onClick={() => setSelectedRoom("Office")}
       </p>
 
       <button
-        onClick={() =>
-          handleAddToCart(item, navigate)
-        }
+          onClick={() => {
+    handleAddToCart(item, navigate);
+
+    setShowMessage(true);
+
+    setTimeout(() => {
+      setShowMessage(false);
+    }, 1000);
+  }}
           className="flex-1 bg-yellow-600 text-white py-3 rounded-xl"
   >
     🛒 Cart
@@ -579,12 +583,15 @@ onClick={() => setSelectedRoom("Office")}
 
         </div>
   <button
-  onClick={() =>
-    handleAddToCart(
-      item,
-      navigate
-    )
-  }
+  onClick={() => {
+    handleAddToCart(item, navigate);
+
+    setShowMessage(true);
+
+    setTimeout(() => {
+      setShowMessage(false);
+    }, 1000);
+  }}
   className="w-full mt-4 bg-purple-600 text-white py-3 rounded-xl"
 >
   Add To Cart
@@ -597,6 +604,11 @@ onClick={() => setSelectedRoom("Office")}
   ))}
 
 </div>
+{showMessage && (
+  <div className="fixed top-5 right-5 bg-green-500 text-white px-6 py-3 rounded-xl shadow-lg z-[9999]">
+    ✅ Added To Cart
+  </div>
+)}
 
 <Footer />
 

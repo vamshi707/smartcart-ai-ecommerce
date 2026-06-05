@@ -9,13 +9,17 @@ import "swiper/css";
 import { useNavigate } from "react-router-dom";
 import { handleAddToCart } from "../utils/cartUtils";
 
+
 export default function Grocery() {
   const navigate = useNavigate();
 
   const [products, setProducts] = useState([]);
+
+  const [showMessage, setShowMessage] = useState(false);
   
 
   useEffect(() => {
+
 
     fetch("http://127.0.0.1:8000/grocery/")
       .then((response) => response.json())
@@ -24,6 +28,7 @@ export default function Grocery() {
       });
 
   }, []);
+
 
   return (
     <>
@@ -138,17 +143,20 @@ export default function Grocery() {
 
             {/* ADD BUTTON */}
 
-             <button
- onClick={() =>
-  handleAddToCart(
-    item,
-    navigate
-  )
-}
+<button
+  onClick={() => {
+    handleAddToCart(item, navigate);
+
+    setShowMessage(true);
+
+    setTimeout(() => {
+      setShowMessage(false);
+    }, 1000);
+  }}
   className="absolute top-32 right-3 bg-white border-2 border-pink-500 text-pink-500 font-bold px-5 py-1 rounded-xl shadow hover:bg-pink-500 hover:text-white transition"
 >
   ADD
-</button> 
+</button>
 
             {/* CONTENT */}
 
@@ -237,6 +245,11 @@ export default function Grocery() {
       </div>
 
     </div>
+ {showMessage && (
+  <div className="fixed top-5 right-5 bg-green-500 text-white px-6 py-3 rounded-xl shadow-lg z-[9999]">
+    ✅ Added To Cart
+  </div>
+)}
     
      <Footer />
     

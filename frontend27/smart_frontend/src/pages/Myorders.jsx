@@ -5,6 +5,11 @@ function MyOrders() {
 
 const [orders, setOrders] = useState([]);
 const navigate = useNavigate();
+const [showCancelModal, setShowCancelModal] =
+  useState(false);
+
+const [selectedItemId, setSelectedItemId] =
+  useState(null);
 
 useEffect(() => {
 
@@ -31,7 +36,38 @@ useEffect(() => {
 
 }, [navigate]);
 
+const cancelProduct = async (
+  itemId,
+  reason
+) => {
+
+  try {
+
+    await fetch(
+      `http://127.0.0.1:8000/api/cancel-product/${itemId}/`,
+      {
+        method: "POST",
+
+        headers: {
+          "Content-Type":
+            "application/json",
+        },
+
+        body: JSON.stringify({
+          reason,
+        }),
+      }
+    );
+
+    window.location.reload();
+
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 return (
+  <> 
 
 
 <div className="min-h-screen bg-gray-100 p-5">
@@ -59,6 +95,8 @@ return (
 
         {order.items?.map((item, index) => (
 
+          
+
           <div
             key={index}
             className="flex gap-4 py-3 border-b"
@@ -84,6 +122,32 @@ return (
                 ₹{item.price}
               </p>
 
+              {!item.cancelled ? (
+
+<button
+  onClick={() => {
+    setSelectedItemId(item.id);
+    setShowCancelModal(true);
+  }}
+  className="mt-2 bg-red-500 text-white px-4 py-2 rounded-lg"
+>
+  ❌ Cancel Product
+</button>
+
+) : (
+
+<div className="mt-2">
+  <p className="text-red-600 font-bold">
+    ❌ Cancelled
+  </p>
+
+  <p className="text-sm text-gray-500">
+    Reason: {item.cancel_reason}
+  </p>
+</div>
+
+)}
+
             </div>
 
           </div>
@@ -104,17 +168,7 @@ return (
 
           </div>
 
-          <div className="flex gap-3">
-
-
-            <button
-  onClick={() => cancelOrder(order.id)}
-  className="flex-1 bg-red-600 text-white py-3 rounded-xl"
->
-  ❌ Cancel your order
-</button>
-
-          </div>
+        
 
         </div>
 
@@ -126,7 +180,58 @@ return (
 
 </div>
 
+{showCancelModal && (
+  <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
 
+    <div className="bg-white rounded-3xl p-6 w-[90%] max-w-md">
+
+      <h2 className="text-xl font-bold mb-4">
+        Why are you cancelling?
+      </h2>
+
+      <button
+        onClick={() => cancelProduct(selectedItemId, "Wrong Address")}
+       className="w-full text-center border border-gray-200 p-4 rounded-2xl mb-3 hover:bg-red-50 hover:border-red-400 hover:text-red-600 transition duration-300 cursor-pointer font-medium"
+      >
+        Wrong Address
+      </button>
+
+      <button
+        onClick={() => cancelProduct(selectedItemId, "Ordered By Mistake")}
+         className="w-full text-center border border-gray-200 p-4 rounded-2xl mb-3 hover:bg-red-50 hover:border-red-400 hover:text-red-600 transition duration-300 cursor-pointer font-medium"
+      >
+        Ordered By Mistake
+      </button>
+
+      <button
+        onClick={() => cancelProduct(selectedItemId, "Found Better Price")}
+        className="w-full text-center border border-gray-200 p-4 rounded-2xl mb-3 hover:bg-red-50 hover:border-red-400 hover:text-red-600 transition duration-300 cursor-pointer font-medium"
+      >
+        Found Better Price
+      </button>
+
+      <button
+        onClick={() => cancelProduct(selectedItemId, "Don't Need Product")}
+         className="w-full text-center border border-gray-200 p-4 rounded-2xl mb-3 hover:bg-red-50 hover:border-red-400 hover:text-red-600 transition duration-300 cursor-pointer font-medium"
+      >
+        Don't Need Product
+      </button>
+
+      <button
+        onClick={() => setShowCancelModal(false)}
+        className="w-full bg-gray-800 text-white py-3 rounded-2xl mt-4 hover:bg-black transition duration-300 cursor-pointer"
+      >
+        close
+      </button>
+
+    </div>
+
+  </div>
+)}
+
+
+
+</>
 );
 }
 

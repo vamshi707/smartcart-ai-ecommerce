@@ -92,6 +92,7 @@ function Home() {
   
 
   const navigate = useNavigate();
+  
 
 const addToCart = (product) => {
   const isLoggedIn = sessionStorage.getItem("isLoggedIn");
@@ -328,7 +329,7 @@ const addToCart = (product) => {
            <div
  
   key={d.title}
-  onClick={() => navigate("/grocery")}
+  onClick={() => navigate("/All")}
   className="group relative rounded-2xl overflow-hidden shadow-card hover:shadow-pop transition cursor-pointer"
 >
 

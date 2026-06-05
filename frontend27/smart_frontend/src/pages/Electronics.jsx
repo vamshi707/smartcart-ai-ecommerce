@@ -35,6 +35,8 @@ const navigate = useNavigate();
 
   const [selectedCategory, setSelectedCategory] = useState("");
 
+  const [showMessage, setShowMessage] = useState(false);
+
   // FETCH PRODUCTS
 
   useEffect(() => {
@@ -589,8 +591,16 @@ setOutputImage(
       </p>
 
       {/* BUTTON */}
- <button
-  onClick={() => handleAddToCart(item, navigate)}
+<button
+  onClick={() => {
+    handleAddToCart(item, navigate);
+
+    setShowMessage(true);
+
+    setTimeout(() => {
+      setShowMessage(false);
+    }, 1000);
+  }}
   className="w-full mt-4 bg-purple-600 text-white py-3 rounded-xl"
 >
   Add To Cart
@@ -751,8 +761,16 @@ setOutputImage(
 
                 {/* BUTTON */}
 
-                <button
-  onClick={() => handleAddToCart(item, navigate)}
+    <button
+  onClick={() => {
+    handleAddToCart(item, navigate);
+
+    setShowMessage(true);
+
+    setTimeout(() => {
+      setShowMessage(false);
+    }, 1000);
+  }}
   className="w-full mt-4 bg-purple-600 text-white py-3 rounded-xl"
 >
   Add To Cart
@@ -767,6 +785,11 @@ setOutputImage(
         </div>
 
       </div>
+      {showMessage && (
+  <div className="fixed top-20 right-5 bg-green-600 text-white px-6 py-3 rounded-xl shadow-2xl z-[99999]">
+    Added To Cart 🛒
+  </div>
+)}
 
       <Footer />
 

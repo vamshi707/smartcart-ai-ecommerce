@@ -32,9 +32,13 @@ export const handleAddToCart = (product, navigate) => {
     });
   }
 
-  localStorage.setItem(cartKey, JSON.stringify(existingCart));
+localStorage.setItem(cartKey, JSON.stringify(existingCart));
 
-  window.dispatchEvent(new Event("cartUpdated"));
+window.dispatchEvent(new Event("cartUpdated"));
+
+window.dispatchEvent(
+  new Event("showCartMessage")
+);
 
   
 };

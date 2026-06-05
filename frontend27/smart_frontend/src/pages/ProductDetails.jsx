@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
+
 export default function ProductDetails() {
   const { state } = useLocation();
   const navigate = useNavigate();
@@ -10,6 +11,7 @@ export default function ProductDetails() {
   const product = state?.product;
 
   const [selectedSize, setSelectedSize] = useState("");
+  const [showMessage, setShowMessage] = useState(false);
 
   if (!product) {
     return <h1>No Product Found</h1>;
@@ -17,6 +19,8 @@ export default function ProductDetails() {
 
   
   const addToCart = () => {
+  console.log("Current Size:", selectedSize);
+
   if (!selectedSize) {
     alert("Please select size");
     return;
@@ -40,8 +44,14 @@ export default function ProductDetails() {
     return;
   }
 
-  let cart =
-    JSON.parse(localStorage.getItem("cart")) || [];
+ const userEmail = localStorage.getItem("userEmail");
+
+const cartKey = userEmail
+  ? `cart_${userEmail}`
+  : "cart";
+
+let cart =
+  JSON.parse(localStorage.getItem(cartKey)) || [];
 
   const existingItem = cart.find(
     (item) =>
@@ -63,7 +73,18 @@ export default function ProductDetails() {
     cart.push(cartItem);
   }
 
-  localStorage.setItem("cart", JSON.stringify(cart));
+console.log("Saving Cart:", cart);
+
+localStorage.setItem(
+  cartKey,
+  JSON.stringify(cart)
+);
+
+setShowMessage(true);
+
+setTimeout(() => {
+  setShowMessage(false);
+}, 2000);
 
   window.dispatchEvent(new Event("cartUpdated"));
 
@@ -119,7 +140,10 @@ export default function ProductDetails() {
               {["S", "M", "L", "XL"].map((size) => (
                 <button
                   key={size}
-                  onClick={() => setSelectedSize(size)}
+                  onClick={() => {
+  console.log("Selected:", size);
+  setSelectedSize(size);
+}}
                   className={`px-5 py-3 rounded-xl border transition ${
                     selectedSize === size
                       ? "bg-purple-500 text-white"
@@ -143,6 +167,12 @@ export default function ProductDetails() {
         </div>
       </div>
     </div>
+
+    {showMessage && (
+      <div className="fixed top-5 right-5 bg-green-500 text-white px-6 py-3 rounded-xl shadow-lg z-50 animate-bounce">
+        ✅ Added To Cart
+      </div>
+    )}
   </div>
 );
 }

@@ -4,13 +4,13 @@ export default function Admin() {
 
   return (
 
-    <div className="min-h-screen bg-gray-100 p-10">
+    <div className="min-h-screen bg-black p-10">
 
-      <h1 className="text-5xl font-bold text-center mb-14">
-        Owner Dashboard
+      <h1 className="text-5xl font-bold text-center mb-14 text-white">
+        SMARTCART  Owner Dashboard 
       </h1>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
 
         {/* Fashion */}
 
@@ -39,7 +39,7 @@ export default function Admin() {
         <div className="bg-white p-10 rounded-3xl shadow-lg hover:shadow-2xl hover:-translate-y-2 transition duration-300">
 
           <h2 className="text-3xl font-bold mb-4">
-            Electronics
+            Hardware product
           </h2>
 
           <p className="text-gray-500 mb-6">
@@ -106,7 +106,7 @@ export default function Admin() {
             Manage  Beauty and daily essential products.
           </p>
            <Link to="/beauty-admin"> 
-          <button className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-2xl transition duration-300">
+          <button className="bg-pink-600 hover:bg-pink-700 text-white px-6 py-3 rounded-2xl transition duration-300">
             Open
           </button>
           </Link>

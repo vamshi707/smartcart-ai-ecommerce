@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { handleAddToCart } from "../utils/cartUtils";
 
 
+
 function Beauty() {
   const navigate = useNavigate();
 
@@ -19,6 +20,7 @@ function Beauty() {
   const [selectedGender, setSelectedGender] = useState("");
   const [recommendedProducts, setRecommendedProducts] = useState([]);
   const [skinType, setSkinType] = useState("");
+  const [showMessage, setShowMessage] = useState(false);
 
   useEffect(() => {
     fetch("http://127.0.0.1:8000/beauty/")
@@ -350,7 +352,7 @@ function Beauty() {
           {showResult ? "Recommended Products" : "Beauty Products"}
         </h1>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-5">
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-5">
           {(showResult ? recommendedProducts : products).map((item) => (
             <div
               key={item.id}
@@ -410,7 +412,15 @@ function Beauty() {
                 </div>
 
                 <button
-                  onClick={() => handleAddToCart(item, navigate)}
+                    onClick={() => {
+    handleAddToCart(item, navigate);
+
+    setShowMessage(true);
+
+    setTimeout(() => {
+      setShowMessage(false);
+    }, 1000);
+  }}
                   className="w-full mt-4 bg-pink-600 text-white py-3 rounded-xl hover:bg-pink-700"
                 >
                   Add To Cart
@@ -419,6 +429,11 @@ function Beauty() {
             </div>
           ))}
         </div>
+        {showMessage && (
+  <div className="fixed top-5 right-5 bg-green-500 text-white px-6 py-3 rounded-xl shadow-lg z-[9999]">
+    ✅ Added To Cart
+  </div>
+)}
 
         <Footer />
       </div>
