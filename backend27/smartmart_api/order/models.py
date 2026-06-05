@@ -22,3 +22,12 @@ class OrderItem(models.Model):
     quantity = models.IntegerField()
     category = models.CharField(max_length=100)
 # Create your models here.
+
+    cancelled = models.BooleanField(
+        default=False
+    )
+
+    cancel_reason = models.CharField(
+        max_length=200,
+        blank=True
+    )
