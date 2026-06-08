@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -15,11 +15,21 @@ export default function Login() {
 
   const [timer, setTimer] = useState(0);
   const [otpExpired, setOtpExpired] = useState(false);
-  const [intervalId, setIntervalId] = useState(null);
-
+  const intervalRef = useRef(null);
   useEffect(() => {
-    return () => intervalId && clearInterval(intervalId);
-  }, [intervalId]);
+  if (localStorage.getItem("isLoggedIn") === "true") {
+    const redirectPath = localStorage.getItem("redirectAfterLogin") || "/";
+    localStorage.removeItem("redirectAfterLogin");
+    navigate(redirectPath, { replace: true });
+  }
+}, [navigate]);
+useEffect(() => {
+  return () => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+    }
+  };
+}, []);
 
   const sendOtp = async () => {
     if (!email) {
@@ -37,59 +47,81 @@ export default function Login() {
       setExistingUser(res.data.existing_user);
 
       setOtpExpired(false);
-      setTimer(30);
+setTimer(30);
+setOtp("");
 
-      if (intervalId) clearInterval(intervalId);
+      if (intervalRef.current) {
+  clearInterval(intervalRef.current);
+}
 
-      const id = setInterval(() => {
-        setTimer((prev) => {
-          if (prev <= 1) {
-            clearInterval(id);
-            setOtpExpired(true);
-            return 0;
-          }
-          return prev - 1;
-        });
-      }, 1000);
+intervalRef.current = setInterval(() => {
+  setTimer((prev) => {
+    if (prev <= 1) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+      setOtpExpired(true);
+      return 0;
+    }
+    return prev - 1;
+  });
+}, 1000);
 
-      setIntervalId(id);
+     
     } catch {
       setError("Failed to send OTP");
     }
   };
 
   const loginUser = async () => {
-    try {
-      await axios.post("http://127.0.0.1:8000/verify-login-otp/", {
-        email,
-        otp,
-      });
+  if (otpExpired) {
+    setError("OTP expired. Please resend OTP.");
+    return;
+  }
 
-      localStorage.setItem("isLoggedIn", "true");
-      localStorage.setItem("userEmail", email);
-      navigate(-1);
-    } catch {
-      setError("Invalid OTP");
-    }
-  };
+  try {
+    await axios.post("http://127.0.0.1:8000/verify-login-otp/", {
+      email,
+      otp,
+    });
+
+    localStorage.setItem("isLoggedIn", "true");
+    localStorage.setItem("userEmail", email);
+
+    const redirectPath = localStorage.getItem("redirectAfterLogin") || "/";
+    localStorage.removeItem("redirectAfterLogin");
+
+    navigate(redirectPath, { replace: true });
+  } catch {
+    setError("Invalid OTP");
+  }
+};
 
   const registerUser = async () => {
-    if (!name) return setError("Enter name");
+  if (!name) return setError("Enter name");
 
-    try {
-      await axios.post("http://127.0.0.1:8000/register/", {
-        name,
-        email,
-        otp,
-      });
+  if (otpExpired) {
+    setError("OTP expired. Please resend OTP.");
+    return;
+  }
 
-      localStorage.setItem("isLoggedIn", "true");
-      localStorage.setItem("userEmail", email);
-      navigate(-1);
-    } catch {
-      setError("Registration Failed");
-    }
-  };
+  try {
+    await axios.post("http://127.0.0.1:8000/register/", {
+      name,
+      email,
+      otp,
+    });
+
+    localStorage.setItem("isLoggedIn", "true");
+    localStorage.setItem("userEmail", email);
+
+    const redirectPath = localStorage.getItem("redirectAfterLogin") || "/";
+    localStorage.removeItem("redirectAfterLogin");
+
+    navigate(redirectPath, { replace: true });
+  } catch {
+    setError("Registration Failed");
+  }
+};
 
   return (
     <div className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center px-4">
@@ -171,9 +203,10 @@ export default function Login() {
               </div>
 
               <button
-                onClick={existingUser ? loginUser : registerUser}
-                className="w-full mt-6 bg-pink-600 text-white py-4 rounded-full font-bold"
-              >
+  onClick={existingUser ? loginUser : registerUser}
+  disabled={otpExpired}
+  className="w-full mt-6 bg-pink-600 disabled:bg-gray-400 text-white py-4 rounded-full font-bold"
+>
                 {existingUser ? "Login" : "Register"}
               </button>
             </>
