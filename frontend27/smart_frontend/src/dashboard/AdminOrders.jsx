@@ -444,49 +444,55 @@ orders.forEach((order) => {
 
 });
 
-const monthlyChart = {
+console.log("Monthly Revenue =", monthlyRevenue);
 
+const monthlyChart = {
   series: [{
     name: "Revenue",
     data: monthlyRevenue
   }],
 
-   options: {
+  options: {
+    chart: {
+      type: "line",
+      toolbar: {
+        show: false
+      }
+    },
 
-  chart: {
-    type: "line",
-    toolbar: {
-      show: false
-    }
-  },
+    stroke: {
+      curve: "straight",
+      width: 10
+    },
 
-  stroke: {
-    curve: "smooth",
-    width: 4
-  },
+    markers: {
+      size: 6
+    },
 
-  fill: {
-    opacity: 0
-  },
+    dataLabels: {
+      enabled: false
+    },
 
-  markers: {
-    size: 6
-  },
-
+    fill: {
+      opacity: 0
+    },
+    grid: {
+  borderColor: "#5f6d85"
+},
   theme: {
-    mode: "dark"
-  },
+      mode: "dark"
+    },
 
-  xaxis: {
-    categories: [
-      "Jan","Feb","Mar","Apr",
-      "May","Jun","Jul","Aug",
-      "Sep","Oct","Nov","Dec"
-    ]
+    colors: ["#22C55E"],
+
+    xaxis: {
+      categories: [
+        "Jan","Feb","Mar","Apr",
+        "May","Jun","Jul","Aug",
+        "Sep","Oct","Nov","Dec"
+      ]
+    }
   }
-
-}
-
 };
 
 
@@ -531,15 +537,19 @@ orders.forEach((order) => {
 
 });
 
+
+
 const bestProduct =
   Object.entries(productSales)
     .sort((a,b)=>b[1].qty-a[1].qty)[0];
+
+
 
  
   return (
     <> 
 
-    <div className="min-h-screen bg-gray-100 p-6">
+    <div className="min-h-screen bg-gray-100 p-6 ">
 
       <h1 className="text-4xl font-bold mb-6 text-center">
   📦 Orders Dashboard
@@ -585,15 +595,49 @@ orders.map((order) => (
           className="bg-white rounded-2xl shadow p-5 mb-5"
         >
 
-          <h2 className="text-2xl font-bold text-center">
-            Order #{order.id}
-          </h2>
+        <h2 className="text-2xl font-bold text-center">
+  Order #{order.id}
+</h2>
 
-          <p>
-            Customer:
-            {" "}
-            {order.email}
-          </p>
+<div className="mt-4 space-y-2">
+
+  <p>
+    👤 <span className="font-bold">Name:</span>
+    {" "}
+    {order.full_name}
+  </p>
+
+  <p>
+    📧 <span className="font-bold">Email:</span>
+    {" "}
+    {order.email}
+  </p>
+
+  <p>
+    📱 <span className="font-bold">Phone:</span>
+    {" "}
+    {order.phone}
+  </p>
+
+  <p>
+    🏠 <span className="font-bold">Address:</span>
+    {" "}
+    {order.address}
+  </p>
+
+  <p>
+    💳 <span className="font-bold">Payment:</span>
+    {" "}
+    {order.payment_method}
+  </p>
+
+  <p>
+    💰 <span className="font-bold">Total:</span>
+    {" "}
+    ₹{order.total_amount}
+  </p>
+
+</div>
 
           <p>
             Total:
@@ -606,19 +650,7 @@ orders.map((order) => (
             {" "}
             {order.payment_method}
           </p>
-          <div className="flex gap-3 mt-4">
-
- <button
-  onClick={() => {
-    setSelectedOrderId(order.id);
-    setShowDeleteModal(true);
-  }}
-  className="bg-red-600 text-white px-5 py-2 rounded-xl hover:bg-red-700 cursor-pointer"
->
-  🗑 Delete Order
-</button>
-
-</div>
+ 
 {showDeleteModal && (
 
   <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
@@ -709,6 +741,20 @@ orders.map((order) => (
                     
 
                   )}
+
+                            <div className="flex gap-3 mt-4">
+
+ <button
+  onClick={() => {
+    setSelectedOrderId(order.id);
+    setShowDeleteModal(true);
+  }}
+  className="bg-red-600 text-white px-5 py-2 rounded-xl hover:bg-red-700 cursor-pointer"
+>
+  🗑 Delete Order
+</button>
+
+</div>
                   
                   
                 
@@ -1009,13 +1055,7 @@ orders.map((order) => (
   </div>
 
  
-
-
-
  
-
-
-
 )}
 
 
@@ -1218,27 +1258,57 @@ orders.map((order) => (
   </h2>
 
   {orders.map(order =>
-    order.items?.map(item =>
-      item.cancelled && (
+  order.items?.map(item =>
+    item.cancelled && (
 
-        <div
-          key={item.id}
-          className="border-b py-3"
-        >
+      <div
+        key={item.id}
+        className="bg-white rounded-2xl shadow-lg p-5 mb-4 border"
+      >
 
-          <h3 className="font-bold">
-            {item.product_name}
-          </h3>
+        <div className="flex gap-4">
 
-          <p className="text-red-600">
-            {item.cancel_reason}
-          </p>
+          <img
+            src={item.product_image}
+            alt=""
+            className="w-24 h-24 object-contain"
+          />
+
+          <div>
+
+            <h3 className="text-xl font-bold">
+              {item.product_name}
+            </h3>
+
+            <p className="text-blue-600 font-semibold">
+              Category: {item.category}
+            </p>
+
+            <p>
+              Customer: {order.full_name}
+            </p>
+
+            <p>
+              Email: {order.email}
+            </p>
+
+            <p>
+              Address: {order.address}
+            </p>
+
+            <p className="text-red-600 font-bold mt-2">
+              Reason: {item.cancel_reason}
+            </p>
+
+          </div>
 
         </div>
 
-      )
+      </div>
+
     )
-  )}
+  )
+)}
 
 </div>
 
