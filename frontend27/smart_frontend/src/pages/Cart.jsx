@@ -8,6 +8,15 @@ export default function Cart() {
 
   const userEmail = localStorage.getItem("userEmail");
   const cartKey = userEmail ? `cart_${userEmail}` : "cart";
+  const handleCheckout = () => {
+  if (localStorage.getItem("isLoggedIn") !== "true") {
+    localStorage.setItem("redirectAfterLogin", "/payment");
+    navigate("/login");
+    return;
+  }
+
+  navigate("/payment");
+};
 
   useEffect(() => {
     const storedCart =
@@ -184,12 +193,11 @@ const finalTotal =
         </div>
 
         <button
-          onClick={() => navigate("/payment")}
-          className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-2xl font-bold"
-        >
-          Proceed To Pay →
-        </button>
-
+  onClick={handleCheckout}
+  className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-2xl font-bold"
+>
+  Proceed To Pay →
+</button>
       </div>
 
     </div>

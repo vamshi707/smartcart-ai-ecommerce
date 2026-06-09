@@ -55,6 +55,14 @@ const handleSearch = (e) => {
     navigate(`/search?query=${searchText}`);
   }
 };
+const handleLogout = () => {
+  localStorage.removeItem("isLoggedIn");
+  localStorage.removeItem("userEmail");
+  localStorage.removeItem("redirectAfterLogin");
+
+  navigate("/", { replace: true });
+  window.location.reload();
+};
 
   return (
 
@@ -127,17 +135,11 @@ const handleSearch = (e) => {
 
           {/* LOGIN */}
 
-          {localStorage.getItem("isLoggedIn") ? (
+      {/* LOGIN */}
 
+{localStorage.getItem("isLoggedIn") === "true" ? (
   <div
-    onClick={() => {
-      localStorage.removeItem("isLoggedIn");
-      localStorage.removeItem("userEmail");
-
-      navigate("/login");
-
-      window.location.reload();
-    }}
+    onClick={handleLogout}
     className="flex flex-col items-center cursor-pointer hover:text-red-600 transition"
   >
     <User size={26} />
@@ -146,9 +148,7 @@ const handleSearch = (e) => {
       Logout
     </span>
   </div>
-
 ) : (
-
   <Link to="/login">
     <div className="flex flex-col items-center cursor-pointer hover:text-purple-600 transition">
       <User size={26} />
@@ -158,8 +158,9 @@ const handleSearch = (e) => {
       </span>
     </div>
   </Link>
-
 )}
+
+
 
           {/* CART */}
 
