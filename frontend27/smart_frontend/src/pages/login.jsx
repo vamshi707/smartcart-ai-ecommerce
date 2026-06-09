@@ -102,7 +102,7 @@ export default function Login() {
         </button>
 
         <div className="bg-purple-800 text-white p-10 flex flex-col justify-center">
-          <h1 className="text-6xl font-extrabold mb-14">SmartMart</h1>
+          <h1 className="text-6xl font-extrabold mb-14">SmartCart</h1>
 
           <h2 className="text-4xl font-bold leading-tight">
             Lowest Prices Everyday

@@ -22,6 +22,7 @@ import FurnitureAdmin from "./dashboard/FurnitureAdmin";
 import BeautyAdmin from "./dashboard/BeautyAdmin";
 import Beauty from "./pages/Beauty";
 import Payment from "./pages/Payment";
+import AdminOrders from "./dashboard/AdminOrders";
 
 function App() {
 
@@ -84,6 +85,11 @@ function App() {
           <Route
   path="/beauty-admin"
   element={<BeautyAdmin />}
+/>
+
+      <Route
+  path="/admin-orders"
+  element={<AdminOrders />}
 />
 
       </Routes>

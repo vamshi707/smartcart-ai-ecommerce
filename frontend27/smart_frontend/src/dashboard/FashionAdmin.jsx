@@ -95,7 +95,7 @@ export default function FashionAdmin() {
 
   setMessage("");
 
-}, 3000);
+}, 1000);
 
   }
 
@@ -144,6 +144,8 @@ export default function FashionAdmin() {
         >
           Update Product
         </button>
+        
+        
 
       </div>
 
