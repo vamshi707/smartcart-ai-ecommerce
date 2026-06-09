@@ -89,3 +89,14 @@ def admin_orders(request):
     )
 
     return Response(serializer.data)
+
+@api_view(["POST"])
+def delete_order(request, id):
+
+    order = Order.objects.get(id=id)
+
+    order.delete()
+
+    return Response({
+        "message": "Order deleted"
+    })
