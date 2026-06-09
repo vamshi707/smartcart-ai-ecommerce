@@ -77,3 +77,15 @@ def cancel_product(request, id):
     return Response({
         "message": "Product Cancelled"
     })
+
+@api_view(["GET"])
+def admin_orders(request):
+
+    orders = Order.objects.all().order_by("-created_at")
+
+    serializer = OrderSerializer(
+        orders,
+        many=True
+    )
+
+    return Response(serializer.data)
