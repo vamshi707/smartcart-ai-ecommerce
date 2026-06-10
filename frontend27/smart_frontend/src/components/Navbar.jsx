@@ -16,11 +16,18 @@ import {
 } from "lucide-react";
 
 
+
 export default function Navbar() {
  const [cartCount, setCartCount] = useState(0);
  
   const [searchText, setSearchText] = useState("");
   const navigate = useNavigate();
+
+  const [showAdminModal, setShowAdminModal] =
+useState(false);
+
+const [adminId, setAdminId] =
+useState("");
 
 useEffect(() => {
  const updateCartCount = () => {
@@ -64,9 +71,29 @@ const handleLogout = () => {
   window.location.reload();
 };
 
+ const checkAdmin = () => {
+
+  if(adminId === "SMART123"){
+
+    navigate("/admin");
+
+  }else{
+
+    alert("Wrong Admin ID");
+
+    navigate("/");
+
+  }
+
+  setShowAdminModal(false);
+
+  setAdminId("");
+
+};
+
   return (
 
-    <div className="bg-white shadow-md sticky top-0 z-50">
+    <div className="bg-white shadow-md sticky fixed top-0 z-50">
 
       {/* TOP NAVBAR */}
 
@@ -185,6 +212,19 @@ const handleLogout = () => {
       <span className="text-sm font-medium">My Orders</span>
     </div>
   </Link>
+
+ <div
+  onClick={() => setShowAdminModal(true)}
+  className="flex flex-col items-center cursor-pointer hover:text-purple-600 transition"
+>
+  <span className="text-xl md:text-2xl">
+    ⚙️
+  </span>
+
+  <span className="text-xs md:text-sm font-medium">
+    Admin
+  </span>
+</div>
 
         </div>
 
@@ -306,9 +346,58 @@ const handleLogout = () => {
   </div>
 </Link>
         </div>
+        {showAdminModal && (
+
+<div className="fixed inset-0 bg-black/50 flex items-center justify-center z-[9999]">
+
+  <div className="bg-white p-6 rounded-3xl shadow-2xl w-[90%] max-w-sm">
+
+    <h2 className="text-2xl font-bold text-center mb-4">
+      Admin Login
+    </h2>
+
+    <input
+      type="password"
+      value={adminId}
+      onChange={(e)=>
+        setAdminId(e.target.value)
+      }
+      placeholder="Enter Admin ID"
+      className="w-full border p-3 rounded-xl"
+    />
+
+    <div className="flex gap-3 mt-5">
+
+      <button
+        onClick={() =>
+          setShowAdminModal(false)
+        }
+        className="flex-1 bg-gray-300 py-3 rounded-xl"
+      >
+        Cancel
+      </button>
+
+      <button
+        onClick={checkAdmin}
+        className="flex-1 bg-purple-600 text-white py-3 rounded-xl"
+      >
+        Login
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+)}
+
+        
         
 
       </div>
+
+      
 
   
 
