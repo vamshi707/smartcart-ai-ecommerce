@@ -274,10 +274,7 @@ const handleLogout = () => {
           <span className="font-medium">
             Groceries
           </span>
-           
-
-        
-
+ 
         </div>
         </Link>
         
