@@ -1,6 +1,5 @@
- 
-import { HashRouter, Routes, Route } from "react-router-dom";
 
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import CustomerLayout from "./layouts/CustomerLayout";
 import OrderSuccess from "./pages/OrderSuccess";
 import Home from "./pages/Home";
@@ -29,7 +28,7 @@ function App() {
 
   return (
 
-   <HashRouter>
+   <BrowserRouter>
 
       <ScrollToTop />
 
@@ -96,7 +95,7 @@ function App() {
       </Routes>
       
 
-    </HashRouter>
+   </BrowserRouter>
 
   );
 }

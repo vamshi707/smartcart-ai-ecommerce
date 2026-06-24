@@ -13,7 +13,7 @@ export default function All() {
 
 
         {/* HERO BANNER */}
-<div className="bg-black p-2 rounded-[50px] mb-2"> 
+<div className="bg-black p-2 rounded-[30px] mb-2"> 
          <Swiper
   modules={[Autoplay]}
   autoplay={{
@@ -22,55 +22,37 @@ export default function All() {
   }}
   loop={true}
 > 
- <SwiperSlide>
-  
-
-    <img
-      src="/WhatsApp Image 2026-06-03 at 11.28.13 PM (1).jpeg"
-      alt="Fashion Banner"
-       className="w-full h-[420px] object-cover rounded-[40px]"
-    />
-
- 
+  <SwiperSlide>
+  <img
+    src="/WhatsApp Image 2026-06-03 at 11.28.13 PM (1).jpeg"
+    alt="Fashion Banner"
+    className="w-full h-[180px] sm:h-[250px] md:h-[350px] lg:h-[420px] object-cover rounded-xl md:rounded-[40px]"
+  />
 </SwiperSlide>
 
- <SwiperSlide>
-  
-
-    <img
-      src="/bety.png"
-      alt="Fashion Banner"
-       className="w-full h-[420px] object-cover rounded-[40px]"
-    />
-
- 
+<SwiperSlide>
+  <img
+    src="/bety.png"
+    alt="Beauty Banner"
+    className="w-full h-[180px] sm:h-[250px] md:h-[350px] lg:h-[420px] object-cover rounded-xl md:rounded-[40px]"
+  />
 </SwiperSlide>
 
- <SwiperSlide>
- 
-  
-
-    <img
-      src="/fashionsmall.png"
-      alt="Fashion Banner"
-       className="w-full h-[420px] object-cover rounded-[40px]"
-    />
-
- 
+<SwiperSlide>
+  <img
+    src="/fashionsmall.png"
+    alt="Fashion Banner"
+    className="w-full h-[180px] sm:h-[250px] md:h-[350px] lg:h-[420px] object-cover rounded-xl md:rounded-[40px]"
+  />
 </SwiperSlide>
 
-
- <SwiperSlide>
-  
-    <img
-      src="/grocerysmall.png"
-      alt="Fashion Banner"
-       className="w-full h-[420px] object-cover rounded-[40px]"
-    />
-
+<SwiperSlide>
+  <img
+    src="/grocerysmall.png"
+    alt="Grocery Banner"
+    className="w-full h-[180px] sm:h-[250px] md:h-[350px] lg:h-[420px] object-cover rounded-x1 md:rounded-[40px]"
+  />
 </SwiperSlide>
-   
-
 
 </Swiper>
 </div>
@@ -216,12 +198,12 @@ style={{
         {/* FASHION */}
         
 
-       <div className="bg-black rounded-3xl p-5 shadow mb-8 ">
-            <img
-    src="/WhatsApp Image 2026-06-03 at 11.28.13 PM.jpeg"
-    alt="SmartMart Grocery Festival"
-  className="w-full h-[600px] md:h-[600px] object-cover rounded-3xl"
-  />
+       <div className="bg-black rounded-3xl p-2 shadow mb-8 ">
+       <img
+  src="/WhatsApp Image 2026-06-03 at 11.28.13 PM.jpeg"
+  alt="SmartMart Grocery Festival"
+  className="w-full h-[450px] sm:h-[440px] md:h-[460px] lg:h-[600px] object-cover rounded-2xl"
+/>
 
   <div className="flex justify-between items-center mb-4 flex-col">
     <h2 className="text-3xl font-bold text-pink-600">
@@ -550,11 +532,11 @@ style={{
 
         {/* BEAUTY */}
 
-       <div className="bg-blue-950 rounded-3xl p-6 shadow mb-8">
+       <div className="bg-blue-950 rounded-3xl p-2 shadow mb-8">
          <img
     src="/WhatsApp Image 2026-06-03 at 11.28.12 PM.jpeg"
     alt="SmartMart Grocery Festival"
-    className="w-full h-[500px] object-cover  rounded-4xl"
+    className="w-full h-[500px] object-cover  rounded-3xl"
   />
 
   <div className="flex justify-between items-center mb-5 flex-col">
@@ -572,7 +554,7 @@ style={{
     </Link>
   </div>
 
-  <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
 
     {/* Product 1 */}
     <div className="bg-gray-50 rounded-2xl p-3 hover:shadow-lg">
@@ -629,22 +611,7 @@ style={{
     </div>
 
     {/* Product 4 */}
-    <div className="bg-gray-50 rounded-2xl p-3 hover:shadow-lg">
-      <img
-        src="https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=500"
-        alt="Moisturizer"
-        className="h-40 w-full object-cover rounded-xl"
-      />
-      <h3 className="font-semibold mt-2">Moisturizer</h3>
-      <p className="text-pink-500 font-bold">₹599</p>
-
-      <button
-        onClick={() => navigate("/beauty")}
-        className="mt-3 w-full bg-pink-500 text-white py-2 rounded-xl"
-      >
-        Shop Now
-      </button>
-    </div>
+  
 
     {/* Product 5 */}
     <div className="bg-gray-50 rounded-2xl p-3 hover:shadow-lg">

@@ -124,8 +124,8 @@ intervalRef.current = setInterval(() => {
 };
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center px-4">
-      <div className="relative w-full max-w-5xl h-[620px] bg-white rounded-3xl overflow-hidden shadow-2xl grid grid-cols-1 md:grid-cols-2">
+   <div className="min-h-screen bg-white flex items-center justify-center px-4 py-6">
+   <div className="relative w-full max-w-5xl my-6 bg-white rounded-3xl overflow-hidden shadow-2xl grid grid-cols-1 md:grid-cols-2">
         <button
          onClick={() => navigate("/")}
           className="absolute top-5 right-6 text-4xl font-bold z-10"
@@ -133,10 +133,10 @@ intervalRef.current = setInterval(() => {
           ×
         </button>
 
-        <div className="bg-purple-800 text-white p-10 flex flex-col justify-center">
-          <h1 className="text-6xl font-extrabold mb-14">SmartCart</h1>
+       <div className="bg-purple-800 text-white p-6 md:p-10 flex flex-col justify-center">
+         <h1 className="text-4xl md:text-6xl font-extrabold mb-4">SmartCart</h1>
 
-          <h2 className="text-4xl font-bold leading-tight">
+          <h2 className="text-xl md:text-4xl font-bold leading-tight">
             Lowest Prices Everyday
             <br />
             in minutes

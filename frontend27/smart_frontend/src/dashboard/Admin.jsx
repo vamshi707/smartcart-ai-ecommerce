@@ -5,14 +5,33 @@ import { Link } from "react-router-dom";
 export default function Admin() {
 
   return (
+    
 
-    <div className="min-h-screen bg-black p-10">
+    <div className="relative min-h-screen overflow-hidden">
+
+  <video
+  autoPlay
+  muted
+  loop
+  playsInline
+  controls
+    className="absolute inset-0 w-full h-full object-cover fixed"
+  >
+    <source src="/smartcart .mp4" type="video/mp4" />
+  </video>
+
+  <div className="absolute inset-0 bg-"></div>
+
+  <div className="relative z-10 p-10">
+    
+      
 
       <h1 className="text-5xl font-bold text-center mb-14 text-white">
         SMARTCART  Owner Dashboard 
       </h1>
+      
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
 
         {/* Fashion */}
 
@@ -148,6 +167,7 @@ export default function Admin() {
       </div>
 
     </div>
+     </div>
 
   )
 

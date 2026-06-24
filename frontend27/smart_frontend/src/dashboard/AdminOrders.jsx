@@ -549,19 +549,23 @@ const bestProduct =
   return (
     <> 
 
-    <div className="min-h-screen bg-gray-100 p-6 ">
+   <div className="min-h-screen bg-gray-300  md:p-6">
 
       
+<div className="fixed top-0 left-0 w-full z-50
+ backdrop-blur-lg
+border-b border-black
+shadow-lg
+flex flex-col items-center">
 
-
-      <h1 className="text-4xl font-bold mb-6 text-center ">
+      <h1 className="text-4xl font-bold mb-6 text-center">
   📦 Orders Dashboard
 </h1>
       <div className="flex flex-wrap justify-center gap-4 mb-8">
 
   <button
     onClick={() => setActiveTab("orders")}
-    className="bg-blue-600 text-white px-6 py-3 rounded-2xl"
+    className="w-ful md:w-auto bg-blue-600 text-white px-6 py-3 rounded-2xl"
   >
     📦 All Orders
   </button>
@@ -588,6 +592,8 @@ const bestProduct =
   </button>
 
 </div>
+</div>
+<br /><br /><br /><br /><br /><br /><br /><br />
 
       {activeTab === "orders" &&
 
@@ -703,13 +709,13 @@ orders.map((order) => (
 
               <div
                 key={item.id}
-                className="flex gap-4 border-b py-3"
-              >
+               className="flex flex-col md:flex-row gap-4 border-b py-3">
+              
 
                 <img
                   src={item.product_image}
                   alt=""
-                  className="w-20 h-20 object-contain"
+                 className="w-full md:w-20 h-40 md:h-20 object-contain"
                 />
 
                 <div>
@@ -1067,7 +1073,7 @@ orders.map((order) => (
 
 <div className="bg-gradient-to-br from-slate-900 via-blue-950 to-slate-100 p-2 rounded-3xl">
 
-    <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
+    <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
 
     <div className="bg-gradient-to-r from-green-500 to-green-700 text-white p-6 rounded-3xl shadow-xl">
       <h3>Total Revenue</h3>
@@ -1269,7 +1275,7 @@ orders.map((order) => (
         className="bg-white rounded-2xl shadow-lg p-5 mb-4 border"
       >
 
-        <div className="flex gap-4">
+       <div className="flex flex-col md:flex-row gap-4">
 
           <img
             src={item.product_image}

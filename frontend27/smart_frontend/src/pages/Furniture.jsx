@@ -10,6 +10,7 @@ function Furniture() {
   const [products, setProducts] = useState([]);
   const [showAI, setShowAI] = useState(false);
   const [openCamera, setOpenCamera] = useState(false);
+  const [facingMode, setFacingMode] = useState("environment");
   const [generatedRoom, setGeneratedRoom] = useState("");
   
   const webcamRef = useRef(null);
@@ -269,12 +270,27 @@ const capturePhoto = () => {
 
               <div>
 
-                <Webcam
-                  ref={webcamRef}
-                  audio={false}
-                  screenshotFormat="image/jpeg"
-                  className="rounded-2xl w-full h-70 object-contain bg-gray-100"
-                />
+               <Webcam
+                      ref={webcamRef}
+                      audio={false}
+                      screenshotFormat="image/jpeg"
+                      videoConstraints={{
+                        facingMode: facingMode,
+                      }}
+                      className="rounded-2xl w-full h-70 object-contain bg-gray-100"
+                    />
+                    <button
+                        onClick={() =>
+                          setFacingMode(
+                            facingMode === "user"
+                              ? "environment"
+                              : "user"
+                          )
+                        }
+                        className="w-full bg-green-900 text-white py-3 rounded-2xl mt-3"
+                      >
+                        🔄 Rotate Camera
+                      </button>
 
                 <button
                   onClick={capturePhoto}

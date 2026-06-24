@@ -11,13 +11,15 @@ function Electronics() {
 
   const [openCamera, setOpenCamera] = useState(false);
 
+  const [facingMode, setFacingMode] = useState("environment");
+
   const webcamRef = useRef(null);
 
   const [outputImage, setOutputImage] = useState("");
 
   const [capturedImage, setCapturedImage] = useState(null);
 
-const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const [showResult, setShowResult] = useState(false);
 
@@ -353,11 +355,26 @@ setOutputImage(
                 <div>
 
                   <Webcam
-                    ref={webcamRef}
-                    audio={false}
-                    screenshotFormat="image/jpeg"
-                    className="rounded-2xl w-full h-70 object-contain bg-gray-100"
-                  />
+                      ref={webcamRef}
+                      audio={false}
+                      screenshotFormat="image/jpeg"
+                      videoConstraints={{
+                        facingMode: facingMode,
+                      }}
+                      className="rounded-2xl w-full h-70 object-contain bg-gray-100"
+                    />
+                    <button
+                          onClick={() =>
+                            setFacingMode(
+                              facingMode === "user"
+                                ? "environment"
+                                : "user"
+                            )
+                          }
+                          className="w-full bg-green-900 text-white py-3 rounded-2xl mt-3"
+                        >
+                          🔄 Rotate Camera
+                        </button>
 
                   <button
                     onClick={capturePhoto}
@@ -670,7 +687,7 @@ setOutputImage(
 
         {/* PRODUCTS */}
 
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-6">
+        <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-8 gap-6">
 
           {products.map((item) => (
 

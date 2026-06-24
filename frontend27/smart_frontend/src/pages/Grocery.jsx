@@ -64,11 +64,11 @@ export default function Grocery() {
       </button>
     </div>
 
-    <img
-      src="/grocery.png"
-      alt="Grocery"
-      className="h-full w-[80%] object-cover"
-    />
+  <img
+  src="/grocery.png"
+  alt="Grocery"
+  className="h-[280px] w-[70%] object-cover"
+/>
 
   </div>
 </SwiperSlide>
@@ -120,7 +120,7 @@ export default function Grocery() {
 
       {/* PRODUCTS */}
 
-      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-7 gap-3">
+      <div className="grid grid-cols-5 sm:grid-cols-5 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-7 gap-3">
 
         {products.map((item) => (
 

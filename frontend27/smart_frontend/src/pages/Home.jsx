@@ -82,7 +82,6 @@ const products = [
 
 const deals = [
   { title: "Fresh Vegetables", subtitle: "From ₹19", img: "https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=600&auto=format&fit=crop" },
-  { title: "Top Mobiles", subtitle: "Up to 40% off", img: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=600&auto=format&fit=crop" },
   { title: "Home Decor", subtitle: "Starting ₹199", img: "https://images.unsplash.com/photo-1505691938895-1758d7feb511?q=80&w=600&auto=format&fit=crop" },
   { title: "Beauty Picks", subtitle: "AI skin match",   img: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=600&q=80" },
   { title: "Men's Fashion", subtitle: "From ₹299", img: "https://images.unsplash.com/photo-1490114538077-0a7f8cb49891?q=80&w=600&auto=format&fit=crop" },
@@ -226,7 +225,7 @@ const addToCart = (product) => {
           </div>
           <a className="text-sm font-semibold text-primary hidden md:flex items-center gap-1 cursor-pointer">View all <ChevronRight className="size-4" /></a>
         </div>
-        <div className=" grid md: grid-cols-5 gap-5 md:grid-cols-5 gap-6">
+        <div className=" grid md: grid-cols-5 gap-4 md:grid-cols-5 gap-4">
           {categories.map((c) => {
             const Icon = c.icon;
             return (
@@ -315,16 +314,16 @@ const addToCart = (product) => {
       </section>
 
       {/* DEAL TILES */}
-      <section className="max-w-7xl mx-auto px-4 py-12">
+      <section className="max-w-6xl mx-auto px-4 py-12">
         <div className="flex items-end justify-between mb-5">
           <div>
             <h2 className="text-3xl md:text-4xl font-extrabold flex items-center gap-2">
-              <TrendingUp className="size-7 text-primary" /> Top deals today
+              <TrendingUp className="size-7 text-primary " /> Top deals today
             </h2>
             <p className="text-muted-foreground mt-1">Hand-picked offers across every category.</p>
           </div>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {deals.map((d) => (
            <div
  
